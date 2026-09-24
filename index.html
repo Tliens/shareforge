@@ -1062,16 +1062,16 @@ spotlight(ctx,W,H,d,p,fr){
   noise(ctx,W,H,.045);
   const pad=fr.pad;
   const hasShot=!!assets.shot;
-  const headH=hasShot? H*0.44 : H*0.7;
+  const headH=hasShot? (fr.mode==='wide'? H*0.52 : H*0.44) : H*0.7;
   const T={x:pad,y:pad,w:W-pad*2};
   const bS=clamp(pad*0.3,12,22);
-  const base=clamp((hasShot?headH:H*0.62)*(fr.mode==='portrait'?0.3:0.4),18,H*0.15);
+  const base=clamp((hasShot?headH:H*0.62)*(fr.mode==='portrait'?0.3:0.38),18,H*0.17);
   const setF=sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
   const tMax=fr.mode==='portrait'?3:2;
   const tb=fitBlock(ctx,d.title,T.w,tMax,base,base*0.4,setF);
   const lh=tb.size*1.12;
   const subSize=clamp(tb.size*0.36,12,30);
-  let sb=d.sub?fitBlock(ctx,d.sub,Math.min(T.w,tb.size*22),2,subSize,11,s=>ctx.font=`400 ${s}px ${F_SANS}`):null;
+  let sb=d.sub?fitBlock(ctx,d.sub,Math.min(T.w,tb.size*22),fr.mode==='wide'?1:2,subSize,11,s=>ctx.font=`400 ${s}px ${F_SANS}`):null;
   let blockH=(d.badge?bS*2.6:0)+tb.lines.length*lh+(sb?sb.lines.length*subSize*1.45+tb.size*0.3:0);
   if(blockH>headH-pad*0.25&&sb){sb=null;blockH=(d.badge?bS*2.6:0)+tb.lines.length*lh;}
   let cur=T.y+Math.max((headH-blockH)/2,pad*0.2);
@@ -1088,8 +1088,9 @@ spotlight(ctx,W,H,d,p,fr){
     ctx.textBaseline='alphabetic';
     cur+=bS*2.6;
   }
+  cur+=tb.size*0.92;
   ctx.textAlign='center'; ctx.fillStyle='#f5f7ff'; setF(tb.size);
-  for(const ln of tb.lines){ ctx.fillText(ln,W/2,cur+tb.size*0.92); cur+=lh; }
+  for(const ln of tb.lines){ ctx.fillText(ln,W/2,cur); cur+=lh; }
   cur+=tb.size*0.3-lh+tb.size*0.28;
   if(sb){ ctx.font=`400 ${sb.size}px ${F_SANS}`; ctx.fillStyle='rgba(206,216,242,.62)'; for(const ln of sb.lines){ ctx.fillText(ln,W/2,cur+sb.size*0.85); cur+=sb.size*1.45; } }
   if(hasShot){
@@ -1173,8 +1174,9 @@ terminal(ctx,W,H,d,p,fr){
   /* title as code string with quotes + cursor */
   setF(tb.size);
   const qw=ctx.measureText('"').width;
+  cur+=tb.size*0.92;
   tb.lines.forEach((ln,i)=>{
-    const baseY=cur+tb.size*0.92;
+    const baseY=cur;
     const indent=i===0?qw:0;
     if(i===0){ ctx.fillStyle=p.bright; ctx.fillText('"',T.x,baseY); }
     ctx.fillStyle='#eef2ff'; ctx.fillText(ln,T.x+indent,baseY);
@@ -1285,34 +1287,61 @@ ticket(ctx,W,H,d,p,fr){
     for(const ln of sb.lines){ ctx.fillText(ln,main.x,ty+sb.size*0.8); ty+=sb.size*1.4; } }
   if(d.url&&!dropUrl) urlLine(ctx,main.x,main.y+main.h-(wide?inpad*0.55:inpad*0.35),d.url.replace(/^https?:\/\//,''),'rgba(23,18,8,.82)',p.base,uS);
   /* stub content */
-  const cxs=stub.x+stub.w/2;
-  let sy=stub.y;
-  if(assets.logo){ const ls=clamp(m*0.085,36,100); logoChip(ctx,assets.logo,cxs-ls/2,sy,ls); sy+=ls*1.25; }
-  if(assets.shot){
-    const sw=stub.w, shh=Math.min(stub.h*0.6, sw*0.68);
-    if(shh>50){
-      shotFrame(ctx,{x:cxs-sw/2,y:sy,w:sw,h:shh},assets.shot,'',fr.mode,p,{rotate:-0.04,border:'#ffffff'});
-      sy+=shh+inpad*0.45;
-    }
-  }
-  /* pass label + barcode */
-  const bH2=clamp(stub.h*0.15,16,50);
-  const by2=stub.y+stub.h-bH2;
-  const tS=clamp(m*0.018,9,15);
-  ctx.font=`700 ${tS}px ${F_SANS}`; setLS(ctx,`${tS*0.3}px`);
-  ctx.fillStyle='rgba(23,18,8,.5)'; ctx.textAlign='center';
-  ctx.fillText(lang==='zh'?'发布通行证 · LAUNCH PASS':'LAUNCH PASS', cxs, by2-tS*1.1);
-  setLS(ctx,'0px');
-  ctx.fillStyle='rgba(23,18,8,.85)';
+  const ink2='rgba(23,18,8,.85)';
   const seed=(d.url||'shareforge').replace(/\W/g,'')||'sf';
-  const bwTot=stub.w*0.88, u2=bwTot/46;
-  let xx=stub.x+stub.w*0.06, i=0;
-  while(xx<stub.x+stub.w*0.94){
-    const ch=seed.charCodeAt(i%seed.length);
-    const w2=(ch%3+1)*u2*0.6;
-    if(xx+w2>stub.x+stub.w*0.94) break;
-    ctx.fillRect(xx,by2,w2,bH2);
-    xx+=w2+u2*0.6; i++;
+  const drawBarcode=(x0,y0,wTot,h2)=>{
+    ctx.fillStyle=ink2;
+    const u2=wTot/46;
+    let xx=x0, i=0;
+    while(xx<x0+wTot){
+      const ch=seed.charCodeAt(i%seed.length);
+      const w2=(ch%3+1)*u2*0.6;
+      if(xx+w2>x0+wTot) break;
+      ctx.fillRect(xx,y0,w2,h2);
+      xx+=w2+u2*0.6; i++;
+    }
+  };
+  const drawPass=(cx2,by2,tS2)=>{
+    ctx.font=`700 ${tS2}px ${F_SANS}`; setLS(ctx,`${tS2*0.3}px`);
+    ctx.fillStyle='rgba(23,18,8,.5)'; ctx.textAlign='center';
+    ctx.fillText(lang==='zh'?'发布通行证 · LAUNCH PASS':'LAUNCH PASS', cx2, by2-tS2*1.1);
+    setLS(ctx,'0px');
+  };
+  if(wide){
+    const cxs=stub.x+stub.w/2;
+    let sy=stub.y;
+    if(assets.logo){ const ls=clamp(m*0.085,36,100); logoChip(ctx,assets.logo,cxs-ls/2,sy,ls); sy+=ls*1.25; }
+    if(assets.shot){
+      const shh=Math.min(stub.h*0.6, stub.w*0.68);
+      if(shh>50){
+        shotFrame(ctx,{x:stub.x,y:sy,w:stub.w,h:shh},assets.shot,'',fr.mode,p,{rotate:-0.04,border:'#ffffff'});
+      }
+    }
+    const bH2=clamp(stub.h*0.15,16,50);
+    const by2=stub.y+stub.h-bH2;
+    drawPass(cxs,by2,clamp(m*0.018,9,15));
+    drawBarcode(stub.x+stub.w*0.06,by2,stub.w*0.88,bH2);
+  } else {
+    /* horizontal: screenshot left, logo + pass + barcode right */
+    const bH2=clamp(stub.h*0.16,14,44);
+    const by2=stub.y+stub.h-bH2;
+    let sx0=stub.x;
+    if(assets.shot){
+      let sw2=Math.min(stub.w*0.56, (stub.h-bH2-inpad*0.4)*1.55);
+      const shh=Math.min(stub.h-bH2-inpad*0.5, sw2*0.66);
+      sw2=shh*1.515;
+      if(shh>46){
+        shotFrame(ctx,{x:stub.x,y:stub.y+(stub.h-shh)/2-bH2*0.12,w:sw2,h:shh},assets.shot,'',fr.mode,p,{rotate:-0.035,border:'#ffffff'});
+        sx0=stub.x+sw2+inpad*0.55;
+      }
+    }
+    const rw=stub.x+stub.w-sx0, rcx=sx0+rw/2;
+    let ry=stub.y+inpad*0.15;
+    if(assets.logo){ const ls=clamp(m*0.075,32,86); logoChip(ctx,assets.logo,rcx-ls/2,ry,ls); }
+    const tS=clamp(m*0.016,8,13);
+    const midY=stub.y+(stub.h+bH2)/2;
+    drawPass(rcx,midY,tS);
+    drawBarcode(sx0,midY,rw,bH2);
   }
 },
 };

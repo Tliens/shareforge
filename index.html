@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShareForge — Free Social Share Image Generator (X, WeChat, OG, Instagram)</title>
-<meta name="description" content="Create beautiful marketing share images in seconds. 6 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
+<meta name="description" content="Create beautiful marketing share images in seconds. 9 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
 <link rel="canonical" href="https://tliens.github.io/shareforge/">
 <link rel="alternate" hreflang="en" href="https://tliens.github.io/shareforge/">
 <link rel="alternate" hreflang="zh" href="https://tliens.github.io/shareforge/?lang=zh">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ShareForge">
 <meta property="og:title" content="ShareForge — Social Share Image Generator">
-<meta property="og:description" content="6 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
+<meta property="og:description" content="9 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
 <meta property="og:url" content="https://tliens.github.io/shareforge/">
 <meta property="og:image" content="https://tliens.github.io/shareforge/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://tliens.github.io/shareforge/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M20 40 L32 18 L44 40 Z' fill='%23fff' opacity='.95'/%3E%3Crect x='24' y='44' width='16' height='4' rx='2' fill='%23fff' opacity='.7'/%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://tliens.github.io/shareforge/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 6 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://tliens.github.io/shareforge/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 9 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -98,12 +98,15 @@ main{
 .sw-custom input{position:absolute;inset:-8px;width:44px;height:44px;opacity:0;cursor:pointer}
 .size-grid{display:grid;gridtemplate:initial;grid-template-columns:repeat(2,1fr);gap:8px}
 .sz{
-  display:flex;flex-direction:column;gap:1px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg2);
-  padding:7px 10px;cursor:pointer;text-align:left;color:var(--ink);
+  position:relative;display:flex;flex-direction:column;gap:1px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg2);
+  padding:7px 30px 7px 10px;cursor:pointer;text-align:left;color:var(--ink);
 }
 .sz b{font-size:12.5px;font-weight:700}
 .sz i{font-style:normal;font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
 .sz.on{border-color:var(--ui-accent);background:color-mix(in srgb,var(--ui-accent) 8%,var(--bg2))}
+.sz .ck{position:absolute;top:9px;right:9px;width:15px;height:15px;border:1.5px solid var(--line);border-radius:5px;background:var(--bg2);display:grid;place-items:center;font-size:10px;line-height:1;color:transparent}
+.sz .ck.on{background:var(--ui-accent);border-color:var(--ui-accent)}
+.sz .ck.on::after{content:'✓';color:#fff}
 .zones{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .zone{
   position:relative;border:1.5px dashed var(--line);border-radius:10px;background:var(--bg2);
@@ -163,6 +166,14 @@ td code{background:var(--soft);border-radius:5px;padding:1px 7px;font-size:12px;
 .faq details:last-child{border-bottom:none}
 .faq summary{cursor:pointer;font-weight:700;font-size:14.5px}
 .faq p{margin:8px 0 2px;font-size:13.5px}
+.mini{border:1px solid var(--line);background:var(--bg2);color:var(--mut);border-radius:7px;font-size:11px;font-weight:700;padding:3px 8px;cursor:pointer}
+.mini:hover{border-color:var(--ui-accent);color:var(--ui-accent)}
+.card .hrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.card .hrow h2{margin:0;flex:1}
+.brandrow{display:flex;gap:8px}
+.brandrow select{flex:1;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--bg2);color:var(--ink);padding:8px 10px;font:inherit;font-size:13.5px}
+.hint{font-size:11.5px;color:var(--mut);margin-top:9px;line-height:1.45}
+.btn:disabled{opacity:.5;cursor:not-allowed}
 footer{border-top:1px solid var(--line);padding:18px 20px 30px;text-align:center;color:var(--mut);font-size:12.5px}
 footer a{color:var(--mut)}
 </style>
@@ -178,10 +189,21 @@ footer a{color:var(--mut)}
   <button class="hbtn" id="btnLang">中文</button>
   <button class="hbtn" id="btnTheme" title="Theme">◐</button>
   <a class="hbtn" style="text-decoration:none" href="https://github.com/Tliens/shareforge" target="_blank" rel="noopener">GitHub</a>
+  <a class="hbtn" style="text-decoration:none" href="https://x.com/shi_kui8457" target="_blank" rel="noopener" title="Follow on X (Twitter)">X</a>
 </header>
 
 <main>
   <aside class="panel">
+    <section class="card">
+      <h2 data-i18n="secBrand">Brand profiles</h2>
+      <div class="brandrow">
+        <select id="brandSel"></select>
+        <button class="zbtn" id="btnBrandSave" data-i18n="bBrandSave">Save</button>
+        <button class="zbtn" id="btnBrandDel" data-i18n="bBrandDel">Delete</button>
+      </div>
+      <div class="hint" data-i18n="brandHint">Saves link, handle, accent & logo — switch between your sites in one click.</div>
+    </section>
+
     <section class="card">
       <h2 data-i18n="secContent">Content</h2>
       <div class="frow">
@@ -219,7 +241,11 @@ footer a{color:var(--mut)}
     </section>
 
     <section class="card">
-      <h2 data-i18n="secSize">Size</h2>
+      <div class="hrow">
+        <h2 data-i18n="secSize">Size</h2>
+        <button class="mini" id="selAll" data-i18n="selAll">All</button>
+        <button class="mini" id="selNone" data-i18n="selNone">None</button>
+      </div>
       <div class="size-grid" id="sizeGrid"></div>
     </section>
 
@@ -246,7 +272,7 @@ footer a{color:var(--mut)}
     </section>
 
     <section class="card btns">
-      <button class="btn primary" id="btnAll">⬇ <span data-i18n="bAll">Export all 8 sizes</span></button>
+      <button class="btn primary" id="btnAll">⬇ <span id="bAllTxt">Export 8 sizes</span></button>
       <div class="btnrow">
         <button class="btn ghost" id="btnDownload" data-i18n="bDownload">Download PNG</button>
         <button class="btn ghost" id="btnCopy" data-i18n="bCopy">Copy image</button>
@@ -277,7 +303,7 @@ footer a{color:var(--mut)}
     <div class="tips">
       <div class="tip"><b data-i18n="tip1t">Big type wins</b><span data-i18n="tip1p">Thumbnails are tiny in feeds. Keep one short headline and let it fill the canvas — ShareForge auto-fits the font size for you.</span></div>
       <div class="tip"><b data-i18n="tip2t">Show the product</b><span data-i18n="tip2p">A real screenshot in a browser frame consistently outperforms abstract art. Paste yours in, no design skill needed.</span></div>
-      <div class="tip"><b data-i18n="tip3t">One accent color</b><span data-i18n="tip3p">Pick your brand color once — gradients, glows and badges across all six templates follow it automatically.</span></div>
+      <div class="tip"><b data-i18n="tip3t">One accent color</b><span data-i18n="tip3p">Pick your brand color once — gradients, glows and badges across all templates follow it automatically.</span></div>
       <div class="tip"><b data-i18n="tip4t">Export the set</b><span data-i18n="tip4p">Post everywhere at launch: batch-export all 8 sizes with one click and drop each file into the right platform.</span></div>
     </div>
   </section>
@@ -309,7 +335,7 @@ footer a{color:var(--mut)}
 
 <footer>
   <span data-i18n="footerPrivacy">🔒 100% local — your content and screenshots never leave your browser.</span><br>
-  <span data-i18n="footerMade">ShareForge · free social share image generator</span> · <a href="https://github.com/Tliens/shareforge">GitHub</a>
+  <span data-i18n="footerMade">ShareForge · free social share image generator</span> · <a href="https://github.com/Tliens/shareforge">GitHub</a> · <a href="https://x.com/shi_kui8457" target="_blank" rel="noopener">X (Twitter)</a> · <a href="https://tliens.github.io/" target="_blank" rel="noopener">更多作品</a>
 </footer>
 
 <script type="module">
@@ -338,12 +364,19 @@ const TPLS = [
   {k:'frosted',  en:'Frosted',   zh:'玻璃'},
   {k:'neon',     en:'Neon Grid', zh:'霓虹'},
   {k:'pop',      en:'Bold Pop',  zh:'波普'},
+  {k:'spotlight',en:'Spotlight', zh:'发布会'},
+  {k:'terminal', en:'Terminal',  zh:'代码窗'},
+  {k:'ticket',   en:'Ticket',    zh:'票券'},
 ];
 const ACCENTS = ['#6366f1','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
 
 const I18N = {
   en:{
     tagline:'Share image studio', surprise:'Surprise me',
+    secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
+    brandHint:'Saves link, handle, accent & logo — switch between your sites in one click.',
+    brandPh:'Select brand…', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
+    selAll:'All', selNone:'None', bAllN:'Export {n} sizes',
     secContent:'Content', secTemplate:'Template', secAccent:'Accent color', secSize:'Size', secAssets:'Assets',
     hBadge:'Badge', hTitle:'Title', hSub:'Subtitle', hUrl:'Link', hHandle:'Handle',
     bUpload:'Upload', bDownload:'Download PNG', bCopy:'Copy image', bAll:'Export all 8 sizes',
@@ -356,7 +389,7 @@ const I18N = {
     gIntro:'One image rarely fits every feed. Type your copy once, pick a template, and export a pixel-perfect PNG for each platform below — everything is rendered locally in your browser, so nothing is ever uploaded.',
     tip1t:'Big type wins', tip1p:'Thumbnails are tiny in feeds. Keep one short headline and let it fill the canvas — ShareForge auto-fits the font size for you.',
     tip2t:'Show the product', tip2p:'A real screenshot in a browser frame consistently outperforms abstract art. Paste yours in, no design skill needed.',
-    tip3t:'One accent color', tip3p:'Pick your brand color once — gradients, glows and badges across all six templates follow it automatically.',
+    tip3t:'One accent color', tip3p:'Pick your brand color once — gradients, glows and badges across all templates follow it automatically.',
     tip4t:'Export the set', tip4p:'Post everywhere at launch: batch-export all 8 sizes with one click and drop each file into the right platform.',
     faqTitle:'FAQ',
     q1:'What sizes do social platforms need for share cards?',
@@ -373,6 +406,10 @@ const I18N = {
   },
   zh:{
     tagline:'分享图工作室', surprise:'随机灵感',
+    secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
+    brandHint:'保存链接、账号、主题色与 Logo——多个站点一键切换。',
+    brandPh:'选择品牌…', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
+    selAll:'全选', selNone:'清空', bAllN:'导出 {n} 张',
     secContent:'文案内容', secTemplate:'模板', secAccent:'主题色', secSize:'尺寸', secAssets:'素材',
     hBadge:'角标', hTitle:'主标题', hSub:'副标题', hUrl:'链接', hHandle:'账号',
     bUpload:'上传', bDownload:'下载 PNG', bCopy:'复制图片', bAll:'一键导出全部 8 尺寸',
@@ -385,7 +422,7 @@ const I18N = {
     gIntro:'一张图很难适配所有平台。填一次文案、选一个模板，即可为下列每个平台导出像素级精准的 PNG——全部在你浏览器本地渲染，任何内容都不会上传。',
     tip1t:'大字优先', tip1p:'信息流里的缩略图非常小，一句短标题铺满画面最有效——ShareForge 会自动调整字号避免溢出。',
     tip2t:'展示产品', tip2p:'浏览器窗口里的真实截图几乎总是比抽象图形更有说服力，直接粘贴即可，无需设计基础。',
-    tip3t:'一个主题色', tip3p:'选定品牌色后，六款模板里的渐变、光晕与角标会自动跟随，保持视觉统一。',
+    tip3t:'一个主题色', tip3p:'选定品牌色后，全部模板里的渐变、光晕与角标会自动跟随，保持视觉统一。',
     tip4t:'整套导出', tip4p:'发布日一键导出 8 个尺寸，把每张图投放到对应平台即可。',
     faqTitle:'常见问题',
     q1:'各平台分享图需要什么尺寸？',
@@ -410,6 +447,7 @@ const DEFAULTS = {
   sub:'One editor, every platform — X, WeChat, RED, Instagram & LinkedIn.',
   url:'yoursite.com', handle:'@yourhandle',
   shot:null, logo:null, demo:true,
+  exportSel: SIZES.map(s=>s.k),
 };
 let state = {...DEFAULTS};
 const assets = {shot:null, logo:null};
@@ -1009,6 +1047,274 @@ pop(ctx,W,H,d,p,fr){
   }
   if (assets.shot && fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,d.url,fr.mode,p,{rotate:0.03, border:ink, hardShadow:'rgba(20,16,9,.85)'});
 },
+
+spotlight(ctx,W,H,d,p,fr){
+  /* centered keynote-style announcement */
+  const g1=ctx.createRadialGradient(W/2,H*0.2,0,W/2,H*0.2,Math.max(W,H)*0.8);
+  g1.addColorStop(0,hsl(p.h,p.s,17)); g1.addColorStop(1,hsl(p.h,p.s,8));
+  ctx.fillStyle=g1; ctx.fillRect(0,0,W,H);
+  const g2=ctx.createRadialGradient(W/2,-H*0.12,0,W/2,-H*0.12,W*0.7);
+  g2.addColorStop(0,hsl(p.h,p.s,60,.15)); g2.addColorStop(1,hsl(p.h,p.s,60,0));
+  ctx.fillStyle=g2; ctx.fillRect(0,0,W,H);
+  /* thin ring accent */
+  ctx.strokeStyle=hsl(p.h,p.s,62,.22); ctx.lineWidth=clamp(Math.min(W,H)*0.003,1.5,3);
+  ctx.beginPath(); ctx.arc(W/2,-H*0.06,Math.min(W,H)*0.3,0,7); ctx.stroke();
+  noise(ctx,W,H,.045);
+  const pad=fr.pad;
+  const hasShot=!!assets.shot;
+  const headH=hasShot? H*0.44 : H*0.7;
+  const T={x:pad,y:pad,w:W-pad*2};
+  const bS=clamp(pad*0.3,12,22);
+  const base=clamp((hasShot?headH:H*0.62)*(fr.mode==='portrait'?0.3:0.4),18,H*0.15);
+  const setF=sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
+  const tMax=fr.mode==='portrait'?3:2;
+  const tb=fitBlock(ctx,d.title,T.w,tMax,base,base*0.4,setF);
+  const lh=tb.size*1.12;
+  const subSize=clamp(tb.size*0.36,12,30);
+  let sb=d.sub?fitBlock(ctx,d.sub,Math.min(T.w,tb.size*22),2,subSize,11,s=>ctx.font=`400 ${s}px ${F_SANS}`):null;
+  let blockH=(d.badge?bS*2.6:0)+tb.lines.length*lh+(sb?sb.lines.length*subSize*1.45+tb.size*0.3:0);
+  if(blockH>headH-pad*0.25&&sb){sb=null;blockH=(d.badge?bS*2.6:0)+tb.lines.length*lh;}
+  let cur=T.y+Math.max((headH-blockH)/2,pad*0.2);
+  if(d.badge){
+    ctx.font=`700 ${bS}px ${F_SANS}`; setLS(ctx,`${bS*0.14}px`);
+    const tw=ctx.measureText(d.badge.toUpperCase()).width;
+    const bw=tw+bS*3.1, bh=bS*1.9, bx=W/2-bw/2, by=cur;
+    ctx.fillStyle='rgba(255,255,255,.09)'; rr(ctx,bx,by,bw,bh,bh/2); ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.lineWidth=1.2; rr(ctx,bx,by,bw,bh,bh/2); ctx.stroke();
+    setLS(ctx,'0px');
+    ctx.fillStyle=p.bright; ctx.beginPath(); ctx.arc(bx+bS*0.85,by+bh/2,bS*0.26,0,7); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(d.badge.toUpperCase(), bx+bS*1.6, by+bh/2+0.5);
+    ctx.textBaseline='alphabetic';
+    cur+=bS*2.6;
+  }
+  ctx.textAlign='center'; ctx.fillStyle='#f5f7ff'; setF(tb.size);
+  for(const ln of tb.lines){ ctx.fillText(ln,W/2,cur+tb.size*0.92); cur+=lh; }
+  cur+=tb.size*0.3-lh+tb.size*0.28;
+  if(sb){ ctx.font=`400 ${sb.size}px ${F_SANS}`; ctx.fillStyle='rgba(206,216,242,.62)'; for(const ln of sb.lines){ ctx.fillText(ln,W/2,cur+sb.size*0.85); cur+=sb.size*1.45; } }
+  if(hasShot){
+    const areaY=T.y+headH+pad*0.25;
+    const areaH=H-areaY-pad*1.7;
+    if(areaH>60){
+      const sw=Math.min(W*0.7,areaH*1.5);
+      const sh=Math.min(areaH,sw*0.68);
+      shotFrame(ctx,{x:W/2-sw/2,y:areaY+(areaH-sh)/2,w:sw,h:sh},assets.shot,'',fr.mode,p,{dark:true, glow:p.glow, border:'rgba(255,255,255,.22)'});
+    }
+  }
+  const uS=clamp(pad*0.28,12,20);
+  if(d.url){
+    ctx.font=`500 ${uS}px ${F_MONO}`; ctx.fillStyle=p.bright; ctx.textAlign='center';
+    ctx.fillText(d.url.replace(/^https?:\/\//,''), W/2, H-pad*0.75);
+  }
+  if(d.handle){
+    ctx.font=`500 ${uS*0.9}px ${F_MONO}`; ctx.fillStyle='rgba(206,216,242,.4)'; ctx.textAlign='right';
+    ctx.fillText(d.handle, W-pad*0.7, H-pad*0.75);
+  }
+},
+
+terminal(ctx,W,H,d,p,fr){
+  ctx.fillStyle='#05080e'; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.05);
+  const m=Math.min(W,H);
+  const wide=fr.mode==='wide';
+  const win={x:fr.pad*0.5,y:fr.pad*0.5,w:W-fr.pad,h:H-fr.pad};
+  const rad=clamp(m*0.035,10,26);
+  ctx.save(); shadowOn(ctx,'rgba(0,0,0,.55)',m*0.06,m*0.025);
+  ctx.fillStyle='#0c1220'; rr(ctx,win.x,win.y,win.w,win.h,rad); ctx.fill(); shadowOff(ctx); ctx.restore();
+  ctx.strokeStyle='rgba(163,177,214,.18)'; ctx.lineWidth=1.2; rr(ctx,win.x,win.y,win.w,win.h,rad); ctx.stroke();
+  ctx.save(); rr(ctx,win.x,win.y,win.w,win.h,rad); ctx.clip();
+  /* title bar */
+  const barH=clamp(m*0.055,22,50);
+  ctx.fillStyle='#141d30'; ctx.fillRect(win.x,win.y,win.w,barH);
+  ctx.strokeStyle='rgba(163,177,214,.16)'; ctx.beginPath(); ctx.moveTo(win.x,win.y+barH+0.5); ctx.lineTo(win.x+win.w,win.y+barH+0.5); ctx.stroke();
+  ['#ff5f57','#febc2e','#28c840'].forEach((c,i)=>{ ctx.fillStyle=c; ctx.beginPath(); ctx.arc(win.x+barH*0.55+i*barH*0.52, win.y+barH/2, barH*0.13,0,7); ctx.fill(); });
+  const fS=clamp(barH*0.4,10,16);
+  ctx.font=`500 ${fS}px ${F_MONO}`; ctx.fillStyle='rgba(163,177,214,.6)'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('launch.js', win.x+win.w/2, win.y+barH/2+0.5);
+  ctx.textBaseline='alphabetic';
+  const gut=clamp(m*0.055,26,58);
+  const bx=win.x+gut, by=win.y+barH;
+  const bw=win.x+win.w-bx-fr.pad*0.45, bh=win.y+win.h-by;
+  /* screenshot placement */
+  let shot=null;
+  if(assets.shot){
+    if(wide){
+      const sw=clamp(bw*0.4,110,540), sh=Math.min(bh*0.78, sw*0.7);
+      shot={x:win.x+win.w-sw-fr.pad*0.45, y:by+(bh-sh)/2, w:sw, h:sh};
+    } else {
+      const sw=bw*0.82, sh=Math.min(bh*0.46, sw*0.66);
+      shot={x:bx+(bw-sw)/2, y:by+bh-sh-fr.pad*0.6, w:sw, h:sh};
+    }
+  }
+  const T={x:bx, y:by+fr.pad*0.3, w: shot&&wide ? shot.x-fr.pad*0.4-bx : bw, h: shot&&!wide ? shot.y-by-fr.pad*0.3 : bh-fr.pad*0.85};
+  /* gutter line numbers */
+  const gS=clamp(m*0.016,9,15);
+  ctx.font=`500 ${gS}px ${F_MONO}`; ctx.fillStyle='rgba(163,177,214,.26)'; ctx.textAlign='right';
+  const step=clamp(m*0.042,20,40);
+  for(let i=1;;i++){ const yy=by+fr.pad*0.3+i*step; if(yy>win.y+win.h-fr.pad*0.7) break; ctx.fillText(String(i), win.x+gut*0.6, yy); }
+  ctx.textAlign='left';
+  /* badge as comment */
+  const bS=clamp(fr.pad*0.26,11,20);
+  let cur=T.y;
+  if(d.badge){
+    ctx.font=`600 ${bS}px ${F_MONO}`; setLS(ctx,`${bS*0.1}px`);
+    ctx.fillStyle=hsl(p.h,p.s,64,.95);
+    ctx.fillText('// '+d.badge.toUpperCase(), T.x, cur+bS);
+    setLS(ctx,'0px'); cur+=bS*2.1;
+  }
+  const base=clamp((wide?T.h*0.42:T.h*0.62),16,m*0.1);
+  const setF=sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
+  const tb=fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh=tb.size*1.14;
+  const subSize=clamp(tb.size*0.38,11,24);
+  let sb=d.sub?fitBlock(ctx,'// '+d.sub,T.w,2,subSize,10,s=>ctx.font=`500 ${s}px ${F_MONO}`):null;
+  let blockH=(d.badge?bS*2.1:0)+tb.lines.length*lh+(sb?sb.lines.length*subSize*1.5+tb.size*0.25:0);
+  if(cur-T.y+blockH>T.h&&sb){sb=null;blockH=(d.badge?bS*2.1:0)+tb.lines.length*lh;}
+  /* title as code string with quotes + cursor */
+  setF(tb.size);
+  const qw=ctx.measureText('"').width;
+  tb.lines.forEach((ln,i)=>{
+    const baseY=cur+tb.size*0.92;
+    const indent=i===0?qw:0;
+    if(i===0){ ctx.fillStyle=p.bright; ctx.fillText('"',T.x,baseY); }
+    ctx.fillStyle='#eef2ff'; ctx.fillText(ln,T.x+indent,baseY);
+    if(i===tb.lines.length-1){
+      const lw=ctx.measureText(ln).width;
+      ctx.fillStyle=p.bright; ctx.fillText('"',T.x+indent+lw+tb.size*0.1,baseY);
+      ctx.fillStyle=hsl(p.h,p.s,60,.9);
+      ctx.fillRect(T.x+indent+lw+tb.size*0.1+qw+tb.size*0.12, baseY-tb.size*0.76, tb.size*0.16, tb.size*0.84);
+    }
+    cur+=lh;
+  });
+  cur+=tb.size*0.25-lh+tb.size*0.3;
+  if(sb){ ctx.font=`500 ${sb.size}px ${F_MONO}`; ctx.fillStyle='rgba(139,154,186,.8)';
+    for(const ln of sb.lines){ ctx.fillText(ln,T.x,cur+sb.size*0.85); cur+=sb.size*1.5; } }
+  if(shot) shotFrame(ctx,shot,assets.shot,'',fr.mode,p,{dark:true, glow:p.glow, border:hsl(p.h,p.s,60,.55)});
+  /* status bar */
+  const stH=clamp(m*0.045,20,42);
+  const stY=win.y+win.h-stH;
+  ctx.fillStyle='#0a101d'; ctx.fillRect(win.x+1,stY,win.w-2,stH);
+  ctx.strokeStyle='rgba(163,177,214,.16)'; ctx.beginPath(); ctx.moveTo(win.x,stY+0.5); ctx.lineTo(win.x+win.w,stY+0.5); ctx.stroke();
+  const sS=clamp(stH*0.42,10,16);
+  ctx.font=`500 ${sS}px ${F_MONO}`; ctx.textBaseline='middle';
+  if(d.url){
+    ctx.fillStyle=p.bright; ctx.textAlign='left';
+    ctx.fillText('git:main', win.x+fr.pad*0.45, stY+stH/2+0.5);
+    const gw2=ctx.measureText('git:main').width;
+    ctx.fillStyle='rgba(190,203,235,.85)';
+    ctx.fillText(d.url.replace(/^https?:\/\//,''), win.x+fr.pad*0.45+gw2+sS*1.4, stY+stH/2+0.5);
+  }
+  if(d.handle){
+    ctx.fillStyle='rgba(163,177,214,.55)'; ctx.textAlign='right';
+    ctx.fillText(d.handle, win.x+win.w-fr.pad*0.45, stY+stH/2+0.5);
+  }
+  ctx.textBaseline='alphabetic';
+  ctx.restore();
+},
+
+ticket(ctx,W,H,d,p,fr){
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,hsl(p.h,p.s,28)); g.addColorStop(1,hsl(p.h+40,p.s,15));
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle=hsl(p.h,p.s,70,.13); ctx.lineWidth=clamp(Math.min(W,H)*0.05,20,70);
+  ctx.beginPath(); ctx.arc(W*1.04,H*1.04,Math.min(W,H)*0.34,0,7); ctx.stroke();
+  noise(ctx,W,H,.05);
+  const m=Math.min(W,H);
+  const wide=fr.mode==='wide';
+  const card={x:fr.pad*0.7,y:fr.pad*0.7,w:W-fr.pad*1.4,h:H-fr.pad*1.4};
+  const rad=clamp(m*0.05,14,42);
+  ctx.save(); shadowOn(ctx,'rgba(4,6,18,.45)',m*0.07,m*0.03);
+  ctx.fillStyle='#fdfaf3'; rr(ctx,card.x,card.y,card.w,card.h,rad); ctx.fill(); shadowOff(ctx); ctx.restore();
+  /* perforation + punched notches */
+  const pr=clamp(m*0.028,9,24);
+  const perf= wide ? card.x+card.w*0.64 : card.y+card.h*(fr.mode==='square'?0.62:0.66);
+  ctx.save(); rr(ctx,card.x,card.y,card.w,card.h,rad); ctx.clip();
+  ctx.globalCompositeOperation='destination-out';
+  ctx.fillStyle='#000';
+  if(wide){ ctx.beginPath(); ctx.arc(perf,card.y,pr,0,7); ctx.arc(perf,card.y+card.h,pr,0,7); ctx.fill(); }
+  else { ctx.beginPath(); ctx.arc(card.x,perf,pr,0,7); ctx.arc(card.x+card.w,perf,pr,0,7); ctx.fill(); }
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle=hsl(p.h,p.s,55,.07);
+  if(wide) ctx.fillRect(perf,card.y,card.x+card.w-perf,card.h);
+  else ctx.fillRect(card.x,perf,card.w,card.y+card.h-perf);
+  ctx.strokeStyle='rgba(25,20,12,.32)'; ctx.lineWidth=clamp(m*0.004,1.5,3);
+  ctx.setLineDash([clamp(m*0.018,7,16), clamp(m*0.018,7,16)]);
+  ctx.beginPath();
+  if(wide){ ctx.moveTo(perf,card.y); ctx.lineTo(perf,card.y+card.h); } else { ctx.moveTo(card.x,perf); ctx.lineTo(card.x+card.w,perf); }
+  ctx.stroke(); ctx.setLineDash([]);
+  ctx.restore();
+  /* boxes */
+  const inpad=clamp(m*0.055,16,54);
+  const main= wide ? {x:card.x+inpad, y:card.y+inpad, w:perf-card.x-inpad*1.4, h:card.h-inpad*2}
+                   : {x:card.x+inpad, y:card.y+inpad, w:card.w-inpad*2, h:perf-card.y-inpad*1.4};
+  const stub= wide ? {x:perf+inpad*0.7, y:card.y+inpad*0.8, w:card.x+card.w-perf-inpad*1.3, h:card.h-inpad*1.6}
+                   : {x:card.x+inpad*0.8, y:perf+inpad*0.7, w:card.w-inpad*1.6, h:card.y+card.h-perf-inpad*1.3};
+  const ink='#171208';
+  /* badge */
+  const bS=clamp(m*0.028,12,22);
+  let y=main.y;
+  if(d.badge){
+    ctx.font=`800 ${bS}px ${F_SANS}`;
+    const tw=ctx.measureText(d.badge.toUpperCase()).width, bh2=bS*1.85;
+    ctx.save(); ctx.translate(main.x+(tw+bS*1.9)/2, y+bh2/2); ctx.rotate(-0.05);
+    shadowOn(ctx,'rgba(23,18,8,.35)',0,bS*0.16,bS*0.16);
+    ctx.fillStyle=p.base; rr(ctx,-(tw+bS*1.9)/2,-bh2/2,tw+bS*1.9,bh2,bh2*0.32); ctx.fill();
+    shadowOff(ctx);
+    ctx.fillStyle='#fff'; ctx.textAlign='left'; ctx.fillText(d.badge.toUpperCase(), -(tw+bS*1.9)/2+bS*0.95, bS*0.33);
+    ctx.restore();
+    y+=bh2*1.55;
+  }
+  /* title + sub */
+  const setF=sz=>ctx.font=`900 ${sz}px ${F_SANS}`;
+  const base=clamp(wide?main.h*0.26:main.h*0.42,16,m*0.1);
+  const tb=fitBlock(ctx,d.title,main.w,fr.mode==='portrait'?3:2,base,base*0.4,setF);
+  const lh=tb.size*1.06;
+  const subSize=clamp(tb.size*0.36,12,26);
+  let sb=d.sub?fitBlock(ctx,d.sub,main.w,2,subSize,11,s=>ctx.font=`600 ${s}px ${F_SANS}`):null;
+  const uS=clamp(m*0.026,12,20);
+  let blockH=(d.badge?bS*1.55:0)+tb.lines.length*lh+(sb?sb.lines.length*subSize*1.4+tb.size*0.25:0);
+  let avail=main.h-(d.url?uS*2.5:0);
+  if(y-main.y+blockH>avail&&sb){sb=null;blockH=(d.badge?bS*1.55:0)+tb.lines.length*lh;}
+  const dropUrl=(y-main.y+blockH)>avail;
+  let ty=main.y+Math.max(y-main.y,(avail-blockH)/2)+(d.badge?bS*1.55:0)+tb.size*0.9;
+  ctx.fillStyle=ink; ctx.textAlign='left';
+  setF(tb.size);
+  for(const ln of tb.lines){ ctx.fillText(ln,main.x,ty); ty+=lh; }
+  ty+=tb.size*0.25-lh+tb.size*0.3;
+  if(sb){ ctx.font=`600 ${sb.size}px ${F_SANS}`; ctx.fillStyle='rgba(35,29,18,.62)';
+    for(const ln of sb.lines){ ctx.fillText(ln,main.x,ty+sb.size*0.8); ty+=sb.size*1.4; } }
+  if(d.url&&!dropUrl) urlLine(ctx,main.x,main.y+main.h-(wide?inpad*0.55:inpad*0.35),d.url.replace(/^https?:\/\//,''),'rgba(23,18,8,.82)',p.base,uS);
+  /* stub content */
+  const cxs=stub.x+stub.w/2;
+  let sy=stub.y;
+  if(assets.logo){ const ls=clamp(m*0.085,36,100); logoChip(ctx,assets.logo,cxs-ls/2,sy,ls); sy+=ls*1.25; }
+  if(assets.shot){
+    const sw=stub.w, shh=Math.min(stub.h*0.6, sw*0.68);
+    if(shh>50){
+      shotFrame(ctx,{x:cxs-sw/2,y:sy,w:sw,h:shh},assets.shot,'',fr.mode,p,{rotate:-0.04,border:'#ffffff'});
+      sy+=shh+inpad*0.45;
+    }
+  }
+  /* pass label + barcode */
+  const bH2=clamp(stub.h*0.15,16,50);
+  const by2=stub.y+stub.h-bH2;
+  const tS=clamp(m*0.018,9,15);
+  ctx.font=`700 ${tS}px ${F_SANS}`; setLS(ctx,`${tS*0.3}px`);
+  ctx.fillStyle='rgba(23,18,8,.5)'; ctx.textAlign='center';
+  ctx.fillText(lang==='zh'?'发布通行证 · LAUNCH PASS':'LAUNCH PASS', cxs, by2-tS*1.1);
+  setLS(ctx,'0px');
+  ctx.fillStyle='rgba(23,18,8,.85)';
+  const seed=(d.url||'shareforge').replace(/\W/g,'')||'sf';
+  const bwTot=stub.w*0.88, u2=bwTot/46;
+  let xx=stub.x+stub.w*0.06, i=0;
+  while(xx<stub.x+stub.w*0.94){
+    const ch=seed.charCodeAt(i%seed.length);
+    const w2=(ch%3+1)*u2*0.6;
+    if(xx+w2>stub.x+stub.w*0.94) break;
+    ctx.fillRect(xx,by2,w2,bH2);
+    xx+=w2+u2*0.6; i++;
+  }
+},
 };
 
 /* ============ demo screenshot ============ */
@@ -1144,16 +1450,8 @@ function renderStaticBits(){
     b.onclick = ()=>{ state.template=t.k; document.querySelectorAll('.tpl').forEach(e=>e.classList.remove('on')); b.classList.add('on'); renderAll(); };
     grid.appendChild(b);
   }
-  /* sizes */
-  const sg = $('#sizeGrid'); sg.innerHTML='';
-  for (const sz of SIZES){
-    const b = document.createElement('button');
-    b.className = 'sz'+(state.size===sz.k?' on':'');
-    b.innerHTML = `<b></b><i>${sz.w} × ${sz.h}</i>`;
-    b.querySelector('b').textContent = lang==='zh'?sz.zh:sz.en;
-    b.onclick = ()=>{ state.size=sz.k; document.querySelectorAll('.sz').forEach(e=>e.classList.remove('on')); b.classList.add('on'); updateStageHead(); fitPreview(); scheduleSave(); };
-    sg.appendChild(b);
-  }
+  /* sizes + export selection */
+  renderSizes();
   /* swatches */
   const sw = $('#swatches'); sw.innerHTML='';
   for (const a of ACCENTS){
@@ -1190,6 +1488,86 @@ function updateStageHead(){
   $('#szName').textContent = lang==='zh'?s.zh:s.en;
   $('#szDim').textContent = `${s.w} × ${s.h}`;
 }
+
+/* ============ brand profiles ============ */
+const PROFILES_KEY = 'shareforge_profiles';
+function loadProfiles(){
+  try{ const l = JSON.parse(localStorage.getItem(PROFILES_KEY)); return Array.isArray(l)?l:[]; }catch(e){ return []; }
+}
+function saveProfiles(list){
+  try{ localStorage.setItem(PROFILES_KEY, JSON.stringify(list)); return true; }catch(e){ return false; }
+}
+function renderBrandSel(){
+  const sel = $('#brandSel'); if(!sel) return;
+  sel.innerHTML = '';
+  const ph = document.createElement('option');
+  ph.value = ''; ph.textContent = I18N[lang].brandPh;
+  sel.appendChild(ph);
+  for (const pr of loadProfiles()){
+    const o = document.createElement('option'); o.value = pr.id; o.textContent = pr.name;
+    sel.appendChild(o);
+  }
+}
+$('#btnBrandSave').onclick = ()=>{
+  const host = (state.url||'').replace(/^https?:\/\//,'').replace(/[\/\?#].*$/,'').trim() || 'brand';
+  const list = loadProfiles();
+  const ex = list.find(pr=>pr.name===host);
+  const prof = {id: ex?ex.id:'b'+Date.now().toString(36), name:host, url:state.url, handle:state.handle, accent:state.accent, logo:state.logo};
+  if (ex) Object.assign(ex, prof); else list.push(prof);
+  if (!saveProfiles(list)){ setStatus(I18N[lang].stStoreFull); return; }
+  renderBrandSel(); $('#brandSel').value = prof.id;
+  setStatus(I18N[lang].stBrandSaved, true);
+  setTimeout(()=>setStatus(''),1600);
+};
+$('#brandSel').onchange = ()=>{
+  const pr = loadProfiles().find(p=>p.id===$('#brandSel').value);
+  if (!pr) return;
+  state.url = pr.url||''; state.handle = pr.handle||'';
+  $('#inUrl').value = state.url; $('#inHandle').value = state.handle;
+  setAccent(pr.accent||'#6366f1');
+  setAsset('logo', pr.logo||null);
+  renderAll();
+};
+$('#btnBrandDel').onclick = ()=>{
+  const id = $('#brandSel').value; if (!id) return;
+  saveProfiles(loadProfiles().filter(p=>p.id!==id));
+  renderBrandSel();
+  setStatus(I18N[lang].stBrandDel, true);
+  setTimeout(()=>setStatus(''),1400);
+};
+
+/* ============ size selection for batch export ============ */
+function exportList(){ return Array.isArray(state.exportSel) ? state.exportSel : SIZES.map(s=>s.k); }
+function updateExportLabel(){
+  const n = exportList().length;
+  const el = $('#bAllTxt'); if (el) el.textContent = I18N[lang].bAllN.replace('{n}',n);
+  const btn = $('#btnAll'); if (btn) btn.disabled = !n;
+}
+function renderSizes(){
+  const sg = $('#sizeGrid'); sg.innerHTML='';
+  const sel = exportList();
+  for (const sz of SIZES){
+    const b = document.createElement('button');
+    b.className = 'sz'+(state.size===sz.k?' on':'');
+    const ck = document.createElement('span');
+    ck.className = 'ck'+(sel.includes(sz.k)?' on':'');
+    const bb = document.createElement('b'); bb.textContent = lang==='zh'?sz.zh:sz.en;
+    const ii = document.createElement('i'); ii.textContent = `${sz.w} × ${sz.h}`;
+    b.append(ck, bb, ii);
+    b.onclick = ()=>{ state.size=sz.k; document.querySelectorAll('.sz').forEach(e=>e.classList.remove('on')); b.classList.add('on'); updateStageHead(); fitPreview(); scheduleSave(); };
+    ck.onclick = e=>{
+      e.stopPropagation();
+      const cur = exportList();
+      state.exportSel = cur.includes(sz.k) ? cur.filter(k=>k!==sz.k) : [...cur, sz.k];
+      ck.classList.toggle('on');
+      updateExportLabel(); scheduleSave();
+    };
+    sg.appendChild(b);
+  }
+  updateExportLabel();
+}
+$('#selAll').onclick = ()=>{ state.exportSel = SIZES.map(s=>s.k); renderSizes(); scheduleSave(); };
+$('#selNone').onclick = ()=>{ state.exportSel = []; renderSizes(); scheduleSave(); };
 
 /* ============ export ============ */
 function renderNative(sizeKey){
@@ -1228,9 +1606,11 @@ $('#btnCopy').onclick = async ()=>{
 };
 $('#btnAll').onclick = async ()=>{
   const btn = $('#btnAll'); btn.disabled = true;
-  const total = SIZES.length; let i = 0;
+  const sel = exportList();
+  const total = sel.length; let i = 0;
   try{
     for (const s of SIZES){
+      if (!sel.includes(s.k)) continue;
       i++;
       setStatus(I18N[lang].stExporting.replace('{a}',i).replace('{b}',total));
       const blob = await toBlob(renderNative(s.k));
@@ -1300,6 +1680,7 @@ function applyLang(){
   $('#btnLang').textContent = lang==='zh'?'EN':'中文';
   localStorage.setItem('shareforge_lang', lang);
   try{ history.replaceState(null,'', lang==='zh' ? '?lang=zh'+location.hash : location.pathname+location.hash); }catch(e){}
+  renderBrandSel();
   renderStaticBits(); renderThumbs();
 }
 $('#btnLang').onclick = ()=>{ lang = lang==='zh'?'en':'zh'; applyLang(); renderAll(); };

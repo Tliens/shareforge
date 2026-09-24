@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShareForge — Free Social Share Image Generator (X, WeChat, OG, Instagram)</title>
+<meta name="description" content="Create beautiful marketing share images in seconds. 6 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
+<link rel="canonical" href="https://tliens.github.io/shareforge/">
+<link rel="alternate" hreflang="en" href="https://tliens.github.io/shareforge/">
+<link rel="alternate" hreflang="zh" href="https://tliens.github.io/shareforge/?lang=zh">
+<link rel="alternate" hreflang="x-default" href="https://tliens.github.io/shareforge/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ShareForge">
+<meta property="og:title" content="ShareForge — Social Share Image Generator">
+<meta property="og:description" content="6 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
+<meta property="og:url" content="https://tliens.github.io/shareforge/">
+<meta property="og:image" content="https://tliens.github.io/shareforge/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ShareForge — Social Share Image Generator">
+<meta name="twitter:description" content="Beautiful marketing images for every platform. 6 templates, 8 sizes, one click.">
+<meta name="twitter:image" content="https://tliens.github.io/shareforge/og-image.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M20 40 L32 18 L44 40 Z' fill='%23fff' opacity='.95'/%3E%3Crect x='24' y='44' width='16' height='4' rx='2' fill='%23fff' opacity='.7'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://tliens.github.io/shareforge/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 6 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What image sizes do social platforms need for share cards?","acceptedAnswer":{"@type":"Answer","text":"X/Twitter posts work best at 1200×675 (16:9), generic Open Graph link cards at 1200×630, WeChat Official Account covers at 900×383 with 383×383 for secondary posts, Xiaohongshu/RED at 1242×1656 (3:4), Instagram at 1080×1080, LinkedIn at 1200×627 and Douyin/Video covers at 1080×1440. ShareForge ships all of these as one-click presets."}},
+{"@type":"Question","name":"Is ShareForge free?","acceptedAnswer":{"@type":"Answer","text":"Yes — ShareForge is 100% free with no signup, no watermark and no usage limits. All templates and export features are available to everyone."}},
+{"@type":"Question","name":"Are my screenshots and text uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. ShareForge renders everything locally with the HTML5 Canvas in your browser. Your screenshots, logos and text never leave your device — it works fully offline once the page is loaded."}},
+{"@type":"Question","name":"Can I export all platform sizes at once?","acceptedAnswer":{"@type":"Answer","text":"Yes. Type your content once, then click “Export all sizes” to batch-download a ready-to-post PNG for every platform in one go. You can also download or copy a single size."}},
+{"@type":"Question","name":"What file format are the exports?","acceptedAnswer":{"@type":"Answer","text":"Exports are lossless PNG files at each platform's exact pixel dimensions, ready to upload directly to X, WeChat, Xiaohongshu, Instagram or LinkedIn."}}]}
+</script>
+<style>
+:root{
+  --ui-accent:#6366f1;
+  --bg:#f6f7fb; --bg2:#ffffff; --ink:#0f172a; --mut:#64748b; --line:#e2e8f0;
+  --card:#ffffff; --soft:#f1f5f9; --shadow:0 1px 2px rgba(15,23,42,.06),0 8px 24px -12px rgba(15,23,42,.12);
+  --radius:14px;
+}
+html[data-theme="dark"]{
+  --bg:#0b0f19; --bg2:#111726; --ink:#e6eaf2; --mut:#8b95a9; --line:#232c3f;
+  --card:#151c2c; --soft:#1b2334; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -12px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,'SF Pro Text','Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--ui-accent)}
+header{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
+  padding:10px 20px;background:color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
+.brand svg{display:block}
+.brand small{font-weight:600;color:var(--mut);font-size:12px;letter-spacing:0;margin-left:2px}
+header .sp{flex:1}
+.hbtn{
+  border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;
+  padding:6px 11px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+}
+.hbtn:hover{border-color:var(--ui-accent);color:var(--ui-accent)}
+main{
+  display:grid;grid-template-columns:392px minmax(0,1fr);gap:20px;
+  max-width:1460px;margin:0 auto;padding:20px;
+  align-items:start;
+}
+@media (max-width:980px){ main{grid-template-columns:1fr} }
+.panel{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px}
+.card h2{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+.frow{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.frow:last-child{margin-bottom:0}
+.frow label{font-size:12.5px;font-weight:700;color:var(--mut)}
+.frow input[type=text],.frow textarea{
+  width:100%;border:1px solid var(--line);border-radius:9px;background:var(--bg2);color:var(--ink);
+  padding:8px 10px;font:inherit;font-size:14px;resize:vertical;
+}
+.frow input:focus,.frow textarea:focus{outline:2px solid color-mix(in srgb,var(--ui-accent) 55%,transparent);outline-offset:0;border-color:var(--ui-accent)}
+.frow textarea{min-height:52px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tpl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tpl{
+  position:relative;border:2px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;padding:0;background:var(--soft);
+}
+.tpl canvas{display:block;width:100%;height:auto}
+.tpl span{position:absolute;left:0;right:0;bottom:0;font-size:10.5px;font-weight:700;padding:2px 4px;color:#fff;background:rgba(2,6,23,.55);text-align:center}
+.tpl.on{border-color:var(--ui-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-accent) 22%,transparent)}
+.swatches{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sw{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;outline:2px solid transparent;outline-offset:2px}
+.sw.on{outline-color:var(--ink)}
+.sw-custom{position:relative;width:26px;height:26px;border-radius:50%;overflow:hidden;border:1px dashed var(--mut);background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)}
+.sw-custom input{position:absolute;inset:-8px;width:44px;height:44px;opacity:0;cursor:pointer}
+.size-grid{display:grid;gridtemplate:initial;grid-template-columns:repeat(2,1fr);gap:8px}
+.sz{
+  display:flex;flex-direction:column;gap:1px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg2);
+  padding:7px 10px;cursor:pointer;text-align:left;color:var(--ink);
+}
+.sz b{font-size:12.5px;font-weight:700}
+.sz i{font-style:normal;font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
+.sz.on{border-color:var(--ui-accent);background:color-mix(in srgb,var(--ui-accent) 8%,var(--bg2))}
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.zone{
+  position:relative;border:1.5px dashed var(--line);border-radius:10px;background:var(--bg2);
+  min-height:96px;padding:8px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;text-align:center;
+}
+.zone.drag{border-color:var(--ui-accent);background:color-mix(in srgb,var(--ui-accent) 7%,var(--bg2))}
+.zone .zt{font-size:12px;font-weight:700}
+.zone .zh2{font-size:10.5px;color:var(--mut);line-height:1.35}
+.zone img{max-width:100%;max-height:74px;border-radius:6px;object-fit:contain;display:none}
+.zone.has img{display:block}
+.zone.has .zh2{display:none}
+.zone .zbtns{display:flex;gap:6px}
+.zbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;font-size:11px;font-weight:600;padding:3px 8px;cursor:pointer}
+.zbtn:hover{border-color:var(--ui-accent);color:var(--ui-accent)}
+.zclear{display:none;position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(2,6,23,.6);color:#fff;font-size:11px;line-height:1;cursor:pointer}
+.zone.has .zclear{display:block}
+.btns{display:flex;flex-direction:column;gap:8px}
+.btn{
+  border:none;border-radius:10px;padding:11px 14px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn.primary{background:linear-gradient(135deg,var(--ui-accent),color-mix(in srgb,var(--ui-accent) 55%,#a855f7));color:#fff;box-shadow:0 6px 18px -6px color-mix(in srgb,var(--ui-accent) 60%,transparent)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{background:var(--bg2);border:1px solid var(--line);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--ui-accent);color:var(--ui-accent)}
+.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.status{font-size:12.5px;color:var(--mut);min-height:18px;text-align:center}
+.status.ok{color:#059669}
+.stage{position:sticky;top:64px;display:flex;flex-direction:column;gap:10px}
+@media (max-width:980px){ .stage{position:static} }
+.stage-head{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);font-weight:600}
+.stage-head b{color:var(--ink)}
+.stage-head .sp{flex:1}
+#canvasWrap{
+  background:
+    linear-gradient(45deg,color-mix(in srgb,var(--line) 45%,transparent) 25%,transparent 25%,transparent 75%,color-mix(in srgb,var(--line) 45%,transparent) 75%),
+    linear-gradient(45deg,color-mix(in srgb,var(--line) 45%,transparent) 25%,transparent 25%,transparent 75%,color-mix(in srgb,var(--line) 45%,transparent) 75%);
+  background-size:22px 22px;background-position:0 0,11px 11px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:center;padding:18px;min-height:320px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+#cv{max-width:100%;max-height:min(72vh,860px);width:auto;height:auto;border-radius:6px;box-shadow:0 12px 40px -12px rgba(2,6,23,.35)}
+.doc{max-width:1460px;margin:0 auto;padding:8px 20px 40px;display:flex;flex-direction:column;gap:18px}
+.doc .card h2{font-size:15px;letter-spacing:0;text-transform:none;color:var(--ink);margin-bottom:8px}
+.doc p{margin:.4em 0;color:var(--mut);font-size:14px}
+.doc p b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em}
+td b{font-weight:700}
+td code{background:var(--soft);border-radius:5px;padding:1px 7px;font-size:12px;font-variant-numeric:tabular-nums}
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}
+.tip{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:13px;color:var(--mut)}
+.tip b{display:block;color:var(--ink);margin-bottom:3px;font-size:13.5px}
+.faq details{border-bottom:1px solid var(--line);padding:10px 2px}
+.faq details:last-child{border-bottom:none}
+.faq summary{cursor:pointer;font-weight:700;font-size:14.5px}
+.faq p{margin:8px 0 2px;font-size:13.5px}
+footer{border-top:1px solid var(--line);padding:18px 20px 30px;text-align:center;color:var(--mut);font-size:12.5px}
+footer a{color:var(--mut)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#lg)"/><path d="M20 40 L32 18 L44 40 Z" fill="#fff" opacity=".95"/><rect x="24" y="44" width="16" height="4" rx="2" fill="#fff" opacity=".7"/></svg>
+    ShareForge <small data-i18n="tagline">Share image studio</small>
+  </div>
+  <div class="sp"></div>
+  <button class="hbtn" id="btnRandom" title="Surprise me">🎲 <span data-i18n="surprise">Surprise me</span></button>
+  <button class="hbtn" id="btnLang">中文</button>
+  <button class="hbtn" id="btnTheme" title="Theme">◐</button>
+  <a class="hbtn" style="text-decoration:none" href="https://github.com/Tliens/shareforge" target="_blank" rel="noopener">GitHub</a>
+</header>
+
+<main>
+  <aside class="panel">
+    <section class="card">
+      <h2 data-i18n="secContent">Content</h2>
+      <div class="frow">
+        <label data-i18n="hBadge">Badge</label>
+        <input type="text" id="inBadge" maxlength="40">
+      </div>
+      <div class="frow">
+        <label data-i18n="hTitle">Title</label>
+        <textarea id="inTitle" rows="2" maxlength="120"></textarea>
+      </div>
+      <div class="frow">
+        <label data-i18n="hSub">Subtitle</label>
+        <textarea id="inSub" rows="2" maxlength="160"></textarea>
+      </div>
+      <div class="f2">
+        <div class="frow">
+          <label data-i18n="hUrl">Link</label>
+          <input type="text" id="inUrl" maxlength="60" inputmode="url">
+        </div>
+        <div class="frow">
+          <label data-i18n="hHandle">Handle</label>
+          <input type="text" id="inHandle" maxlength="30">
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="secTemplate">Template</h2>
+      <div class="tpl-grid" id="tplGrid"></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="secAccent">Accent color</h2>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="secSize">Size</h2>
+      <div class="size-grid" id="sizeGrid"></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="secAssets">Assets</h2>
+      <div class="zones">
+        <div class="zone" id="zoneShot" tabindex="0">
+          <img alt="screenshot preview" id="pvShot">
+          <div class="zt" data-i18n="zoneShot">Product screenshot</div>
+          <div class="zh2" data-i18n="hintPaste">Click to upload · drop · ⌘/Ctrl+V paste</div>
+          <div class="zbtns"><button class="zbtn" data-up="shot" data-i18n="bUpload">Upload</button></div>
+          <button class="zclear" data-clr="shot" title="Remove">✕</button>
+        </div>
+        <div class="zone" id="zoneLogo" tabindex="0">
+          <img alt="logo preview" id="pvLogo">
+          <div class="zt" data-i18n="zoneLogo">Logo</div>
+          <div class="zh2" data-i18n="hintPaste2">Click to upload · drop · ⌘/Ctrl+V paste</div>
+          <div class="zbtns"><button class="zbtn" data-up="logo" data-i18n="bUpload">Upload</button></div>
+          <button class="zclear" data-clr="logo" title="Remove">✕</button>
+        </div>
+      </div>
+      <input type="file" id="fileShot" accept="image/*" hidden>
+      <input type="file" id="fileLogo" accept="image/*" hidden>
+    </section>
+
+    <section class="card btns">
+      <button class="btn primary" id="btnAll">⬇ <span data-i18n="bAll">Export all 8 sizes</span></button>
+      <div class="btnrow">
+        <button class="btn ghost" id="btnDownload" data-i18n="bDownload">Download PNG</button>
+        <button class="btn ghost" id="btnCopy" data-i18n="bCopy">Copy image</button>
+      </div>
+      <div class="status" id="status"></div>
+    </section>
+  </aside>
+
+  <section class="stage">
+    <div class="stage-head">
+      <b id="szName">X / Twitter post</b>
+      <span id="szDim">1200 × 675</span>
+      <div class="sp"></div>
+      <span data-i18n="live">Live preview</span>
+    </div>
+    <div id="canvasWrap"><canvas id="cv" width="1200" height="675"></canvas></div>
+  </section>
+</main>
+
+<div class="doc">
+  <section class="card">
+    <h2 data-i18n="gTitle">Share image sizes cheat sheet</h2>
+    <p data-i18n="gIntro">One image rarely fits every feed. Type your copy once, pick a template, and export a pixel-perfect PNG for each platform below — everything is rendered locally in your browser, so nothing is ever uploaded.</p>
+    <table>
+      <thead><tr><th data-i18n="thPlatform">Platform</th><th data-i18n="thUse">Use</th><th>Size</th><th data-i18n="thRatio">Ratio</th></tr></thead>
+      <tbody id="sizeTable"></tbody>
+    </table>
+    <div class="tips">
+      <div class="tip"><b data-i18n="tip1t">Big type wins</b><span data-i18n="tip1p">Thumbnails are tiny in feeds. Keep one short headline and let it fill the canvas — ShareForge auto-fits the font size for you.</span></div>
+      <div class="tip"><b data-i18n="tip2t">Show the product</b><span data-i18n="tip2p">A real screenshot in a browser frame consistently outperforms abstract art. Paste yours in, no design skill needed.</span></div>
+      <div class="tip"><b data-i18n="tip3t">One accent color</b><span data-i18n="tip3p">Pick your brand color once — gradients, glows and badges across all six templates follow it automatically.</span></div>
+      <div class="tip"><b data-i18n="tip4t">Export the set</b><span data-i18n="tip4p">Post everywhere at launch: batch-export all 8 sizes with one click and drop each file into the right platform.</span></div>
+    </div>
+  </section>
+
+  <section class="card faq">
+    <h2 data-i18n="faqTitle">FAQ</h2>
+    <details open>
+      <summary data-i18n="q1">What sizes do social platforms need for share cards?</summary>
+      <p data-i18n="a1">X/Twitter posts work best at 1200×675 (16:9), generic Open Graph link cards at 1200×630, WeChat Official Account covers at 900×383 (plus 383×383 for secondary posts), Xiaohongshu/RED at 1242×1656, Instagram at 1080×1080, LinkedIn at 1200×627 and Douyin/Video covers at 1080×1440. All ship as one-click presets here.</p>
+    </details>
+    <details>
+      <summary data-i18n="q2">Is it free? Do I need an account?</summary>
+      <p data-i18n="a2">100% free, no signup, no watermark, no export limits.</p>
+    </details>
+    <details>
+      <summary data-i18n="q3">Are my screenshots uploaded anywhere?</summary>
+      <p data-i18n="a3">No. Everything renders locally with HTML5 Canvas — your text, screenshots and logo never leave your device, and the page keeps working offline.</p>
+    </details>
+    <details>
+      <summary data-i18n="q4">Can I export all platform sizes at once?</summary>
+      <p data-i18n="a4">Yes — type once, click “Export all 8 sizes”, and you get one ready-to-post PNG per platform. Single-size download and copy-to-clipboard are also available.</p>
+    </details>
+    <details>
+      <summary data-i18n="q5">What format are the exports?</summary>
+      <p data-i18n="a5">Lossless PNG files at each platform's exact pixel dimensions, ready to upload as-is.</p>
+    </details>
+  </section>
+</div>
+
+<footer>
+  <span data-i18n="footerPrivacy">🔒 100% local — your content and screenshots never leave your browser.</span><br>
+  <span data-i18n="footerMade">ShareForge · free social share image generator</span> · <a href="https://github.com/Tliens/shareforge">GitHub</a>
+</footer>
+
+<script type="module">
+/* ============ constants ============ */
+const $ = s => document.querySelector(s);
+const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+
+const F_SANS = "-apple-system,'SF Pro Display','Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif";
+const F_SERIF = "Georgia,'Times New Roman','Songti SC','SimSun',serif";
+const F_MONO = "'SF Mono',ui-monospace,Menlo,Consolas,'Courier New',monospace";
+
+const SIZES = [
+  {k:'x',   en:'X / Twitter post', zh:'X 推文图',       use_en:'Timeline image',  use_zh:'时间流配图',   w:1200,h:675},
+  {k:'og',  en:'OG link card',     zh:'OG 通用卡片',    use_en:'Website meta OG', use_zh:'网页 meta OG', w:1200,h:630},
+  {k:'wx1', en:'WeChat cover',     zh:'公众号首图',     use_en:'Official account head', use_zh:'公众号头条封面', w:900,h:383},
+  {k:'wx2', en:'WeChat secondary', zh:'公众号次图',     use_en:'Official account list', use_zh:'公众号次条封面', w:383,h:383},
+  {k:'red', en:'RED / Xiaohongshu',zh:'小红书配图',     use_en:'Note cover 3:4',  use_zh:'笔记封面 3:4', w:1242,h:1656},
+  {k:'ig',  en:'Instagram post',   zh:'Instagram 方图', use_en:'Feed square',     use_zh:'信息流方图',   w:1080,h:1080},
+  {k:'li',  en:'LinkedIn post',    zh:'LinkedIn 配图',  use_en:'Feed image',      use_zh:'信息流配图',   w:1200,h:627},
+  {k:'dy',  en:'Douyin cover',     zh:'抖音/视频号封面', use_en:'Video cover 3:4', use_zh:'视频封面 3:4', w:1080,h:1440},
+];
+const TPLS = [
+  {k:'aurora',   en:'Aurora',    zh:'极光'},
+  {k:'midnight', en:'Midnight',  zh:'暗夜'},
+  {k:'editorial',en:'Editorial', zh:'杂志'},
+  {k:'frosted',  en:'Frosted',   zh:'玻璃'},
+  {k:'neon',     en:'Neon Grid', zh:'霓虹'},
+  {k:'pop',      en:'Bold Pop',  zh:'波普'},
+];
+const ACCENTS = ['#6366f1','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
+
+const I18N = {
+  en:{
+    tagline:'Share image studio', surprise:'Surprise me',
+    secContent:'Content', secTemplate:'Template', secAccent:'Accent color', secSize:'Size', secAssets:'Assets',
+    hBadge:'Badge', hTitle:'Title', hSub:'Subtitle', hUrl:'Link', hHandle:'Handle',
+    bUpload:'Upload', bDownload:'Download PNG', bCopy:'Copy image', bAll:'Export all 8 sizes',
+    zoneShot:'Product screenshot', zoneLogo:'Logo',
+    hintPaste:'Click to upload · drop · ⌘/Ctrl+V paste', hintPaste2:'Click to upload · drop · ⌘/Ctrl+V paste',
+    live:'Live preview',
+    stCopied:'Copied to clipboard ✓', stExporting:'Exporting {a}/{b}…', stDone:'✓ Saved {b} PNG files', stFail:'Export failed: ',
+    thPlatform:'Platform', thUse:'Use', thRatio:'Ratio',
+    gTitle:'Share image sizes cheat sheet',
+    gIntro:'One image rarely fits every feed. Type your copy once, pick a template, and export a pixel-perfect PNG for each platform below — everything is rendered locally in your browser, so nothing is ever uploaded.',
+    tip1t:'Big type wins', tip1p:'Thumbnails are tiny in feeds. Keep one short headline and let it fill the canvas — ShareForge auto-fits the font size for you.',
+    tip2t:'Show the product', tip2p:'A real screenshot in a browser frame consistently outperforms abstract art. Paste yours in, no design skill needed.',
+    tip3t:'One accent color', tip3p:'Pick your brand color once — gradients, glows and badges across all six templates follow it automatically.',
+    tip4t:'Export the set', tip4p:'Post everywhere at launch: batch-export all 8 sizes with one click and drop each file into the right platform.',
+    faqTitle:'FAQ',
+    q1:'What sizes do social platforms need for share cards?',
+    a1:'X/Twitter posts work best at 1200×675 (16:9), generic Open Graph link cards at 1200×630, WeChat Official Account covers at 900×383 (plus 383×383 for secondary posts), Xiaohongshu/RED at 1242×1656, Instagram at 1080×1080, LinkedIn at 1200×627 and Douyin/Video covers at 1080×1440. All ship as one-click presets here.',
+    q2:'Is it free? Do I need an account?', a2:'100% free, no signup, no watermark, no export limits.',
+    q3:'Are my screenshots uploaded anywhere?',
+    a3:'No. Everything renders locally with HTML5 Canvas — your text, screenshots and logo never leave your device, and the page keeps working offline.',
+    q4:'Can I export all platform sizes at once?',
+    a4:'Yes — type once, click “Export all 8 sizes”, and you get one ready-to-post PNG per platform. Single-size download and copy-to-clipboard are also available.',
+    q5:'What format are the exports?', a5:'Lossless PNG files at each platform\'s exact pixel dimensions, ready to upload as-is.',
+    footerPrivacy:'🔒 100% local — your content and screenshots never leave your browser.',
+    footerMade:'ShareForge · free social share image generator',
+    docTitle:'ShareForge — Free Social Share Image Generator (X, WeChat, OG, Instagram)',
+  },
+  zh:{
+    tagline:'分享图工作室', surprise:'随机灵感',
+    secContent:'文案内容', secTemplate:'模板', secAccent:'主题色', secSize:'尺寸', secAssets:'素材',
+    hBadge:'角标', hTitle:'主标题', hSub:'副标题', hUrl:'链接', hHandle:'账号',
+    bUpload:'上传', bDownload:'下载 PNG', bCopy:'复制图片', bAll:'一键导出全部 8 尺寸',
+    zoneShot:'产品截图', zoneLogo:'Logo',
+    hintPaste:'点击上传 · 拖拽 · ⌘/Ctrl+V 粘贴', hintPaste2:'点击上传 · 拖拽 · ⌘/Ctrl+V 粘贴',
+    live:'实时预览',
+    stCopied:'已复制到剪贴板 ✓', stExporting:'正在导出 {a}/{b}…', stDone:'✓ 已保存 {b} 张 PNG', stFail:'导出失败：',
+    thPlatform:'平台', thUse:'用途', thRatio:'比例',
+    gTitle:'各平台分享图尺寸速查表',
+    gIntro:'一张图很难适配所有平台。填一次文案、选一个模板，即可为下列每个平台导出像素级精准的 PNG——全部在你浏览器本地渲染，任何内容都不会上传。',
+    tip1t:'大字优先', tip1p:'信息流里的缩略图非常小，一句短标题铺满画面最有效——ShareForge 会自动调整字号避免溢出。',
+    tip2t:'展示产品', tip2p:'浏览器窗口里的真实截图几乎总是比抽象图形更有说服力，直接粘贴即可，无需设计基础。',
+    tip3t:'一个主题色', tip3p:'选定品牌色后，六款模板里的渐变、光晕与角标会自动跟随，保持视觉统一。',
+    tip4t:'整套导出', tip4p:'发布日一键导出 8 个尺寸，把每张图投放到对应平台即可。',
+    faqTitle:'常见问题',
+    q1:'各平台分享图需要什么尺寸？',
+    a1:'X/推特推文图推荐 1200×675（16:9），通用 OG 链接卡 1200×630，微信公众号首图 900×383（次条 383×383），小红书 1242×1656，Instagram 1080×1080，LinkedIn 1200×627，抖音/视频号封面 1080×1440。本站已内置全部一键预设。',
+    q2:'免费吗？需要注册吗？','a2':'完全免费，无需注册，无水印，无导出次数限制。',
+    q3:'我的截图会被上传吗？',
+    a3:'不会。所有内容均通过 HTML5 Canvas 在浏览器本地渲染——文案、截图和 Logo 不会离开你的设备，页面加载后离线也能用。',
+    q4:'可以一次性导出所有平台尺寸吗？',
+    a4:'可以——填一次文案，点击「一键导出全部 8 尺寸」，每个平台各得一张可直接发布的 PNG。也支持单张下载与复制到剪贴板。',
+    q5:'导出是什么格式？','a5':'无损 PNG，尺寸与各平台要求像素级一致，可直接上传。',
+    footerPrivacy:'🔒 纯本地运行——文案与截图不会离开你的浏览器。',
+    footerMade:'ShareForge · 免费社交分享图生成器',
+    docTitle:'ShareForge — 免费社交分享图生成器（X / 公众号 / OG / 小红书）',
+  }
+};
+
+/* ============ state ============ */
+const DEFAULTS = {
+  template:'aurora', size:'x', accent:'#6366f1',
+  badge:'NEW LAUNCH',
+  title:'Ship beautiful share images in seconds',
+  sub:'One editor, every platform — X, WeChat, RED, Instagram & LinkedIn.',
+  url:'yoursite.com', handle:'@yourhandle',
+  shot:null, logo:null, demo:true,
+};
+let state = {...DEFAULTS};
+const assets = {shot:null, logo:null};
+let lang = 'en';
+
+/* ============ color utils ============ */
+function hexToHsl(hex){
+  const m = hex.replace('#','');
+  const r = parseInt(m.slice(0,2),16)/255, g = parseInt(m.slice(2,4),16)/255, b = parseInt(m.slice(4,6),16)/255;
+  const mx = Math.max(r,g,b), mn = Math.min(r,g,b); let h=0,s=0; const l=(mx+mn)/2;
+  if (mx!==mn){
+    const d = mx-mn;
+    s = l>0.5 ? d/(2-mx-mn) : d/(mx+mn);
+    if (mx===r) h=(g-b)/d+(g<b?6:0); else if (mx===g) h=(b-r)/d+2; else h=(r-g)/d+4;
+    h*=60;
+  }
+  return [h, s*100, l*100];
+}
+const hsl = (h,s,l,a=1)=>`hsla(${((h%360)+360)%360},${clamp(s,0,100)}%,${clamp(l,0,100)}%,${a})`;
+function pal(hex){
+  const [h,s0,l0] = hexToHsl(hex);
+  const s = clamp(s0, 45, 92), l = clamp(l0, 38, 62);
+  return {
+    hex, h, s, l,
+    base: hsl(h,s,l),
+    bright: hsl(h, clamp(s+6,50,95), clamp(l+12,48,74)),
+    deep: hsl(h, clamp(s+8,45,95), 26),
+    darker: hsl(h, clamp(s+5,40,90), 14),
+    comp: hsl(h+48, clamp(s,55,90), 60),
+    comp2: hsl(h-42, clamp(s,55,90), 62),
+    soft: hsl(h, clamp(s*0.9,40,88), 90),
+    soft2: hsl(h+48, clamp(s*0.85,36,84), 91),
+    glow: hsl(h,s,60,.38),
+    faint: hsl(h,s,55,.16),
+  };
+}
+
+/* ============ canvas helpers ============ */
+function rr(ctx,x,y,w,h,r){
+  r = Math.min(r, w/2, h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+function drawCover(ctx,img,x,y,w,h){
+  const iw = img.naturalWidth||img.width, ih = img.naturalHeight||img.height;
+  if(!iw||!ih) return;
+  const s = Math.max(w/iw, h/ih), sw = w/s, sh = h/s;
+  ctx.drawImage(img, (iw-sw)/2, (ih-sh)/2, sw, sh, x, y, w, h);
+}
+function drawContain(ctx,img,x,y,w,h){
+  const iw = img.naturalWidth||img.width, ih = img.naturalHeight||img.height;
+  if(!iw||!ih) return;
+  const s = Math.min(w/iw, h/ih), dw = iw*s, dh = ih*s;
+  ctx.drawImage(img, x+(w-dw)/2, y+(h-dh)/2, dw, dh);
+}
+function setLS(ctx,v){ try{ ctx.letterSpacing = v; }catch(e){} }
+let noiseCv = null;
+function noise(ctx,W,H,alpha){
+  if(!noiseCv){
+    noiseCv = document.createElement('canvas'); noiseCv.width = noiseCv.height = 140;
+    const nx = noiseCv.getContext('2d'); const id = nx.createImageData(140,140);
+    for(let i=0;i<id.data.length;i+=4){ const v = 90+Math.random()*110|0; id.data[i]=id.data[i+1]=id.data[i+2]=v; id.data[i+3]=255; }
+    nx.putImageData(id,0,0);
+  }
+  ctx.save();
+  ctx.globalAlpha = alpha; ctx.globalCompositeOperation = 'overlay';
+  ctx.fillStyle = ctx.createPattern(noiseCv,'repeat');
+  ctx.fillRect(0,0,W,H);
+  ctx.restore();
+}
+function unitsOf(str){
+  const out = [];
+  for (const w of str.split(/(\s+)/)){
+    if(!w) continue;
+    if(/^\s+$/.test(w)) out.push(' ');
+    else if (/[^\x00-\xff]/.test(w)) { for(const ch of w) out.push(ch); }
+    else out.push(w);
+  }
+  return out;
+}
+function wrapLines(ctx,text,maxW){
+  const lines = []; let line = '';
+  for (const u of unitsOf(text)){
+    const trial = line + u;
+    if (ctx.measureText(trial).width > maxW && line.trim()){
+      lines.push(line.replace(/\s+$/,''));
+      line = u === ' ' ? '' : u.replace(/^\s+/,'');
+    } else line = trial;
+  }
+  if (line.trim()) lines.push(line.replace(/\s+$/,''));
+  return lines.length ? lines : [''];
+}
+function fitBlock(ctx,text,maxW,maxLines,base,min,setFont){
+  for (let size = base; size >= min; size -= 2){
+    setFont(size); const lines = wrapLines(ctx,text,maxW);
+    if (lines.length <= maxLines && lines.every(l=>ctx.measureText(l).width <= maxW)) return {size,lines};
+  }
+  setFont(min); let lines = wrapLines(ctx,text,maxW);
+  if (lines.length > maxLines){
+    lines = lines.slice(0,maxLines);
+    let last = lines[maxLines-1];
+    while (last.length>1 && ctx.measureText(last+'…').width > maxW) last = last.slice(0,-1);
+    lines[maxLines-1] = last.replace(/\s+$/,'')+'…';
+  }
+  return {size:min,lines};
+}
+/* layout frames shared by templates */
+function frame(W,H,hasShot,{share=0.36,padMul=1}={}){
+  const m = Math.min(W,H);
+  const pad = Math.round(clamp(m*0.08*padMul, 18, 130));
+  const r = W/H;
+  if (r >= 1.5){
+    const maxH = H - pad*2;
+    let sw = hasShot ? W*share : 0;
+    let sh = hasShot ? clamp(sw*0.76, 0, maxH*0.82) : 0;
+    if (hasShot && sw > W*0.42){ sw = W*0.42; sh = clamp(sw*0.76,0,maxH*0.82); }
+    const gap = hasShot ? Math.max(22, W*0.028) : 0;
+    const sy = pad + (maxH-sh)/2;
+    return {mode:'wide',pad,tMax:r>1.9?2:3,
+      text:{x:pad, y:pad, w:W-pad*2-sw-gap, h:maxH},
+      shot:{x:W-pad-sw, y:sy, w:sw, h:sh}};
+  }
+  if (r >= 0.9){
+    const textH = hasShot ? H*0.44 : H-pad*2;
+    const gap = hasShot ? H*0.045 : 0;
+    const sh = hasShot ? H*0.36 : 0;
+    const sw = hasShot ? sh*1.45 : 0;
+    const sx = (W-sw)/2;
+    return {mode:'square',pad,tMax:3,
+      text:{x:pad, y:pad, w:W-pad*2, h:textH},
+      shot:{x:sx, y:pad+textH+gap, w:sw, h:sh}};
+  }
+  const textH = hasShot ? H*0.42 : H-pad*2;
+  const gap = hasShot ? H*0.035 : 0;
+  const sw = W*0.8, sh = hasShot ? Math.min(H*0.44, sw*0.68) : 0;
+  return {mode:'portrait',pad,tMax:4,
+    text:{x:pad, y:Math.round(pad*1.15), w:W-pad*2, h:textH},
+    shot:{x:(W-sw)/2, y:pad+textH+gap, w:sw, h:sh}};
+}
+function pill(ctx,x,y,h,text,{font,color,fill,stroke,align='left'}={}){
+  ctx.font = font; const tw = ctx.measureText(text).width;
+  const pw = tw + h*0.95;
+  const px = align==='center' ? x-pw/2 : x;
+  if (fill){ ctx.fillStyle = fill; rr(ctx,px,y,pw,h,h/2); ctx.fill(); }
+  if (stroke){ ctx.strokeStyle = stroke; ctx.lineWidth = Math.max(1,h*0.045); rr(ctx,px,y,pw,h,h/2); ctx.stroke(); }
+  ctx.fillStyle = color; ctx.textAlign='left'; ctx.textBaseline='middle';
+  ctx.fillText(text, px+h*0.475, y+h/2+h*0.02);
+  ctx.textBaseline='alphabetic';
+  return pw;
+}
+function logoChip(ctx,img,x,y,s){
+  ctx.save();
+  ctx.shadowColor = 'rgba(2,6,23,.28)'; ctx.shadowBlur = s*0.3; ctx.shadowOffsetY = s*0.08;
+  ctx.fillStyle = '#ffffff'; rr(ctx,x,y,s,s,s*0.28); ctx.fill();
+  ctx.restore();
+  ctx.save(); rr(ctx,x,y,s,s,s*0.28); ctx.clip();
+  drawContain(ctx,img,x+s*0.12,y+s*0.12,s*0.76,s*0.76);
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(2,6,23,.08)'; ctx.lineWidth = 1; rr(ctx,x,y,s,s,s*0.28); ctx.stroke();
+}
+function urlLine(ctx,x,y,text,color,dot,size,weight=700){
+  ctx.font = `${weight} ${size}px ${F_SANS}`;
+  ctx.fillStyle = dot;
+  ctx.beginPath(); ctx.arc(x+size*0.32, y-size*0.32, size*0.32, 0, 7); ctx.fill();
+  ctx.fillStyle = color; ctx.textAlign='left';
+  ctx.fillText(text, x+size*0.95, y);
+  return size*0.95 + ctx.measureText(text).width;
+}
+function shadowOn(ctx,color,blur,dy=0,sx=0){ ctx.shadowColor=color; ctx.shadowBlur=blur; ctx.shadowOffsetY=dy; ctx.shadowOffsetX=sx; }
+function shadowOff(ctx){ ctx.shadowColor='transparent'; ctx.shadowBlur=0; ctx.shadowOffsetY=0; ctx.shadowOffsetX=0; }
+
+/* browser-window screenshot frame */
+function shotFrame(ctx,box,img,url,mode,p,opts={}){
+  if(!box.w||!box.h) return;
+  const dark = opts.dark;
+  const chromeH = clamp(box.w*0.085, 16, 46);
+  const rad = clamp(box.w*0.045, 10, 24);
+  ctx.save();
+  if (opts.rotate){ ctx.translate(box.x+box.w/2, box.y+box.h/2); ctx.rotate(opts.rotate); ctx.translate(-(box.x+box.w/2), -(box.y+box.h/2)); }
+  if (opts.hardShadow){ shadowOn(ctx, opts.hardShadow, 0, box.w*0.035, box.w*0.035); }
+  else { shadowOn(ctx, opts.glow || 'rgba(2,6,23,.32)', opts.glow?box.w*0.14:box.w*0.09, opts.glow?0:box.w*0.045); }
+  ctx.fillStyle = dark ? '#101624' : '#ffffff';
+  rr(ctx,box.x,box.y,box.w,box.h,rad); ctx.fill();
+  shadowOff(ctx);
+  const iy = box.y + chromeH, ih = box.h - chromeH;
+  ctx.save(); rr(ctx,box.x,box.y,box.w,box.h,rad); ctx.clip();
+  drawCover(ctx,img,box.x,box.y,box.w,box.h);
+  ctx.restore();
+  /* chrome bar */
+  ctx.save(); rr(ctx,box.x,box.y,box.w,box.h,rad); ctx.clip();
+  ctx.fillStyle = dark ? '#182136' : '#f1f4f9'; ctx.fillRect(box.x,box.y,box.w,chromeH);
+  const d = chromeH*0.24;
+  const dc = ['#ff5f57','#febc2e','#28c840'];
+  dc.forEach((c,i)=>{ ctx.fillStyle=c; ctx.beginPath(); ctx.arc(box.x+chromeH*0.55+i*d*2.1, box.y+chromeH/2, d, 0, 7); ctx.fill(); });
+  if (url){
+    const uw = clamp(box.w*0.52, 60, 340);
+    ctx.fillStyle = dark ? '#232d45' : '#e5eaf2';
+    rr(ctx,box.x+(box.w-uw)/2+chromeH*0.3, box.y+chromeH*0.24, uw, chromeH*0.52, chromeH*0.26); ctx.fill();
+    const fs = clamp(chromeH*0.42, 8, 15);
+    ctx.font = `500 ${fs}px ${F_MONO}`; ctx.fillStyle = dark ? '#8fa0c0' : '#7c8aa0';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    let t = url.replace(/^https?:\/\//,'');
+    while (t.length>4 && ctx.measureText(t).width > uw*0.85) t = t.slice(0,-2);
+    ctx.fillText(t, box.x+box.w/2+chromeH*0.3, box.y+chromeH*0.52);
+    ctx.textBaseline='alphabetic';
+  }
+  ctx.restore();
+  if (opts.border){ ctx.strokeStyle = opts.border; ctx.lineWidth = clamp(box.w*0.008,1.5,3.5); rr(ctx,box.x,box.y,box.w,box.h,rad); ctx.stroke(); }
+  ctx.restore();
+}
+
+/* ============ templates ============ */
+const TPL_FN = {
+
+aurora(ctx,W,H,d,p,fr){
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,p.soft); g.addColorStop(1,p.soft2);
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  const b1=ctx.createRadialGradient(W*0.08,H*0.05,0,W*0.08,H*0.05,W*0.55); b1.addColorStop(0,hsl(p.h,p.s,62,.5)); b1.addColorStop(1,hsl(p.h,p.s,62,0)); ctx.fillStyle=b1; ctx.fillRect(0,0,W,H);
+  const b2=ctx.createRadialGradient(W*0.95,H*0.12,0,W*0.95,H*0.12,W*0.5); b2.addColorStop(0,hsl(p.h+48,p.s,62,.42)); b2.addColorStop(1,hsl(p.h+48,p.s,62,0)); ctx.fillStyle=b2; ctx.fillRect(0,0,W,H);
+  const b3=ctx.createRadialGradient(W*0.4,H*1.05,0,W*0.4,H*1.05,W*0.55); b3.addColorStop(0,hsl(p.h-42,p.s,60,.34)); b3.addColorStop(1,hsl(p.h-42,p.s,60,0)); ctx.fillStyle=b3; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.05);
+
+  const T = fr.text; const ink = '#161426';
+  let y = T.y + fr.pad*0.28;
+  /* badge row */
+  const bSize = clamp(fr.pad*0.34, 13, 26);
+  let bx = T.x;
+  if (assets.logo){ const ls = bSize*2.1; logoChip(ctx,assets.logo,bx,y-bSize*0.72,ls); bx += ls + bSize*0.7; }
+  if (d.badge){
+    ctx.font = `800 ${bSize}px ${F_SANS}`;
+    const tw = ctx.measureText(d.badge).width;
+    const bh = bSize*1.9;
+    shadowOn(ctx,'rgba(22,20,38,.12)',bSize*1.2,bSize*0.35);
+    ctx.fillStyle='rgba(255,255,255,.78)'; rr(ctx,bx,y-bSize,bh+tw,bh,bh/2); ctx.fill(); shadowOff(ctx);
+    ctx.strokeStyle='rgba(255,255,255,.95)'; ctx.lineWidth=1.2; rr(ctx,bx,y-bSize,bh+tw,bh,bh/2); ctx.stroke();
+    ctx.fillStyle=p.base; ctx.beginPath(); ctx.arc(bx+bSize*0.95,y-bSize*0.05,bSize*0.28,0,7); ctx.fill();
+    ctx.fillStyle=ink; ctx.textAlign='left'; ctx.fillText(d.badge, bx+bSize*1.55, y+bSize*0.32);
+  }
+  /* title */
+  const base = fr.mode==='wide' ? T.h*0.175 : fr.mode==='square' ? T.w*0.096 : T.w*0.1;
+  const setF = sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
+  const tb = fitBlock(ctx, d.title, T.w, fr.tMax, base, base*0.42, setF);
+  const lh = tb.size*1.12;
+  const subSize = Math.max(clamp(tb.size*0.4,14,34), fr.pad*0.3);
+  ctx.font=`500 ${subSize}px ${F_SANS}`;
+  const sb = d.sub ? fitBlock(ctx,d.sub,Math.min(T.w,tb.size*22),fr.mode==='portrait'?3:2,subSize,13,(s)=>ctx.font=`500 ${s}px ${F_SANS}`) : null;
+  const urlS = clamp(fr.pad*0.34,13,24);
+  const urlSpace = d.url? urlS*2.8 : 0;
+  let sb2 = sb;
+  let blockH = tb.lines.length*lh + (sb2? sb2.lines.length*subSize*1.35 + tb.size*0.42 : 0);
+  const topMin = fr.pad*0.28 + ((d.badge||assets.logo)? bSize*2.6 : 0);
+  let avail = T.h - urlSpace;
+  if (topMin + blockH > avail && sb2){ sb2 = null; blockH = tb.lines.length*lh + tb.size*0.42; }
+  const dropUrl = topMin + blockH > avail;
+  if (dropUrl) avail = T.h;
+  let ty = T.y + Math.max(topMin,(avail-blockH)/2) + tb.size*0.92;
+  ctx.fillStyle = ink; ctx.textAlign='left';
+  setF(tb.size);
+  for (const ln of tb.lines){ ctx.fillText(ln, T.x, ty); ty += lh; }
+  ty += tb.size*0.42 - lh + tb.size*0.34;
+  if (sb2){
+    ctx.font=`500 ${sb2.size}px ${F_SANS}`;
+    ctx.fillStyle = 'rgba(22,20,38,.62)';
+    for (const ln of sb2.lines){ ctx.fillText(ln, T.x, ty+subSize*0.8); ty += subSize*1.35; }
+  }
+  if (d.url && !dropUrl) urlLine(ctx, T.x, T.y+T.h-fr.pad*0.35, d.url.replace(/^https?:\/\//,''), 'rgba(22,20,38,.78)', p.base, urlS);
+  if (d.handle && !dropUrl){
+    ctx.font=`700 ${urlS*0.92}px ${F_SANS}`; ctx.fillStyle='rgba(22,20,38,.55)'; ctx.textAlign='right';
+    ctx.fillText(d.handle, W-fr.pad, T.y+T.h-fr.pad*0.35);
+  }
+  if (assets.shot && fr.shot.w) shotFrame(ctx, fr.shot, assets.shot, '', fr.mode, p, {rotate:-0.035, border:'rgba(255,255,255,.95)', glow:'rgba(38,28,90,.30)'});
+},
+
+midnight(ctx,W,H,d,p,fr){
+  ctx.fillStyle = '#0a0e18'; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle = 'rgba(148,163,205,.07)'; ctx.lineWidth = 1;
+  const step = clamp(Math.min(W,H)*0.075, 34, 62);
+  ctx.beginPath();
+  for(let x=step;x<W;x+=step){ ctx.moveTo(x,0); ctx.lineTo(x,H); }
+  for(let y=step;y<H;y+=step){ ctx.moveTo(0,y); ctx.lineTo(W,y); }
+  ctx.stroke();
+  if (assets.shot && fr.shot.w){
+    const g = ctx.createRadialGradient(fr.shot.x+fr.shot.w/2, fr.shot.y+fr.shot.h/2, 0, fr.shot.x+fr.shot.w/2, fr.shot.y+fr.shot.h/2, Math.max(fr.shot.w,fr.shot.h)*0.95);
+    g.addColorStop(0,p.glow); g.addColorStop(1,hsl(p.h,p.s,60,0));
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  } else {
+    const g = ctx.createRadialGradient(W*0.5,H*0.32,0,W*0.5,H*0.32,W*0.6);
+    g.addColorStop(0,hsl(p.h,p.s,55,.22)); g.addColorStop(1,hsl(p.h,p.s,55,0));
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  }
+  noise(ctx,W,H,.05);
+  const T = fr.text;
+  const kS = clamp(fr.pad*0.3,12,22);
+  let y = T.y + fr.pad*0.3;
+  if (d.badge){
+    ctx.font=`600 ${kS}px ${F_MONO}`; setLS(ctx,`${kS*0.22}px`);
+    ctx.fillStyle = p.bright; ctx.textAlign='left';
+    ctx.fillText('[ '+d.badge.toUpperCase()+' ]', T.x, y);
+    setLS(ctx,'0px');
+  }
+  const base = fr.mode==='wide' ? T.h*0.165 : fr.mode==='square' ? T.w*0.092 : T.w*0.098;
+  const setF = sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
+  const tb = fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh = tb.size*1.1;
+  const subSize = clamp(tb.size*0.36,14,32);
+  const sb = d.sub ? fitBlock(ctx,d.sub,T.w,fr.mode==='portrait'?3:2,subSize,13,s=>ctx.font=`400 ${s}px ${F_SANS}`) : null;
+  const urlS = clamp(fr.pad*0.3,12,22);
+  let sb2 = sb;
+  let blockH = (d.badge?kS*2.4:0) + tb.lines.length*lh + (sb2? sb2.lines.length*subSize*1.4+tb.size*0.3:0);
+  let avail = T.h - (d.url?urlS*2.6:0);
+  if (fr.pad*0.3 + blockH > avail && sb2){ sb2 = null; blockH = (d.badge?kS*2.4:0) + tb.lines.length*lh + tb.size*0.3; }
+  const dropUrl = fr.pad*0.3 + blockH > avail;
+  if (dropUrl) avail = T.h;
+  let ty = T.y + Math.max(fr.pad*0.3,(avail-blockH)/2) + (d.badge?kS*2.2:0) + tb.size*0.9;
+  ctx.fillStyle = '#f4f7ff'; ctx.textAlign='left';
+  setF(tb.size);
+  for (const ln of tb.lines){ ctx.fillText(ln,T.x,ty); ty+=lh; }
+  ty += tb.size*0.3 - lh + tb.size*0.3;
+  if (sb2){ ctx.font=`400 ${sb2.size}px ${F_SANS}`; ctx.fillStyle='rgba(198,209,235,.62)'; for(const ln of sb2.lines){ ctx.fillText(ln,T.x,ty+subSize*0.8); ty+=subSize*1.4; } }
+  if (d.url && !dropUrl){
+    ctx.font=`500 ${urlS}px ${F_MONO}`; ctx.fillStyle=p.bright; ctx.textAlign='left';
+    ctx.fillText(d.url.replace(/^https?:\/\//,''), T.x, T.y+T.h-fr.pad*0.3);
+  }
+  if (d.handle && !dropUrl){
+    ctx.font=`500 ${urlS*0.9}px ${F_MONO}`; ctx.fillStyle='rgba(198,209,235,.45)'; ctx.textAlign='right';
+    ctx.fillText(d.handle, W-fr.pad, T.y+T.h-fr.pad*0.3);
+  }
+  if (assets.shot && fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,d.url,fr.mode,p,{dark:true, glow:p.glow, border:'rgba(148,163,205,.25)'});
+},
+
+editorial(ctx,W,H,d,p,fr){
+  ctx.fillStyle = '#f8f5ec'; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.035);
+  const ink = '#191510';
+  const T = {x:fr.text.x, y:fr.pad*0.85, w:fr.text.w, h:fr.mode==='wide'? H-fr.pad*1.85 : fr.text.h};
+  const kS = clamp(fr.pad*0.26,11,19);
+  let y = T.y;
+  /* kicker row */
+  ctx.fillStyle = p.base; ctx.fillRect(T.x, y-kS*0.72, kS*0.5, kS*0.5);
+  ctx.font=`700 ${kS}px ${F_SANS}`; setLS(ctx,`${kS*0.28}px`);
+  ctx.fillStyle='rgba(70,60,45,.85)'; ctx.textAlign='left';
+  const kick = (d.badge||'').toUpperCase();
+  ctx.fillText(kick, T.x+kS*0.85, y-kS*0.28);
+  setLS(ctx,'0px');
+  ctx.strokeStyle='rgba(25,21,16,.18)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(T.x+kS*0.85+ctx.measureText(kick).width+kS*1.6, y-kS*0.5); ctx.lineTo(T.x+T.w, y-kS*0.5); ctx.stroke();
+  /* serif title */
+  const base = fr.mode==='wide' ? T.h*0.16 : fr.mode==='square' ? T.w*0.098 : T.w*0.104;
+  const setF = sz=>ctx.font=`700 ${sz}px ${F_SERIF}`;
+  const tb = fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh = tb.size*1.08;
+  const subSize = clamp(tb.size*0.4,15,34);
+  const sb = d.sub ? fitBlock(ctx,d.sub,Math.min(T.w,tb.size*20),2,subSize,14,s=>ctx.font=`italic 400 ${s}px ${F_SERIF}`) : null;
+  const urlS = clamp(fr.pad*0.28,12,20);
+  const footH = d.url||d.handle ? urlS*2.2 : 0;
+  let blockH = kS*2.2 + tb.lines.length*lh + (sb? sb.lines.length*subSize*1.5+tb.size*0.28:0);
+  let ty = T.y + Math.max(kS*2.2,(T.h-footH-blockH)/2) + kS*2.2 + tb.size*0.92;
+  ctx.fillStyle = ink; ctx.textAlign='left';
+  setF(tb.size);
+  for (const ln of tb.lines){ ctx.fillText(ln,T.x,ty); ty+=lh; }
+  /* accent rule */
+  ty += tb.size*0.28 - lh + tb.size*0.3;
+  ctx.fillStyle = p.base; rr(ctx,T.x,ty,tb.size*1.6,tb.size*0.055,tb.size*0.03); ctx.fill();
+  ty += tb.size*0.34;
+  if (sb){ ctx.font=`italic 400 ${sb.size}px ${F_SERIF}`; ctx.fillStyle='rgba(70,60,45,.72)'; for(const ln of sb.lines){ ctx.fillText(ln,T.x,ty+subSize*0.8); ty+=subSize*1.5; } }
+  /* footer */
+  if (d.url||d.handle){
+    const fy = H-fr.pad*0.85;
+    ctx.strokeStyle='rgba(25,21,16,.2)'; ctx.beginPath(); ctx.moveTo(T.x,fy-urlS*1.5); ctx.lineTo(W-fr.pad,fy-urlS*1.5); ctx.stroke();
+    ctx.font=`700 ${urlS}px ${F_SANS}`; setLS(ctx,`${urlS*0.14}px`);
+    ctx.fillStyle='rgba(40,33,24,.85)'; ctx.textAlign='left';
+    ctx.fillText(d.url.replace(/^https?:\/\//,'').toUpperCase(), T.x, fy);
+    if (d.handle){ ctx.textAlign='right'; ctx.fillText(d.handle.toUpperCase(), W-fr.pad, fy); }
+    setLS(ctx,'0px');
+  }
+  if (assets.shot && fr.shot.w){
+    shotFrame(ctx,fr.shot,assets.shot,'',fr.mode,p,{border:ink, hardShadow:'rgba(25,21,16,.9)'});
+  }
+},
+
+frosted(ctx,W,H,d,p,fr){
+  const g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,hsl(p.h,p.s,34)); g.addColorStop(1,hsl(p.h+48,p.s,26));
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  const b1=ctx.createRadialGradient(W*0.2,H*0.1,0,W*0.2,H*0.1,W*0.5); b1.addColorStop(0,hsl(p.h+30,p.s,60,.5)); b1.addColorStop(1,hsl(p.h+30,p.s,60,0)); ctx.fillStyle=b1; ctx.fillRect(0,0,W,H);
+  const b2=ctx.createRadialGradient(W*0.85,H*0.9,0,W*0.85,H*0.9,W*0.5); b2.addColorStop(0,hsl(p.h-40,p.s,55,.4)); b2.addColorStop(1,hsl(p.h-40,p.s,55,0)); ctx.fillStyle=b2; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.06);
+  const inner = fr.pad*0.62;
+  const cx = inner, cy = inner, cw = W-inner*2, ch = H-inner*2;
+  /* glass card */
+  ctx.save();
+  shadowOn(ctx,'rgba(4,8,22,.4)',inner*1.6,inner*0.55);
+  ctx.fillStyle='rgba(255,255,255,.13)'; rr(ctx,cx,cy,cw,ch,clamp(inner*0.9,16,44)); ctx.fill();
+  shadowOff(ctx);
+  ctx.strokeStyle='rgba(255,255,255,.42)'; ctx.lineWidth=1.6; rr(ctx,cx,cy,cw,ch,clamp(inner*0.9,16,44)); ctx.stroke();
+  const hl = ctx.createLinearGradient(0,cy,0,cy+ch*0.42);
+  hl.addColorStop(0,'rgba(255,255,255,.22)'); hl.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=hl; rr(ctx,cx+1.5,cy+1.5,cw-3,ch*0.42,clamp(inner*0.9,16,44)); ctx.fill();
+  ctx.restore();
+  /* shift content inside the card */
+  const ip = fr.pad*0.5;
+  const T = {x:fr.text.x+ip*0.4, y:fr.text.y+ip*0.55, w:fr.text.w-ip*0.8, h:fr.text.h-ip*0.9};
+  const headS = clamp(fr.pad*0.32,13,25);
+  const urlS = clamp(fr.pad*0.3,12,22);
+  const bottomReserve = d.url ? urlS*2.1 + fr.pad*0.85 : ip*0.7;
+  const S = fr.shot;
+  const shot = (assets.shot && S.w) ? (()=>{
+    const sx = S.x+ip*0.3, sw2 = S.w-ip*0.6;
+    const sy = Math.max(S.y, cy+ip*0.7);
+    const sh2 = Math.min(S.h-ip*0.4, cy+ch-bottomReserve-sy);
+    return sh2 > 24 ? {x:sx, y:sy, w:sw2, h:sh2} : null;
+  })() : null;
+  const centered = fr.mode!=='wide';
+  let y = T.y + fr.pad*0.18;
+  /* header: logo + badge (centered as a row in stacked modes) */
+  ctx.font=`800 ${headS}px ${F_SANS}`;
+  let hw = 0;
+  if (assets.logo) hw += headS*2;
+  if (d.badge) hw += (assets.logo?headS*0.7:0) + ctx.measureText(d.badge).width + headS*1.85;
+  let hx = centered ? T.x+(T.w-hw)/2 : T.x;
+  if (assets.logo){ const ls = headS*2; logoChip(ctx,assets.logo,hx,y-headS*0.68,ls); hx += ls+headS*0.7; }
+  if (d.badge){
+    const bh = headS*1.85, tw = ctx.measureText(d.badge).width;
+    ctx.fillStyle='rgba(255,255,255,.18)'; rr(ctx,hx,y-headS*0.8,bh+tw,bh,bh/2); ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=1.2; rr(ctx,hx,y-headS*0.8,bh+tw,bh,bh/2); ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.textAlign='left'; ctx.fillText(d.badge, hx+bh*0.5, y+headS*0.28);
+  }
+  const base = fr.mode==='wide' ? T.h*0.17 : fr.mode==='square' ? T.w*0.098 : T.w*0.1;
+  const setF = sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
+  const tb = fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh = tb.size*1.12;
+  const subSize = clamp(tb.size*0.38,14,32);
+  const sb = d.sub? fitBlock(ctx,d.sub,T.w,fr.mode==='portrait'?3:2,subSize,13,s=>ctx.font=`500 ${s}px ${F_SANS}`):null;
+  let sb2 = sb;
+  const stacked = fr.mode!=='wide';
+  const stackRoom = stacked ? ((shot? shot.y : cy+ch-(d.url?bottomReserve:ip*0.4)) - T.y) - fr.pad*0.15 : T.h;
+  let blockH = (d.badge||assets.logo?headS*2.3:0) + tb.lines.length*lh + (sb2? sb2.lines.length*subSize*1.38+tb.size*0.3:0);
+  if (fr.pad*0.18 + blockH > stackRoom && sb2){ sb2 = null; blockH = (d.badge||assets.logo?headS*2.3:0) + tb.lines.length*lh + tb.size*0.3; }
+  let ty = T.y + Math.max(fr.pad*0.18,(stackRoom-blockH)/2) + (d.badge||assets.logo?headS*2.1:0) + tb.size*0.92;
+  ctx.textAlign = centered?'center':'left';
+  const tx = centered? T.x+T.w/2 : T.x;
+  ctx.fillStyle='#ffffff';
+  setF(tb.size);
+  for (const ln of tb.lines){ ctx.fillText(ln,tx,ty); ty+=lh; }
+  ty += tb.size*0.3 - lh + tb.size*0.28;
+  if (sb2){ ctx.font=`500 ${sb2.size}px ${F_SANS}`; ctx.fillStyle='rgba(255,255,255,.82)'; for(const ln of sb2.lines){ ctx.fillText(ln,tx,ty+subSize*0.8); ty+=subSize*1.38; } }
+  if (d.url){
+    ctx.font=`700 ${urlS}px ${F_SANS}`;
+    const tw = ctx.measureText(d.url).width, pw = tw+urlS*2.6, ph=urlS*2.1;
+    const px = centered? W/2-pw/2 : T.x, py = cy+ch-ph-fr.pad*0.32;
+    ctx.fillStyle='rgba(255,255,255,.16)'; rr(ctx,px,py,pw,ph,ph/2); ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=1.2; rr(ctx,px,py,pw,ph,ph/2); ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.textAlign='left'; ctx.fillText(d.url, px+urlS*1.3, py+ph*0.68);
+  }
+  if (shot && shot.w>0 && shot.h>0){
+    ctx.save(); shadowOn(ctx,'rgba(4,8,22,.5)',shot.w*0.1,shot.w*0.05);
+    ctx.fillStyle='rgba(255,255,255,.2)'; rr(ctx,shot.x,shot.y,shot.w,shot.h,clamp(shot.w*0.04,10,22)); ctx.fill();
+    shadowOff(ctx); ctx.restore();
+    ctx.save(); rr(ctx,shot.x,shot.y,shot.w,shot.h,clamp(shot.w*0.04,10,22)); ctx.clip();
+    drawCover(ctx,assets.shot,shot.x,shot.y,shot.w,shot.h); ctx.restore();
+    ctx.strokeStyle='rgba(255,255,255,.5)'; ctx.lineWidth=1.5; rr(ctx,shot.x,shot.y,shot.w,shot.h,clamp(shot.w*0.04,10,22)); ctx.stroke();
+  }
+},
+
+neon(ctx,W,H,d,p,fr){
+  ctx.fillStyle = '#04060d'; ctx.fillRect(0,0,W,H);
+  const step = clamp(Math.min(W,H)*0.07,32,58);
+  ctx.strokeStyle = hsl(p.h,p.s,60,.09); ctx.lineWidth=1;
+  ctx.beginPath();
+  for(let x=step;x<W;x+=step){ctx.moveTo(x,0);ctx.lineTo(x,H);}
+  for(let y=step;y<H;y+=step){ctx.moveTo(0,y);ctx.lineTo(W,y);}
+  ctx.stroke();
+  const o1=ctx.createRadialGradient(W*0.85,H*0.08,0,W*0.85,H*0.08,W*0.35); o1.addColorStop(0,hsl(p.h,p.s,60,.2)); o1.addColorStop(1,hsl(p.h,p.s,60,0)); ctx.fillStyle=o1; ctx.fillRect(0,0,W,H);
+  const o2=ctx.createRadialGradient(W*0.06,H*0.95,0,W*0.06,H*0.95,W*0.3); o2.addColorStop(0,hsl(p.h+48,p.s,60,.14)); o2.addColorStop(1,hsl(p.h+48,p.s,60,0)); ctx.fillStyle=o2; ctx.fillRect(0,0,W,H);
+  /* inner neon frame */
+  const fp = fr.pad*0.42, frad = clamp(fp*0.9,12,34);
+  ctx.save(); shadowOn(ctx,p.base,fp*1.6); ctx.strokeStyle=p.base; ctx.lineWidth=clamp(Math.min(W,H)*0.0035,1.5,3);
+  rr(ctx,fp,fp,W-fp*2,H-fp*2,frad); ctx.stroke(); shadowOff(ctx); ctx.restore();
+  /* corner ticks */
+  const tk = clamp(fr.pad*0.5,14,40), tw2 = clamp(tk*0.55,2.5,6);
+  ctx.strokeStyle = p.bright; ctx.lineWidth = tw2; ctx.lineCap='round';
+  const cs=[[fp,fp,1,1],[W-fp,fp,-1,1],[fp,H-fp,1,-1],[W-fp,H-fp,-1,-1]];
+  for(const [xx,yy,dx,dy] of cs){
+    ctx.beginPath(); ctx.moveTo(xx+dx*tk*0.2,yy+dy*(tk*0.2+tk)); ctx.lineTo(xx+dx*tk*0.2,yy+dy*tk*0.2); ctx.lineTo(xx+dx*(tk*0.2+tk),yy+dy*tk*0.2); ctx.stroke();
+  }
+  ctx.lineCap='butt';
+  noise(ctx,W,H,.05);
+  const T = {x:fr.text.x, y:fr.text.y+fr.pad*0.22, w:fr.text.w, h:fr.text.h-fr.pad*0.22};
+  const kS = clamp(fr.pad*0.28,12,20);
+  let y = T.y;
+  if (d.badge){
+    ctx.font=`600 ${kS}px ${F_MONO}`; setLS(ctx,`${kS*0.2}px`);
+    ctx.fillStyle=p.bright; ctx.textAlign='left';
+    ctx.fillText('// '+d.badge.toUpperCase(), T.x, y);
+    setLS(ctx,'0px');
+  }
+  const base = fr.mode==='wide' ? T.h*0.155 : fr.mode==='square' ? T.w*0.09 : T.w*0.095;
+  const setF = sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
+  const tb = fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh = tb.size*1.1;
+  const subSize = clamp(tb.size*0.35,13,30);
+  const sb = d.sub? fitBlock(ctx,d.sub,T.w,fr.mode==='portrait'?3:2,subSize,12,s=>ctx.font=`400 ${s}px ${F_MONO}`):null;
+  const urlS = clamp(fr.pad*0.28,12,20);
+  let sb2 = sb;
+  let blockH = (d.badge?kS*2.5:0)+tb.lines.length*lh+(sb2? sb2.lines.length*subSize*1.45+tb.size*0.3:0);
+  let avail = T.h - (d.url?urlS*2.4:0);
+  if (fr.pad*0.2 + blockH > avail && sb2){ sb2 = null; blockH = (d.badge?kS*2.5:0)+tb.lines.length*lh+tb.size*0.3; }
+  const dropUrl = fr.pad*0.2 + blockH > avail;
+  if (dropUrl) avail = T.h;
+  let ty = T.y + Math.max(fr.pad*0.2,(avail-blockH)/2) + (d.badge?kS*2.3:0) + tb.size*0.9;
+  ctx.fillStyle='#eef2ff'; ctx.textAlign='left';
+  setF(tb.size);
+  for(const ln of tb.lines){ ctx.fillText(ln,T.x,ty); ty+=lh; }
+  ty += tb.size*0.3-lh+tb.size*0.3;
+  if (sb2){ ctx.font=`400 ${sb2.size}px ${F_MONO}`; ctx.fillStyle='rgba(176,192,226,.66)'; for(const ln of sb2.lines){ ctx.fillText(ln,T.x,ty+subSize*0.8); ty+=subSize*1.45; } }
+  if (d.url && !dropUrl){
+    ctx.font=`500 ${urlS}px ${F_MONO}`; ctx.fillStyle=p.bright; ctx.textAlign='left';
+    ctx.fillText('> '+d.url.replace(/^https?:\/\//,''), T.x, T.y+T.h-fr.pad*0.28);
+  }
+  if (d.handle && !dropUrl){
+    ctx.font=`500 ${urlS*0.9}px ${F_MONO}`; ctx.fillStyle='rgba(176,192,226,.45)'; ctx.textAlign='right';
+    ctx.fillText(d.handle, W-fr.pad, T.y+T.h-fr.pad*0.28);
+  }
+  if (assets.shot && fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,'',fr.mode,p,{dark:true, glow:p.glow, border:hsl(p.h,p.s,62,.9)});
+},
+
+pop(ctx,W,H,d,p,fr){
+  ctx.fillStyle = '#f7f2e9'; ctx.fillRect(0,0,W,H);
+  /* big shapes */
+  ctx.fillStyle = p.base;
+  ctx.beginPath(); ctx.arc(W*1.02,H*0.02,Math.min(W,H)*0.3,0,7); ctx.fill();
+  ctx.strokeStyle = p.deep; ctx.lineWidth = clamp(Math.min(W,H)*0.02,8,22);
+  ctx.beginPath(); ctx.arc(-Math.min(W,H)*0.04,H*1.02,Math.min(W,H)*0.16,Math.PI*1.05,Math.PI*1.95); ctx.stroke();
+  ctx.fillStyle = p.deep;
+  const px = W*0.52, py = H*0.06, a2 = clamp(Math.min(W,H)*0.012,4,10);
+  ctx.save(); ctx.translate(px,py); ctx.rotate(0.3);
+  ctx.fillRect(-a2*2.4,-a2*0.5,a2*4.8,a2); ctx.fillRect(-a2*0.5,-a2*2.4,a2,a2*4.8);
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(25,20,12,.25)'; ctx.lineWidth = clamp(Math.min(W,H)*0.004,2,4);
+  ctx.beginPath(); ctx.moveTo(W*0.62,H*0.13); ctx.lineTo(W*0.62+Math.min(W,H)*0.05,H*0.13); ctx.moveTo(W*0.62+Math.min(W,H)*0.025,H*0.13-Math.min(W,H)*0.025); ctx.lineTo(W*0.62+Math.min(W,H)*0.025,H*0.13+Math.min(W,H)*0.025); ctx.stroke();
+  noise(ctx,W,H,.04);
+  const ink = '#141009';
+  const T = fr.text;
+  /* rotated badge */
+  const bS = clamp(fr.pad*0.34,14,26);
+  let y0 = T.y + fr.pad*0.3;
+  if (d.badge){
+    ctx.save();
+    ctx.font=`800 ${bS}px ${F_SANS}`;
+    const bw = ctx.measureText(d.badge).width + bS*1.6, bh = bS*1.9;
+    ctx.translate(T.x+bw/2, y0); ctx.rotate(-0.06);
+    shadowOn(ctx,ink,0,bS*0.28,bS*0.28);
+    ctx.fillStyle = p.base; rr(ctx,-bw/2,-bh/2,bw,bh,bh*0.3); ctx.fill();
+    shadowOff(ctx);
+    ctx.fillStyle = '#fff'; ctx.textAlign='left'; ctx.fillText(d.badge,-bw/2+bS*0.8,bS*0.34);
+    ctx.restore();
+  }
+  const base = fr.mode==='wide' ? T.h*0.17 : fr.mode==='square' ? T.w*0.1 : T.w*0.105;
+  const setF = sz=>ctx.font=`900 ${sz}px ${F_SANS}`;
+  const tb = fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh = tb.size*1.06;
+  const subSize = clamp(tb.size*0.36,14,30);
+  const sb = d.sub? fitBlock(ctx,d.sub,T.w,2,subSize,13,s=>ctx.font=`600 ${s}px ${F_SANS}`):null;
+  const urlS = clamp(fr.pad*0.32,13,22);
+  let sb2 = sb;
+  let blockH = (d.badge?bS*2.6:0)+tb.lines.length*lh+(sb2? sb2.lines.length*subSize*1.4+tb.size*0.34:0);
+  let avail = T.h - (d.url?urlS*2.6:0);
+  if (fr.pad*0.3 + blockH > avail && sb2){ sb2 = null; blockH = (d.badge?bS*2.6:0)+tb.lines.length*lh+tb.size*0.34; }
+  const dropUrl = fr.pad*0.3 + blockH > avail;
+  if (dropUrl) avail = T.h;
+  let ty = T.y + Math.max(fr.pad*0.3,(avail-blockH)/2) + (d.badge?bS*2.4:0) + tb.size*0.95;
+  ctx.textAlign='left';
+  setF(tb.size);
+  tb.lines.forEach((ln,i)=>{
+    if (i===0){ ctx.fillStyle=p.base; rr(ctx,T.x+2,ty-tb.size*0.16,Math.min(ctx.measureText(ln).width*0.96,T.w),tb.size*0.13,tb.size*0.07); ctx.fill(); }
+    ctx.fillStyle=ink; ctx.fillText(ln,T.x,ty); ty+=lh;
+  });
+  ty += tb.size*0.34-lh+tb.size*0.3;
+  if (sb2){ ctx.font=`600 ${sb2.size}px ${F_SANS}`; ctx.fillStyle='rgba(35,29,20,.66)'; for(const ln of sb2.lines){ ctx.fillText(ln,T.x,ty+subSize*0.8); ty+=subSize*1.4; } }
+  if (d.url && !dropUrl){
+    const uy = T.y+T.h-fr.pad*0.4;
+    ctx.font=`800 ${urlS}px ${F_SANS}`;
+    ctx.fillStyle=ink; ctx.textAlign='left';
+    const t=d.url.replace(/^https?:\/\//,'');
+    ctx.fillText(t,T.x,uy);
+    const uw = ctx.measureText(t).width;
+    ctx.strokeStyle=p.base; ctx.lineWidth=Math.max(2.5,urlS*0.16);
+    ctx.beginPath(); ctx.moveTo(T.x,uy+urlS*0.28); ctx.lineTo(T.x+uw,uy+urlS*0.28); ctx.stroke();
+  }
+  if (d.handle && !dropUrl){
+    ctx.font=`700 ${urlS*0.9}px ${F_SANS}`; ctx.fillStyle='rgba(35,29,20,.6)'; ctx.textAlign='right';
+    ctx.fillText(d.handle, W-fr.pad, T.y+T.h-fr.pad*0.4);
+  }
+  if (assets.shot && fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,d.url,fr.mode,p,{rotate:0.03, border:ink, hardShadow:'rgba(20,16,9,.85)'});
+},
+};
+
+/* ============ demo screenshot ============ */
+function makeDemoShot(){
+  const c = document.createElement('canvas'); c.width=1200; c.height=760;
+  const x = c.getContext('2d');
+  x.fillStyle='#ffffff'; x.fillRect(0,0,1200,760);
+  x.fillStyle='#f6f8fb'; x.fillRect(0,0,1200,64);
+  x.strokeStyle='#e6eaf0'; x.beginPath(); x.moveTo(0,64.5); x.lineTo(1200,64.5); x.stroke();
+  ['#ff5f57','#febc2e','#28c840'].forEach((col,i)=>{ x.fillStyle=col; x.beginPath(); x.arc(34+i*26,32,7,0,7); x.fill(); });
+  x.fillStyle='#e9edf3'; rr(x,150,17,640,30,15); x.fill();
+  x.fillStyle='#8a94a6'; x.font='500 15px '+F_MONO; x.textAlign='center'; x.textBaseline='middle';
+  x.fillText('yoursite.com', 470, 33); x.textBaseline='alphabetic';
+  /* hero */
+  const g = x.createLinearGradient(60,100,1140,380);
+  g.addColorStop(0,'#6366f1'); g.addColorStop(1,'#a855f7');
+  x.fillStyle=g; rr(x,60,100,1080,270,22); x.fill();
+  x.fillStyle='rgba(255,255,255,.95)'; rr(x,110,160,430,42,10); x.fill();
+  x.fillStyle='rgba(255,255,255,.6)'; rr(x,110,222,300,26,8); x.fill();
+  x.fillStyle='#ffffff'; rr(x,110,282,170,52,26); x.fill();
+  x.fillStyle='rgba(255,255,255,.35)'; rr(x,760,150,340,190,16); x.fill();
+  /* cards */
+  for(let i=0;i<3;i++){
+    x.fillStyle='#f8fafc'; x.strokeStyle='#e6eaf0';
+    rr(x,60+i*370,410,340,290,18); x.fill(); x.stroke();
+    x.fillStyle='#e2e8f0'; rr(x,90+i*370,445,180,22,8); x.fill();
+    x.fillStyle='#eef1f6'; rr(x,90+i*370,485,280,16,6); x.fill();
+    rr(x,90+i*370,512,240,16,6); x.fill(); rr(x,90+i*370,539,260,16,6); x.fill();
+  }
+  return c.toDataURL('image/png');
+}
+
+/* ============ images ============ */
+function loadImg(dataURL){
+  return new Promise((res,rej)=>{
+    if(!dataURL) return res(null);
+    const im = new Image();
+    im.onload = ()=>res(im); im.onerror = rej;
+    im.src = dataURL;
+  });
+}
+async function importImageFile(kind, blob){
+  const isPng = blob.type==='image/png' || blob.type==='image/webp';
+  const dataURL = await new Promise((res,rej)=>{
+    const fr = new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(blob);
+  });
+  /* downscale huge images to max 1600px */
+  const im = await loadImg(dataURL);
+  const max = 1600;
+  let out = dataURL;
+  if (im && Math.max(im.naturalWidth,im.naturalHeight) > max){
+    const s = max/Math.max(im.naturalWidth,im.naturalHeight);
+    const c = document.createElement('canvas');
+    c.width = Math.round(im.naturalWidth*s); c.height = Math.round(im.naturalHeight*s);
+    c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    out = c.toDataURL(isPng?'image/png':'image/jpeg', 0.92);
+  }
+  state[kind] = out; state.demo = state.demo && kind!=='shot' ? state.demo : false;
+  assets[kind] = await loadImg(out);
+  updateZones(); renderAll();
+}
+function setAsset(kind, dataURL){
+  state[kind] = dataURL;
+  if (kind==='shot') state.demo = false;
+  loadImg(dataURL).then(im=>{ assets[kind]=im; updateZones(); renderAll(); });
+}
+function updateZones(){
+  for (const kind of ['shot','logo']){
+    const z = $(kind==='shot'?'#zoneShot':'#zoneLogo');
+    const pv = $(kind==='shot'?'#pvShot':'#pvLogo');
+    const v = state[kind];
+    z.classList.toggle('has', !!v);
+    if (v) pv.src = v;
+  }
+}
+
+/* ============ render ============ */
+const cv = $('#cv');
+function renderTo(ctx2,W,H){
+  ctx2.save();
+  ctx2.clearRect(0,0,W,H);
+  TPL_FN[state.template](ctx2,W,H,state,pal(state.accent),frame(W,H,!!assets.shot));
+  ctx2.restore();
+}
+function fitPreview(){
+  const wrap = $('#canvasWrap');
+  const s = SIZES.find(s=>s.k===state.size);
+  const availW = Math.max(wrap.clientWidth - 36, 200);
+  const availH = Math.min(window.innerHeight*0.72, 860);
+  const scale = Math.min(availW/s.w, availH/s.h, 1.6);
+  const q = clamp(scale*devicePixelRatio, 1, 2);
+  cv.width = Math.round(s.w*q); cv.height = Math.round(s.h*q);
+  cv.style.width = Math.round(s.w*scale)+'px';
+  cv.style.height = Math.round(s.h*scale)+'px';
+  const ctx2 = cv.getContext('2d');
+  ctx2.setTransform(q,0,0,q,0,0);
+  renderTo(ctx2, s.w, s.h);
+}
+let thumbTimer = null;
+function renderThumbs(){
+  clearTimeout(thumbTimer);
+  thumbTimer = setTimeout(()=>{
+    for (const t of TPLS){
+      const c = document.getElementById('tpl-'+t.k);
+      if(!c) continue;
+      const x = c.getContext('2d');
+      const W=320, Hr=200;
+      const keep = state.template;
+      state.template = t.k;
+      x.setTransform(1,0,0,1,0,0);
+      x.clearRect(0,0,W,Hr);
+      TPL_FN[t.k](x,W,Hr,state,pal(state.accent),frame(W,Hr,!!assets.shot,{padMul:1.3}));
+      state.template = keep;
+    }
+  },120);
+}
+function renderAll(){
+  fitPreview();
+  renderThumbs();
+  scheduleSave();
+}
+function renderStaticBits(){
+  /* template thumbs labels */
+  const grid = $('#tplGrid');
+  grid.innerHTML = '';
+  for (const t of TPLS){
+    const b = document.createElement('button');
+    b.className = 'tpl'+(state.template===t.k?' on':'');
+    b.id = 'wrap-'+t.k;
+    const c = document.createElement('canvas'); c.id='tpl-'+t.k; c.width=320; c.height=200;
+    const s = document.createElement('span'); s.textContent = lang==='zh'?t.zh:t.en;
+    b.append(c,s);
+    b.onclick = ()=>{ state.template=t.k; document.querySelectorAll('.tpl').forEach(e=>e.classList.remove('on')); b.classList.add('on'); renderAll(); };
+    grid.appendChild(b);
+  }
+  /* sizes */
+  const sg = $('#sizeGrid'); sg.innerHTML='';
+  for (const sz of SIZES){
+    const b = document.createElement('button');
+    b.className = 'sz'+(state.size===sz.k?' on':'');
+    b.innerHTML = `<b></b><i>${sz.w} × ${sz.h}</i>`;
+    b.querySelector('b').textContent = lang==='zh'?sz.zh:sz.en;
+    b.onclick = ()=>{ state.size=sz.k; document.querySelectorAll('.sz').forEach(e=>e.classList.remove('on')); b.classList.add('on'); updateStageHead(); fitPreview(); scheduleSave(); };
+    sg.appendChild(b);
+  }
+  /* swatches */
+  const sw = $('#swatches'); sw.innerHTML='';
+  for (const a of ACCENTS){
+    const btn = document.createElement('button');
+    btn.className='sw'+(state.accent.toLowerCase()===a.toLowerCase()?' on':'');
+    btn.style.background=a; btn.title=a;
+    btn.onclick=()=>{ setAccent(a); };
+    sw.appendChild(btn);
+  }
+  const custom = document.createElement('label');
+  custom.className='sw-custom'; custom.title='Custom';
+  const inp = document.createElement('input'); inp.type='color'; inp.value=state.accent;
+  inp.oninput = ()=>setAccent(inp.value);
+  custom.appendChild(inp); sw.appendChild(custom);
+  /* table */
+  const tb = $('#sizeTable'); tb.innerHTML='';
+  for (const sz of SIZES){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><b></b></td><td class="use"></td><td><code>${sz.w} × ${sz.h}</code></td><td>${(sz.w/sz.h).toFixed(2).replace(/0+$/,'').replace(/\.$/,'')}:1</td>`;
+    tr.querySelector('b').textContent = lang==='zh'?sz.zh:sz.en;
+    tr.querySelector('.use').textContent = lang==='zh'?sz.use_zh:sz.use_en;
+    tb.appendChild(tr);
+  }
+  updateStageHead();
+}
+function setAccent(a){
+  state.accent = a;
+  document.documentElement.style.setProperty('--ui-accent', a);
+  document.querySelectorAll('.sw').forEach(e=>e.classList.toggle('on', e.title===a));
+  renderAll();
+}
+function updateStageHead(){
+  const s = SIZES.find(s=>s.k===state.size);
+  $('#szName').textContent = lang==='zh'?s.zh:s.en;
+  $('#szDim').textContent = `${s.w} × ${s.h}`;
+}
+
+/* ============ export ============ */
+function renderNative(sizeKey){
+  const s = SIZES.find(s=>s.k===sizeKey);
+  const c = document.createElement('canvas');
+  c.width=s.w; c.height=s.h;
+  renderTo(c.getContext('2d'), s.w, s.h);
+  return c;
+}
+const toBlob = c => new Promise(res=>c.toBlob(res,'image/png'));
+function download(blob,name){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },800);
+}
+const slug = ()=> (state.title||'share').toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g,'-').replace(/^-+|-+$/g,'').slice(0,42)||'share';
+function setStatus(msg,ok){
+  const el = $('#status'); el.textContent = msg||''; el.classList.toggle('ok',!!ok);
+}
+$('#btnDownload').onclick = async ()=>{
+  const blob = await toBlob(renderNative(state.size));
+  const s = SIZES.find(s=>s.k===state.size);
+  download(blob, `${slug()}-${state.template}-${s.w}x${s.h}.png`);
+  setStatus(lang==='zh'?'已下载 ✓':'Downloaded ✓', true);
+  setTimeout(()=>setStatus(''),1600);
+};
+$('#btnCopy').onclick = async ()=>{
+  try{
+    const s = SIZES.find(s=>s.k===state.size);
+    const blobP = new Promise(res=>renderNative(state.size).toBlob(res,'image/png'));
+    await navigator.clipboard.write([new ClipboardItem({'image/png':blobP})]);
+    setStatus(I18N[lang].stCopied,true);
+  }catch(e){ setStatus(I18N[lang].stFail+e.message); }
+  setTimeout(()=>setStatus(''),1800);
+};
+$('#btnAll').onclick = async ()=>{
+  const btn = $('#btnAll'); btn.disabled = true;
+  const total = SIZES.length; let i = 0;
+  try{
+    for (const s of SIZES){
+      i++;
+      setStatus(I18N[lang].stExporting.replace('{a}',i).replace('{b}',total));
+      const blob = await toBlob(renderNative(s.k));
+      download(blob, `${slug()}-${state.template}-${s.w}x${s.h}.png`);
+      await new Promise(r=>setTimeout(r,420));
+    }
+    setStatus(I18N[lang].stDone.replace('{b}',total), true);
+  }catch(e){ setStatus(I18N[lang].stFail+e.message); }
+  btn.disabled = false;
+  setTimeout(()=>setStatus(''),2600);
+};
+
+/* ============ inputs ============ */
+function bindText(id,key){
+  const el = $(id);
+  el.value = state[key];
+  el.addEventListener('input',()=>{ state[key]=el.value; renderAll(); });
+}
+bindText('#inBadge','badge'); bindText('#inTitle','title'); bindText('#inSub','sub');
+bindText('#inUrl','url'); bindText('#inHandle','handle');
+
+/* uploads */
+let pasteTarget = 'shot';
+for (const kind of ['shot','logo']){
+  const zone = $(kind==='shot'?'#zoneShot':'#zoneLogo');
+  const file = $(kind==='shot'?'#fileShot':'#fileLogo');
+  zone.addEventListener('click',e=>{ pasteTarget = kind; if(e.target.closest('.zbtn')) file.click(); });
+  zone.addEventListener('focus',()=>pasteTarget = kind);
+  zone.addEventListener('dragover',e=>{ e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));
+  zone.addEventListener('drop',e=>{
+    e.preventDefault(); zone.classList.remove('drag'); pasteTarget = kind;
+    const f = [...e.dataTransfer.files].find(f=>f.type.startsWith('image/'));
+    if (f) importImageFile(kind,f);
+  });
+  file.addEventListener('change',()=>{ if(file.files[0]) importImageFile(kind,file.files[0]); file.value=''; });
+}
+document.addEventListener('paste',e=>{
+  const item = [...(e.clipboardData?.items||[])].find(i=>i.type.startsWith('image/'));
+  if (item){ e.preventDefault(); importImageFile(pasteTarget, item.getAsFile()); }
+});
+document.querySelectorAll('.zclear').forEach(b=>{
+  b.addEventListener('click',e=>{ e.stopPropagation(); setAsset(b.dataset.clr, null); });
+});
+
+/* random */
+$('#btnRandom').onclick = ()=>{
+  const t = TPLS[Math.random()*TPLS.length|0];
+  const a = ACCENTS[Math.random()*ACCENTS.length|0];
+  state.template = t.k; setAccent(a);
+  document.querySelectorAll('.tpl').forEach(e=>e.classList.remove('on'));
+  const w = $('#wrap-'+t.k); if(w) w.classList.add('on');
+  renderAll();
+};
+
+/* ============ i18n / theme ============ */
+function applyLang(){
+  const dict = I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v = dict[el.dataset.i18n]; if (v!=null) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const v = dict[el.dataset.i18nPh]; if (v!=null) el.placeholder = v;
+  });
+  document.documentElement.lang = lang==='zh'?'zh-CN':'en';
+  document.title = dict.docTitle;
+  $('#btnLang').textContent = lang==='zh'?'EN':'中文';
+  localStorage.setItem('shareforge_lang', lang);
+  try{ history.replaceState(null,'', lang==='zh' ? '?lang=zh'+location.hash : location.pathname+location.hash); }catch(e){}
+  renderStaticBits(); renderThumbs();
+}
+$('#btnLang').onclick = ()=>{ lang = lang==='zh'?'en':'zh'; applyLang(); renderAll(); };
+function applyTheme(mode){
+  const sys = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light';
+  const eff = mode==='auto'?sys:mode;
+  document.documentElement.dataset.theme = eff;
+  localStorage.setItem('shareforge_theme', mode);
+}
+$('#btnTheme').onclick = ()=>{
+  const cur = localStorage.getItem('shareforge_theme')||'auto';
+  const next = cur==='auto'?'light':cur==='light'?'dark':'auto';
+  applyTheme(next);
+};
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
+  applyTheme(localStorage.getItem('shareforge_theme')||'auto');
+});
+window.addEventListener('resize',()=>fitPreview());
+
+/* ============ persistence ============ */
+let saveTimer = null;
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveDraft, 400);
+}
+function saveDraft(){
+  try{ localStorage.setItem('shareforge_draft', JSON.stringify(state)); }
+  catch(e){
+    try{ localStorage.setItem('shareforge_draft', JSON.stringify({...state, shot:null, logo:null})); }catch(_){}
+  }
+}
+function loadDraft(){
+  try{
+    const d = JSON.parse(localStorage.getItem('shareforge_draft'));
+    if (d && typeof d==='object') return {...DEFAULTS, ...d};
+  }catch(e){}
+  return null;
+}
+
+/* ============ debug handle ============ */
+window.__SF = {
+  get state(){ return state; },
+  renderNative, setAsset,
+  dataURL(sizeKey){ return renderNative(sizeKey||state.size).toDataURL('image/png'); },
+};
+
+/* ============ init ============ */
+(async function init(){
+  const params = new URLSearchParams(location.search);
+  lang = params.get('lang')==='zh' ? 'zh'
+    : (params.get('lang')==='en' ? 'en'
+    : (localStorage.getItem('shareforge_lang') || ((navigator.language||'').toLowerCase().startsWith('zh')?'zh':'en')));
+  applyTheme(localStorage.getItem('shareforge_theme')||'auto');
+
+  const draft = loadDraft();
+  if (draft){
+    state = draft;
+    if (params.get('lang')) lang = params.get('lang');
+  }
+  if (state.demo !== false && !state.shot) state.shot = makeDemoShot();
+  /* bind input values from restored state */
+  for (const [id,k] of [['#inBadge','badge'],['#inTitle','title'],['#inSub','sub'],['#inUrl','url'],['#inHandle','handle']]) $(id).value = state[k]||'';
+  document.documentElement.style.setProperty('--ui-accent', state.accent);
+  applyLang();
+  assets.shot = await loadImg(state.shot);
+  assets.logo = await loadImg(state.logo);
+  updateZones();
+  renderAll();
+})();
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "6a164def7d63477cba60148b8417ca95"}'></script>
+</body>
+</html>

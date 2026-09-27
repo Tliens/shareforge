@@ -1583,7 +1583,7 @@ swiss(ctx,W,H,d,p,fr){
   /* registration crosses */
   const cross=(cx,cy,r)=>{ctx.strokeStyle='rgba(16,16,16,.3)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-r,cy);ctx.lineTo(cx+r,cy);ctx.moveTo(cx,cy-r);ctx.lineTo(cx,cy+r);ctx.stroke();};
   const cr3=clamp(m*0.014,8,16);
-  cross(W*0.06,H*0.1,cr3); cross(W*0.94,H*0.55,cr3); cross(W*0.5,H*0.945,cr3);
+  cross(W*0.965,H*0.9,cr3); cross(W*0.94,H*0.55,cr3); cross(W*0.5,H*0.945,cr3);
   const T=fr.text;
   const kS=clamp(fr.pad*0.27,11,19);
   let y=T.y+fr.pad*0.25;

@@ -4,26 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShareForge — Free Social Share Image Generator (X, WeChat, OG, Instagram)</title>
-<meta name="description" content="Create beautiful marketing share images in seconds. 9 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
-<link rel="canonical" href="https://tliens.github.io/shareforge/">
-<link rel="alternate" hreflang="en" href="https://tliens.github.io/shareforge/">
-<link rel="alternate" hreflang="zh" href="https://tliens.github.io/shareforge/?lang=zh">
-<link rel="alternate" hreflang="x-default" href="https://tliens.github.io/shareforge/">
+<meta name="description" content="Create beautiful marketing share images in seconds. 12 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
+<link rel="canonical" href="https://shareforge.kuige.me/">
+<link rel="alternate" hreflang="en" href="https://shareforge.kuige.me/">
+<link rel="alternate" hreflang="zh" href="https://shareforge.kuige.me/?lang=zh">
+<link rel="alternate" hreflang="x-default" href="https://shareforge.kuige.me/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ShareForge">
 <meta property="og:title" content="ShareForge — Social Share Image Generator">
-<meta property="og:description" content="9 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
-<meta property="og:url" content="https://tliens.github.io/shareforge/">
-<meta property="og:image" content="https://tliens.github.io/shareforge/og-image.png">
+<meta property="og:description" content="12 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
+<meta property="og:url" content="https://shareforge.kuige.me/">
+<meta property="og:image" content="https://shareforge.kuige.me/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ShareForge — Social Share Image Generator">
 <meta name="twitter:description" content="Beautiful marketing images for every platform. 6 templates, 8 sizes, one click.">
-<meta name="twitter:image" content="https://tliens.github.io/shareforge/og-image.png">
+<meta name="twitter:image" content="https://shareforge.kuige.me/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M20 40 L32 18 L44 40 Z' fill='%23fff' opacity='.95'/%3E%3Crect x='24' y='44' width='16' height='4' rx='2' fill='%23fff' opacity='.7'/%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://tliens.github.io/shareforge/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 9 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 12 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -335,7 +335,7 @@ footer a{color:var(--mut)}
 
 <footer>
   <span data-i18n="footerPrivacy">🔒 100% local — your content and screenshots never leave your browser.</span><br>
-  <span data-i18n="footerMade">ShareForge · free social share image generator</span> · <a href="https://github.com/Tliens/shareforge">GitHub</a> · <a href="https://x.com/shi_kui8457" target="_blank" rel="noopener">X (Twitter)</a> · <a href="https://tliens.github.io/" target="_blank" rel="noopener">更多作品</a>
+  <span data-i18n="footerMade">ShareForge · free social share image generator</span> · <a href="https://github.com/Tliens/shareforge">GitHub</a> · <a href="https://x.com/shi_kui8457" target="_blank" rel="noopener">X (Twitter)</a> · <a href="https://kuige.me/" target="_blank" rel="noopener">更多作品</a>
 </footer>
 
 <script type="module">
@@ -367,6 +367,9 @@ const TPLS = [
   {k:'spotlight',en:'Spotlight', zh:'发布会'},
   {k:'terminal', en:'Terminal',  zh:'代码窗'},
   {k:'ticket',   en:'Ticket',    zh:'票券'},
+  {k:'guochao',  en:'Guochao',   zh:'国潮'},
+  {k:'blueprint',en:'Blueprint', zh:'蓝图'},
+  {k:'swiss',    en:'Swiss',     zh:'瑞士'},
 ];
 const ACCENTS = ['#6366f1','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
 
@@ -1343,6 +1346,296 @@ ticket(ctx,W,H,d,p,fr){
     drawPass(rcx,midY,tS);
     drawBarcode(sx0,midY,rw,bH2);
   }
+},
+
+guochao(ctx,W,H,d,p,fr){
+  const paper='#f7f1e3';
+  ctx.fillStyle=paper; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.05);
+  const ink='#231a10';
+  const m=Math.min(W,H);
+  /* rising-sun disc */
+  ctx.save(); ctx.globalAlpha=.92;
+  ctx.fillStyle=p.base;
+  ctx.beginPath(); ctx.arc(W*0.8,H*0.16,m*0.3,0,7); ctx.fill();
+  ctx.restore();
+  /* corner frames */
+  const inset=fr.pad*0.28, al=clamp(m*0.05,24,64);
+  const cs=[[inset,inset,1,1],[W-inset,inset,-1,1],[inset,H-inset,1,-1],[W-inset,H-inset,-1,-1]];
+  ctx.lineCap='square';
+  ctx.strokeStyle='rgba(35,26,16,.6)'; ctx.lineWidth=clamp(m*0.0035,2,4);
+  for(const [xx,yy,dx,dy] of cs){
+    ctx.beginPath(); ctx.moveTo(xx+dx*al,yy); ctx.lineTo(xx,yy); ctx.lineTo(xx,yy+dy*al); ctx.stroke();
+  }
+  const i2=clamp(m*0.012,6,14);
+  ctx.strokeStyle='rgba(35,26,16,.28)'; ctx.lineWidth=1;
+  for(const [xx,yy,dx,dy] of cs){
+    ctx.beginPath();
+    ctx.moveTo(xx+dx*al*0.7,yy+dy*i2); ctx.lineTo(xx+dx*i2,yy+dy*i2); ctx.lineTo(xx+dx*i2,yy+dy*al*0.7);
+    ctx.stroke();
+  }
+  /* vertical strip (right edge) */
+  const T0=fr.text;
+  const vS=clamp(fr.pad*0.24,10,17);
+  const vRaw=(d.handle||'').replace('@','').trim();
+  const maxChars=Math.max(2,Math.floor((T0.h-fr.pad*0.6)/(vS*1.3)));
+  const vText=[...vRaw].slice(0,maxChars).join('');
+  const stripW=vText? vS*2.6 : 0;
+  const T={x:T0.x,y:T0.y,w:T0.w-stripW,h:T0.h};
+  /* badge: seal stamp for short text, pill otherwise */
+  const bS=clamp(fr.pad*0.3,12,22);
+  let y=T.y+fr.pad*0.3;
+  let bx=T.x;
+  if(assets.logo){const ls=bS*2.1; logoChip(ctx,assets.logo,bx,y-bS*0.72,ls); bx+=ls+bS*0.7;}
+  if(d.badge){
+    ctx.font=`800 ${bS}px ${F_SERIF}`;
+    if([...d.badge].length<=4){
+      const tw=ctx.measureText(d.badge).width;
+      const bw2=tw+bS*0.9, bh2=bS*1.95;
+      shadowOn(ctx,'rgba(35,26,16,.3)',bS*0.5,bS*0.14);
+      ctx.fillStyle=p.base; rr(ctx,bx,y-bS*0.85,bw2,bh2,bh2*0.18); ctx.fill(); shadowOff(ctx);
+      ctx.strokeStyle='rgba(255,255,255,.75)'; ctx.lineWidth=1.4;
+      rr(ctx,bx+bS*0.14,y-bS*0.85+bS*0.14,bw2-bS*0.28,bh2-bS*0.28,bh2*0.12); ctx.stroke();
+      ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(d.badge, bx+bw2/2, y-bS*0.85+bh2/2+1);
+      ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+    } else {
+      const bh2=bS*1.9, tw=ctx.measureText(d.badge).width;
+      ctx.fillStyle=p.base; rr(ctx,bx,y-bS,bh2+tw,bh2,bh2*0.3); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.fillText(d.badge,bx+bS*0.95,y+bS*0.32);
+    }
+  }
+  /* serif title */
+  const base= fr.mode==='wide'? T.h*0.18 : fr.mode==='square'? T.w*0.1 : T.w*0.105;
+  const setF=sz=>ctx.font=`900 ${sz}px ${F_SERIF}`;
+  const tb=fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh=tb.size*1.12;
+  const subSize=clamp(tb.size*0.38,13,32);
+  let sb=d.sub? fitBlock(ctx,d.sub,Math.min(T.w,tb.size*22),fr.mode==='portrait'?3:2,subSize,12,s=>ctx.font=`500 ${s}px ${F_SANS}`):null;
+  const urlS=clamp(fr.pad*0.32,12,22);
+  const urlSpace=d.url? urlS*2.8 : 0;
+  let sb2=sb;
+  let blockH=tb.lines.length*lh+(sb2? sb2.lines.length*subSize*1.4+tb.size*0.5 : 0);
+  const topMin=fr.pad*0.3+((d.badge||assets.logo)? bS*2.6 : 0);
+  let avail=T.h-urlSpace;
+  if(topMin+blockH>avail&&sb2){ sb2=null; blockH=tb.lines.length*lh+tb.size*0.5; }
+  const dropUrl=topMin+blockH>avail;
+  if(dropUrl) avail=T.h;
+  let ty=T.y+Math.max(topMin,(avail-blockH)/2)+tb.size*0.92;
+  ctx.fillStyle=ink; ctx.textAlign='left';
+  setF(tb.size);
+  for(const ln of tb.lines){ ctx.fillText(ln,T.x,ty); ty+=lh; }
+  const lastBase=ty-lh;
+  /* brush bar under title */
+  setF(tb.size);
+  const barW=Math.min(ctx.measureText(tb.lines[0]).width*0.92,T.w);
+  ctx.save();
+  ctx.translate(T.x+barW/2, lastBase+tb.size*0.34); ctx.rotate(-0.012);
+  ctx.fillStyle=p.base;
+  rr(ctx,-barW/2,-tb.size*0.05,barW,tb.size*0.1,tb.size*0.05); ctx.fill();
+  ctx.restore();
+  if(sb2){
+    ctx.font=`500 ${sb2.size}px ${F_SANS}`;
+    ctx.fillStyle='rgba(35,26,16,.66)';
+    let sy=lastBase+tb.size*0.85;
+    for(const ln of sb2.lines){ ctx.fillText(ln,T.x,sy+sb2.size*0.8); sy+=sb2.size*1.4; }
+  }
+  if(d.url&&!dropUrl) urlLine(ctx,T.x,T.y+T.h-fr.pad*0.4,d.url.replace(/^https?:\/\//,''),'rgba(35,26,16,.8)',p.base,urlS);
+  /* vertical strip text */
+  if(vText){
+    const vx=W-fr.pad*0.62, vy0=T.y+fr.pad*0.2;
+    ctx.strokeStyle='rgba(35,26,16,.35)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(vx-vS*1.15,vy0); ctx.lineTo(vx-vS*1.15,vy0+vText.length*vS*1.3); ctx.stroke();
+    ctx.font=`600 ${vS}px ${F_SERIF}`; ctx.fillStyle='rgba(35,26,16,.55)'; ctx.textAlign='center';
+    let vy=vy0+vS;
+    for(const ch of vText){ ctx.fillText(ch,vx,vy); vy+=vS*1.3; }
+    ctx.textAlign='left';
+  }
+  if(assets.shot&&fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,'',fr.mode,p,{rotate:0.02,border:'#fff',hardShadow:'rgba(35,26,16,.85)'});
+},
+
+blueprint(ctx,W,H,d,p,fr){
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,hsl(p.h,clamp(p.s,45,62),25)); g.addColorStop(1,hsl(p.h,clamp(p.s,45,62),19));
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  const m=Math.min(W,H);
+  /* grid minor + major */
+  const step=clamp(m*0.032,16,30);
+  ctx.lineWidth=1;
+  ctx.strokeStyle='rgba(255,255,255,.055)';
+  ctx.beginPath();
+  for(let x=step;x<W;x+=step){ctx.moveTo(x,0);ctx.lineTo(x,H);}
+  for(let y=step;y<H;y+=step){ctx.moveTo(0,y);ctx.lineTo(W,y);}
+  ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.12)';
+  ctx.beginPath();
+  for(let x=step*5;x<W;x+=step*5){ctx.moveTo(x,0);ctx.lineTo(x,H);}
+  for(let y=step*5;y<H;y+=step*5){ctx.moveTo(0,y);ctx.lineTo(W,y);}
+  ctx.stroke();
+  /* double frame + corner crosses + edge ticks */
+  const bd=fr.pad*0.32, bd2=bd+clamp(m*0.012,6,14);
+  ctx.strokeStyle='rgba(255,255,255,.55)'; ctx.lineWidth=clamp(m*0.0035,2,3.5);
+  ctx.strokeRect(bd,bd,W-bd*2,H-bd*2);
+  ctx.strokeStyle='rgba(255,255,255,.22)'; ctx.lineWidth=1;
+  ctx.strokeRect(bd2,bd2,W-bd2*2,H-bd2*2);
+  const cross=(cx,cy,r)=>{ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(cx-r,cy);ctx.lineTo(cx+r,cy);ctx.moveTo(cx,cy-r);ctx.lineTo(cx,cy+r);ctx.stroke();};
+  const cr2=clamp(m*0.012,7,14);
+  cross(bd2,bd2,cr2); cross(W-bd2,bd2,cr2); cross(bd2,H-bd2,cr2); cross(W-bd2,H-bd2,cr2);
+  ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.lineWidth=1;
+  ctx.beginPath();
+  let tick=0;
+  for(let x=bd2;x<=W-bd2;x+=step){ const lng=tick%5===0; ctx.moveTo(x,H-bd2); ctx.lineTo(x,H-bd2-(lng?12:6)); tick++; }
+  ctx.stroke();
+  /* content */
+  const T=fr.text;
+  const kS=clamp(fr.pad*0.27,11,19);
+  let y=T.y+fr.pad*0.25;
+  if(d.badge){
+    ctx.font=`700 ${kS}px ${F_MONO}`; setLS(ctx,`${kS*0.18}px`);
+    const txt=d.badge.toUpperCase();
+    const tw=ctx.measureText(txt).width;
+    const bw=tw+kS*2.6, bh2=kS*2;
+    ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=1.6;
+    rr(ctx,T.x,y-kS*0.9,bw,bh2,4); ctx.stroke();
+    ctx.fillStyle=p.bright; ctx.beginPath(); ctx.arc(T.x+kS*0.95,y+kS*0.12,kS*0.22,0,7); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.fillText(txt,T.x+kS*1.7,y+kS*0.35);
+    setLS(ctx,'0px');
+    y+=kS*2.6;
+  }
+  const base= fr.mode==='wide'? T.h*0.17 : fr.mode==='square'? T.w*0.095 : T.w*0.1;
+  const setF=sz=>ctx.font=`800 ${sz}px ${F_SANS}`;
+  const tb=fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh=tb.size*1.1;
+  const subSize=clamp(tb.size*0.34,12,28);
+  let sb=d.sub? fitBlock(ctx,d.sub,T.w,fr.mode==='portrait'?3:2,subSize,11,s=>ctx.font=`400 ${s}px ${F_MONO}`):null;
+  const urlS=clamp(fr.pad*0.28,12,20);
+  let sb2=sb;
+  let blockH=(d.badge?kS*2.6:0)+tb.lines.length*lh+(sb2? sb2.lines.length*subSize*1.5+tb.size*0.25 : 0);
+  const topMin=fr.pad*0.25+(d.badge?kS*2.6:0);
+  let avail=T.h-(d.url? urlS*3.6 : fr.pad*0.2);
+  if(topMin+blockH>avail&&sb2){ sb2=null; blockH=(d.badge?kS*2.6:0)+tb.lines.length*lh; }
+  const dropDim=topMin+blockH>avail;
+  if(dropDim) avail=T.h;
+  let ty=T.y+Math.max(topMin,(avail-blockH)/2)+(d.badge?kS*2.6:0)+tb.size*0.9;
+  ctx.fillStyle='#f4f8ff'; ctx.textAlign='left';
+  setF(tb.size);
+  for(const ln of tb.lines){ ctx.fillText(ln,T.x,ty); ty+=lh; }
+  ty+=tb.size*0.25-lh+tb.size*0.3;
+  if(sb2){
+    ctx.font=`400 ${sb2.size}px ${F_MONO}`;
+    ctx.fillStyle='rgba(214,228,255,.68)';
+    for(const ln of sb2.lines){ ctx.fillText(ln,T.x,ty+sb2.size*0.8); ty+=sb2.size*1.5; }
+  }
+  /* dimension line with measured label */
+  if(!dropDim){
+    const dimY=T.y+T.h-(d.url? urlS*3.6 : fr.pad*0.7);
+    if(ty+tb.size*0.2<dimY){
+      const x1=T.x, x2=T.x+Math.min(T.w,tb.size*14);
+      ctx.strokeStyle='rgba(255,255,255,.5)'; ctx.lineWidth=1.4;
+      ctx.setLineDash([clamp(m*0.014,7,14),clamp(m*0.01,5,9)]);
+      ctx.beginPath(); ctx.moveTo(x1,dimY); ctx.lineTo(x2,dimY); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.moveTo(x1,dimY-8); ctx.lineTo(x1,dimY+8);
+      ctx.moveTo(x2,dimY-8); ctx.lineTo(x2,dimY+8);
+      ctx.stroke();
+      ctx.font=`600 ${clamp(m*0.014,9,14)}px ${F_MONO}`;
+      ctx.fillStyle=p.bright; ctx.textAlign='center';
+      ctx.fillText(`${W} × ${H}`, (x1+x2)/2, dimY-10);
+      ctx.textAlign='left';
+    }
+  }
+  /* url in outlined chip */
+  if(d.url){
+    ctx.font=`500 ${urlS}px ${F_MONO}`;
+    const t=d.url.replace(/^https?:\/\//,'');
+    const tw2=ctx.measureText(t).width;
+    const bw3=tw2+urlS*1.6, bh3=urlS*2, by3=T.y+T.h-bh3-fr.pad*0.42;
+    ctx.strokeStyle='rgba(255,255,255,.6)'; ctx.lineWidth=1.5;
+    rr(ctx,T.x,by3,bw3,bh3,bh3*0.14); ctx.stroke();
+    ctx.fillStyle=p.bright;
+    ctx.fillText(t,T.x+urlS*0.8,by3+bh3*0.68);
+  }
+  if(d.handle){
+    ctx.font=`500 ${urlS*0.9}px ${F_MONO}`;
+    ctx.fillStyle='rgba(214,228,255,.5)'; ctx.textAlign='right';
+    ctx.fillText(d.handle, W-fr.pad, T.y+T.h-fr.pad*0.42-(d.url?urlS*0.55:0));
+    ctx.textAlign='left';
+  }
+  if(assets.shot&&fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,'',fr.mode,p,{dark:true,border:'rgba(255,255,255,.85)',hardShadow:'rgba(0,8,26,.6)'});
+},
+
+swiss(ctx,W,H,d,p,fr){
+  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.028);
+  const ink='#101010';
+  const m=Math.min(W,H);
+  /* accent disc top-right */
+  ctx.fillStyle=p.base;
+  ctx.beginPath(); ctx.arc(W*0.87,H*0.1,m*0.24,0,7); ctx.fill();
+  /* giant outline index */
+  ctx.save();
+  ctx.font=`900 ${m*0.52}px ${F_SANS}`;
+  ctx.strokeStyle='rgba(16,16,16,.08)'; ctx.lineWidth=clamp(m*0.016,6,24);
+  ctx.textAlign='left';
+  ctx.strokeText('01',W*0.03,H-m*0.05);
+  ctx.restore();
+  /* registration crosses */
+  const cross=(cx,cy,r)=>{ctx.strokeStyle='rgba(16,16,16,.3)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-r,cy);ctx.lineTo(cx+r,cy);ctx.moveTo(cx,cy-r);ctx.lineTo(cx,cy+r);ctx.stroke();};
+  const cr3=clamp(m*0.014,8,16);
+  cross(W*0.06,H*0.1,cr3); cross(W*0.94,H*0.55,cr3); cross(W*0.5,H*0.945,cr3);
+  const T=fr.text;
+  const kS=clamp(fr.pad*0.27,11,19);
+  let y=T.y+fr.pad*0.25;
+  if(d.badge){
+    ctx.fillStyle=ink;
+    ctx.fillRect(T.x,y-kS*0.72,kS*0.55,kS*0.55);
+    ctx.font=`800 ${kS}px ${F_SANS}`; setLS(ctx,`${kS*0.26}px`);
+    ctx.fillStyle='rgba(16,16,16,.85)'; ctx.textAlign='left';
+    ctx.fillText(d.badge.toUpperCase(),T.x+kS*0.95,y-kS*0.26);
+    setLS(ctx,'0px');
+  }
+  const base= fr.mode==='wide'? T.h*0.185 : fr.mode==='square'? T.w*0.105 : T.w*0.11;
+  const setF=sz=>ctx.font=`900 ${sz}px ${F_SANS}`;
+  const tb=fitBlock(ctx,d.title,T.w,fr.tMax,base,base*0.4,setF);
+  const lh=tb.size*1.04;
+  const subSize=clamp(tb.size*0.34,13,30);
+  let sb=d.sub? fitBlock(ctx,d.sub,Math.min(T.w,tb.size*22),fr.mode==='portrait'?3:2,subSize,12,s=>ctx.font=`500 ${s}px ${F_SANS}`):null;
+  const urlS=clamp(fr.pad*0.3,12,21);
+  const urlSpace=d.url? urlS*2.8 : 0;
+  let sb2=sb;
+  let blockH=(d.badge?kS*2.3:0)+tb.lines.length*lh+(sb2? sb2.lines.length*subSize*1.42+tb.size*0.3 : 0);
+  const topMin=fr.pad*0.25+(d.badge?kS*2.3:0);
+  let avail=T.h-urlSpace;
+  if(topMin+blockH>avail&&sb2){ sb2=null; blockH=(d.badge?kS*2.3:0)+tb.lines.length*lh; }
+  const dropUrl=topMin+blockH>avail;
+  if(dropUrl) avail=T.h;
+  let ty=T.y+Math.max(topMin,(avail-blockH)/2)+(d.badge?kS*2.3:0)+tb.size*0.9;
+  ctx.fillStyle=ink; ctx.textAlign='left';
+  setF(tb.size);
+  for(const ln of tb.lines){ ctx.fillText(ln,T.x,ty); ty+=lh; }
+  ty+=tb.size*0.3-lh+tb.size*0.28;
+  if(sb2){
+    ctx.font=`500 ${sb2.size}px ${F_SANS}`;
+    ctx.fillStyle='rgba(16,16,16,.62)';
+    for(const ln of sb2.lines){ ctx.fillText(ln,T.x,ty+sb2.size*0.8); ty+=sb2.size*1.42; }
+  }
+  if(d.url||d.handle){
+    const fy=T.y+T.h-fr.pad*0.35;
+    ctx.strokeStyle='rgba(16,16,16,.18)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(T.x,fy-urlS*1.6); ctx.lineTo(T.x+T.w,fy-urlS*1.6); ctx.stroke();
+    if(d.url&&!dropUrl){
+      ctx.fillStyle=p.base; ctx.fillRect(T.x,fy-urlS*0.72,urlS*0.42,urlS*0.42);
+      ctx.font=`800 ${urlS}px ${F_SANS}`; ctx.fillStyle=ink;
+      ctx.fillText(d.url.replace(/^https?:\/\//,''),T.x+urlS*0.85,fy);
+    }
+    if(d.handle&&!dropUrl){
+      ctx.font=`700 ${urlS*0.9}px ${F_SANS}`; ctx.fillStyle='rgba(16,16,16,.55)'; ctx.textAlign='right';
+      ctx.fillText(d.handle,T.x+T.w,fy);
+      ctx.textAlign='left';
+    }
+  }
+  if(assets.shot&&fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,'',fr.mode,p,{border:ink,hardShadow:'rgba(16,16,16,.9)'});
 },
 };
 

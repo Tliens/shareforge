@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tliens.github.io/shareforge/sitemap.xml
+Sitemap: https://shareforge.kuige.me/sitemap.xml

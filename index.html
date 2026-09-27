@@ -378,7 +378,7 @@ const I18N = {
     tagline:'Share image studio', surprise:'Surprise me',
     secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
     brandHint:'Saves link, handle, accent & logo — switch between your sites in one click.',
-    brandPh:'Select brand…', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
+    brandPh:'Select brand…', brandPhEmpty:'No profiles yet — click Save to create one', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
     selAll:'All', selNone:'None', bAllN:'Export {n} sizes',
     secContent:'Content', secTemplate:'Template', secAccent:'Accent color', secSize:'Size', secAssets:'Assets',
     hBadge:'Badge', hTitle:'Title', hSub:'Subtitle', hUrl:'Link', hHandle:'Handle',
@@ -411,7 +411,7 @@ const I18N = {
     tagline:'分享图工作室', surprise:'随机灵感',
     secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
     brandHint:'保存链接、账号、主题色与 Logo——多个站点一键切换。',
-    brandPh:'选择品牌…', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
+    brandPh:'选择品牌…', brandPhEmpty:'尚无档案 · 填好后点「保存」创建', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
     selAll:'全选', selNone:'清空', bAllN:'导出 {n} 张',
     secContent:'文案内容', secTemplate:'模板', secAccent:'主题色', secSize:'尺寸', secAssets:'素材',
     hBadge:'角标', hTitle:'主标题', hSub:'副标题', hUrl:'链接', hHandle:'账号',
@@ -1822,10 +1822,13 @@ function saveProfiles(list){
 function renderBrandSel(){
   const sel = $('#brandSel'); if(!sel) return;
   sel.innerHTML = '';
+  const list = loadProfiles();
   const ph = document.createElement('option');
-  ph.value = ''; ph.textContent = I18N[lang].brandPh;
+  ph.value = '';
+  ph.textContent = list.length ? I18N[lang].brandPh : I18N[lang].brandPhEmpty;
+  if (!list.length) ph.disabled = true;
   sel.appendChild(ph);
-  for (const pr of loadProfiles()){
+  for (const pr of list){
     const o = document.createElement('option'); o.value = pr.id; o.textContent = pr.name;
     sel.appendChild(o);
   }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShareForge — Free Social Share Image Generator (X, WeChat, OG, Instagram)</title>
-<meta name="description" content="Create beautiful marketing share images in seconds. 12 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
+<meta name="description" content="Create beautiful marketing share images in seconds. 13 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
 <link rel="canonical" href="https://shareforge.kuige.me/">
 <link rel="alternate" hreflang="en" href="https://shareforge.kuige.me/">
 <link rel="alternate" hreflang="zh" href="https://shareforge.kuige.me/?lang=zh">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ShareForge">
 <meta property="og:title" content="ShareForge — Social Share Image Generator">
-<meta property="og:description" content="12 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
+<meta property="og:description" content="13 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
 <meta property="og:url" content="https://shareforge.kuige.me/">
 <meta property="og:image" content="https://shareforge.kuige.me/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 12 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 13 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -203,7 +203,7 @@ footer a{color:var(--mut)}
 
 <section class="hero">
   <h1 data-i18n="heroTitle">Forge scroll-stopping share images</h1>
-  <p data-i18n="heroSub">12 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.</p>
+  <p data-i18n="heroSub">13 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.</p>
 </section>
 
 <main>
@@ -384,6 +384,7 @@ const TPLS = [
   {k:'guochao',  en:'Guochao',   zh:'国潮'},
   {k:'blueprint',en:'Blueprint', zh:'蓝图'},
   {k:'swiss',    en:'Swiss',     zh:'瑞士'},
+  {k:'viral',    en:'Viral',     zh:'爆文'},
 ];
 const ACCENTS = ['#7c3aed','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
 
@@ -391,7 +392,7 @@ const I18N = {
   en:{
     tagline:'Share image studio', surprise:'Surprise me',
     heroTitle:'Forge scroll-stopping share images',
-    heroSub:'12 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
+    heroSub:'13 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
     secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
     brandHint:'Saves link, handle, accent & logo — switch between your sites in one click.',
     brandPh:'Select brand…', brandPhEmpty:'No profiles yet — click Save to create one', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
@@ -426,7 +427,7 @@ const I18N = {
   zh:{
     tagline:'分享图工作室', surprise:'随机灵感',
     heroTitle:'锻造让全网驻足的分享图',
-    heroSub:'12 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
+    heroSub:'13 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
     secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
     brandHint:'保存链接、账号、主题色与 Logo——多个站点一键切换。',
     brandPh:'选择品牌…', brandPhEmpty:'尚无档案 · 填好后点「保存」创建', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
@@ -1654,6 +1655,136 @@ swiss(ctx,W,H,d,p,fr){
     }
   }
   if(assets.shot&&fr.shot.w) shotFrame(ctx,fr.shot,assets.shot,'',fr.mode,p,{border:ink,hardShadow:'rgba(16,16,16,.9)'});
+},
+
+viral(ctx,W,H,d,p,fr){
+  /* 爆文封面：黑底做旧 + 超粗宋体 + 朱红强调 + 墨环笔刷。固定黑白红配色，不随主题色。 */
+  const bgc='#141110', ink='#f2ecdf', red='#e0362b';
+  ctx.fillStyle=bgc; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.09);
+  /* 暗角 */
+  const vg=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.3,W/2,H/2,Math.max(W,H)*0.75);
+  vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,.42)');
+  ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+  /* 确定性伪随机（预览/导出/缩略图一致） */
+  const seedStr=(d.title+'|'+d.url+'|'+d.badge);
+  let sd=7; for(const ch of seedStr) sd=(sd*31+ch.charCodeAt(0))>>>0;
+  const rnd=(a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296})(sd);
+  const m=Math.min(W,H);
+  const mode=fr.mode;
+  /* 墨环：右侧溢出，2-3 圈错位弧 + 墨溅 */
+  const ringCfg = mode==='wide' ? {cx:W*0.95, cy:H*0.36, r:m*0.46}
+    : mode==='square' ? {cx:W*0.98, cy:H*0.20, r:m*0.30}
+    : {cx:W*1.0, cy:H*0.15, r:m*0.26};
+  ctx.save();
+  const rings=[[1.0,.9,26],[0.78,.5,13],[1.12,.28,9]];
+  for(const [rf,al,lwF] of rings){
+    const a0=rnd()*6.28, a1=a0+4.9+rnd()*1.2;
+    ctx.strokeStyle=red; ctx.globalAlpha=al;
+    ctx.lineWidth=m*0.004*lwF+2;
+    ctx.lineCap='round';
+    ctx.beginPath(); ctx.arc(ringCfg.cx,ringCfg.cy,ringCfg.r*rf,a0,a1); ctx.stroke();
+  }
+  ctx.globalAlpha=1; ctx.lineCap='butt';
+  /* 墨溅点 */
+  for(let i=0;i<26;i++){
+    const ang=rnd()*6.28, dist=ringCfg.r*(0.5+rnd()*1.15);
+    const px=ringCfg.cx+Math.cos(ang)*dist, py=ringCfg.cy+Math.sin(ang)*dist*0.9;
+    if(px<-10||px>W+10||py<-10||py>H+10) continue;
+    ctx.fillStyle=red; ctx.globalAlpha=0.35+rnd()*0.6;
+    ctx.beginPath(); ctx.arc(px,py,m*(0.0015+rnd()*0.006),0,7); ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  ctx.restore();
+  /* 文字区（纯文字模板：忽略截图） */
+  const pad=fr.pad;
+  const zoneW = mode==='wide' ? W*0.68-pad : mode==='square' ? W*0.76-pad*1.2 : W-pad*2;
+  const T={x:pad, y:pad*1.02, w:zoneW, h:H-pad*2.04};
+  const kS=clamp(pad*0.28,12,24);
+  const kickerH=d.badge? kS*2.3 : 0;
+  const base=Math.min(T.w*(mode==='portrait'?0.168:0.152),(T.h-kickerH)*(mode==='wide'?0.44:0.38));
+  const setF=sz=>ctx.font=`900 ${sz}px ${F_SERIF}`;
+  const tb=fitBlock(ctx,d.title,T.w,mode==='wide'?2:mode==='square'?2:3,base,base*0.4,setF);
+  const lh=tb.size*1.12;
+  const subSize=clamp(tb.size*0.6,13,46);
+  let sb=d.sub? fitBlock(ctx,d.sub,T.w,mode==='portrait'?2:2,subSize,12,s=>ctx.font=`700 ${s}px ${F_SERIF}`):null;
+  const footH=(d.url||d.handle)? clamp(pad*0.4,14,26)*2.6 : 0;
+  const brushH=tb.size*0.17;
+  const subH=sb? sb.lines.length*subSize*1.3+tb.size*0.18 : 0;
+  const blockH=kickerH+tb.lines.length*lh+brushH+subH;
+  const top=T.y+Math.max(pad*0.05,(T.h-footH-blockH)/2);
+  /* kicker：两侧短线 + 衬线小字 */
+  let cur=top;
+  if(d.badge){
+    ctx.font=`700 ${kS}px ${F_SERIF}`; setLS(ctx,`${kS*0.14}px`);
+    const tw=ctx.measureText(d.badge).width;
+    const lineW=Math.min(T.w*0.14,kS*3.2);
+    const ky=cur+kS*0.95;
+    ctx.strokeStyle='rgba(242,236,223,.85)'; ctx.lineWidth=Math.max(1.5,kS*0.09);
+    ctx.beginPath();
+    ctx.moveTo(T.x,ky); ctx.lineTo(T.x+lineW,ky);
+    ctx.moveTo(T.x+lineW+kS*1.1+tw+kS*1.1,ky); ctx.lineTo(T.x+lineW+kS*1.1+tw+kS*1.1+lineW,ky);
+    ctx.stroke();
+    ctx.fillStyle=ink; ctx.textAlign='left';
+    ctx.fillText(d.badge, T.x+lineW+kS*1.1, ky+kS*0.36);
+    setLS(ctx,'0px');
+    cur+=kickerH;
+  }
+  /* 主标题：米白宋体，数字/拉丁段自动标红 */
+  cur+=tb.size*0.94;
+  setF(tb.size);
+  const reHL=/[0-9A-Za-z+#%.]+/g;
+  ctx.textAlign='left'; setLS(ctx,`${-tb.size*0.015}px`);
+  for(const ln of tb.lines){
+    ctx.fillStyle=ink; ctx.fillText(ln,T.x,cur);
+    let mm; reHL.lastIndex=0;
+    while((mm=reHL.exec(ln))){
+      const seg=mm[0];
+      const isNum=/^[0-9]/.test(seg);
+      const isAcro=seg.length<=3 && seg===seg.toUpperCase() && /[A-Z]/.test(seg);
+      if(!isNum&&!isAcro) continue;
+      const px=T.x+ctx.measureText(ln.slice(0,mm.index)).width;
+      ctx.fillStyle=red; ctx.fillText(seg,px,cur);
+    }
+    cur+=lh;
+  }
+  setLS(ctx,'0px');
+  cur-=lh;
+  /* 笔刷下划线：划在末行下方，覆写式红条 */
+  const lastW=ctx.measureText(tb.lines[tb.lines.length-1]).width;
+  const bw=lastW*(0.5+rnd()*0.25), bh=Math.max(4,tb.size*0.13);
+  const bx=T.x+lastW*0.05, by=cur+tb.size*0.16;
+  ctx.save();
+  ctx.translate(bx+bw/2,by+bh/2); ctx.rotate((rnd()-0.5)*0.028);
+  ctx.fillStyle=red;
+  rr(ctx,-bw/2,-bh/2,bw,bh,bh*0.4); ctx.fill();
+  ctx.globalAlpha=0.85;
+  rr(ctx,-bw/2-bh*0.5,-bh*0.28,bh*0.9,bh*0.6,bh*0.3); ctx.fill();
+  rr(ctx,bw/2-bh*0.4,-bh*0.34,bh*1.1,bh*0.66,bh*0.3); ctx.fill();
+  ctx.restore();
+  cur+=brushH+tb.size*0.22;
+  /* 副标题：朱红 */
+  if(sb){
+    ctx.font=`700 ${sb.size}px ${F_SERIF}`; setLS(ctx,`${-sb.size*0.01}px`);
+    ctx.fillStyle=red;
+    for(const ln of sb.lines){ ctx.fillText(ln,T.x,cur+sb.size*0.9); cur+=sb.size*1.3; }
+    setLS(ctx,'0px');
+  }
+  /* 底部 URL / handle */
+  if(d.url||d.handle){
+    const uS=clamp(pad*0.26,12,22);
+    const fy=H-pad*0.9;
+    if(d.url){
+      ctx.fillStyle=red; ctx.fillRect(T.x,fy-uS*0.78,uS*0.34,uS*0.34);
+      ctx.font=`700 ${uS}px ${F_SERIF}`; ctx.fillStyle='rgba(242,236,223,.8)'; ctx.textAlign='left';
+      ctx.fillText(d.url.replace(/^https?:\/\//,''),T.x+uS*0.72,fy);
+    }
+    if(d.handle){
+      ctx.font=`700 ${uS*0.9}px ${F_SERIF}`; ctx.fillStyle='rgba(242,236,223,.45)'; ctx.textAlign='right';
+      ctx.fillText(d.handle,W-pad,fy);
+      ctx.textAlign='left';
+    }
+  }
 },
 };
 

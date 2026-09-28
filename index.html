@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShareForge — Free Social Share Image Generator (X, WeChat, OG, Instagram)</title>
-<meta name="description" content="Create beautiful marketing share images in seconds. 13 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
+<meta name="description" content="Create beautiful marketing share images in seconds. 14 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
 <link rel="canonical" href="https://shareforge.kuige.me/">
 <link rel="alternate" hreflang="en" href="https://shareforge.kuige.me/">
 <link rel="alternate" hreflang="zh" href="https://shareforge.kuige.me/?lang=zh">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ShareForge">
 <meta property="og:title" content="ShareForge — Social Share Image Generator">
-<meta property="og:description" content="13 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
+<meta property="og:description" content="14 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
 <meta property="og:url" content="https://shareforge.kuige.me/">
 <meta property="og:image" content="https://shareforge.kuige.me/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 13 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 14 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -203,7 +203,7 @@ footer a{color:var(--mut)}
 
 <section class="hero">
   <h1 data-i18n="heroTitle">Forge scroll-stopping share images</h1>
-  <p data-i18n="heroSub">13 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.</p>
+  <p data-i18n="heroSub">14 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.</p>
 </section>
 
 <main>
@@ -385,6 +385,7 @@ const TPLS = [
   {k:'blueprint',en:'Blueprint', zh:'蓝图'},
   {k:'swiss',    en:'Swiss',     zh:'瑞士'},
   {k:'viral',    en:'Viral',     zh:'爆文'},
+  {k:'promo',    en:'Promo',     zh:'推广'},
 ];
 const ACCENTS = ['#7c3aed','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
 
@@ -392,7 +393,7 @@ const I18N = {
   en:{
     tagline:'Share image studio', surprise:'Surprise me',
     heroTitle:'Forge scroll-stopping share images',
-    heroSub:'13 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
+    heroSub:'14 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
     secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
     brandHint:'Saves link, handle, accent & logo — switch between your sites in one click.',
     brandPh:'Select brand…', brandPhEmpty:'No profiles yet — click Save to create one', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
@@ -427,7 +428,7 @@ const I18N = {
   zh:{
     tagline:'分享图工作室', surprise:'随机灵感',
     heroTitle:'锻造让全网驻足的分享图',
-    heroSub:'13 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
+    heroSub:'14 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
     secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
     brandHint:'保存链接、账号、主题色与 Logo——多个站点一键切换。',
     brandPh:'选择品牌…', brandPhEmpty:'尚无档案 · 填好后点「保存」创建', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
@@ -568,7 +569,13 @@ function wrapLines(ctx,text,maxW){
 function fitBlock(ctx,text,maxW,maxLines,base,min,setFont){
   for (let size = base; size >= min; size -= 2){
     setFont(size); const lines = wrapLines(ctx,text,maxW);
-    if (lines.length <= maxLines && lines.every(l=>ctx.measureText(l).width <= maxW)) return {size,lines};
+    if (lines.length <= maxLines && lines.every(l=>ctx.measureText(l).width <= maxW)){
+      if (lines.length>1 && size-2>=min){
+        const last=lines[lines.length-1].trim();
+        if ([...last].length===1 && /[\u4e00-\u9fff]/.test(last)) continue; /* 避免末行孤字 */
+      }
+      return {size,lines};
+    }
   }
   setFont(min); let lines = wrapLines(ctx,text,maxW);
   if (lines.length > maxLines){
@@ -1784,6 +1791,175 @@ viral(ctx,W,H,d,p,fr){
       ctx.fillText(d.handle,W-pad,fy);
       ctx.textAlign='left';
     }
+  }
+},
+
+promo(ctx,W,H,d,p,fr){
+  /* 网站推广：域名地址栏做主角 + 价值主张 + ✓卖点 + CTA 按钮。亮色品牌渐变底，跟随主题色。 */
+  const pad=fr.pad;
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#ffffff'); g.addColorStop(1,p.soft);
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  const b1=ctx.createRadialGradient(W*0.86,H*0.06,0,W*0.86,H*0.06,W*0.45);
+  b1.addColorStop(0,hsl(p.h,p.s,72,.38)); b1.addColorStop(1,hsl(p.h,p.s,72,0));
+  ctx.fillStyle=b1; ctx.fillRect(0,0,W,H);
+  const b2=ctx.createRadialGradient(W*0.08,H*0.96,0,W*0.08,H*0.96,W*0.4);
+  b2.addColorStop(0,hsl(p.h+48,p.s,76,.32)); b2.addColorStop(1,hsl(p.h+48,p.s,76,0));
+  ctx.fillStyle=b2; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.03);
+  const ink='#17122b';
+  const acc=p.base;
+  const ctaTxt=lang==='zh'?'立即访问  →':'Visit now  →';
+  /* 卖点拆分：按 ·•|/、，; 分隔，≤3 段；拆不出就当整句副标题 */
+  const feats = d.sub ? d.sub.split(/\s*[·•|/、，,；;]\s*|\s{2,}/).map(s=>s.trim()).filter(Boolean).slice(0,3) : [];
+  const asList = feats.length>=2;
+  const stacked = fr.mode!=='wide';
+  const hasShot = !!assets.shot;
+  /* 尺寸系统 */
+  const headS=clamp(pad*0.30,13,26);
+  const base = stacked ? Math.min(W*0.082,(H*0.24)/(d.title.split('\n').length||1)+H*0.06) : Math.min(W*0.50*0.115,(fr.text.h)*0.20);
+  const tSize=clamp(base,20,stacked?W*0.085:W*0.50*0.13);
+  const barH=clamp(pad*0.62,34,64);      /* 地址栏高 */
+  const ctaH=clamp(pad*0.56,30,56);      /* CTA 高 */
+  const fS=clamp(pad*0.24,11,20);        /* 卖点字号 */
+  const gap=clamp(pad*0.24,10,26);
+  const urlT=(d.url||'yoursite.com').replace(/^https?:\/\//,'');
+  /* 上下文块高度（stacked 计算用） */
+  const headH=(d.badge||assets.logo)?headS*2.3:0;
+  const shotW=stacked? W*0.78 : W*0.44;
+  const barW=stacked? W*0.74 : W*0.50-pad*1.4;
+  const ctaW=(()=>{ctx.font=`800 ${ctaH*0.42}px ${F_SANS}`;return ctx.measureText(ctaTxt).width+ctaH*1.3;})();
+  const bottomH=(d.url? barH+gap*0.9+ctaH+gap : 0); /* 地址栏+CTA 底部预留 */
+  /* 标题（fitBlock 限行） */
+  const tMax=stacked?2:2;
+  const tMaxW=stacked? W-pad*2.4 : W*0.50-pad*1.4;
+  const tb=fitBlock(ctx,d.title,tMaxW,tMax,tSize,14,sz=>ctx.font=`900 ${sz}px ${F_SANS}`);
+  const tSize2=tb.size;
+  const tH=tb.lines.length*tSize2*1.18;
+  const featH=asList? (stacked? fS*2.2 : feats.length*fS*2.1) : (feats.length===1? fS*2.2:0);
+  /* stacked 截图自适应：占用标题/卖点之后的剩余空间 */
+  const stackedPre = headH+tH+gap+(featH?featH+gap:0);
+  const stackedAvail = stacked ? H - pad*1.2 - stackedPre - gap - bottomH - pad*0.5 : 0;
+  const shotH = hasShot ? (stacked ? clamp(Math.min(shotW*0.66, stackedAvail), 0, H) : Math.min(H*0.62,shotW*0.72)) : 0;
+  const showShotStacked = stacked && hasShot && shotH>=60;
+  const blockH=headH+tH+gap+(featH?featH+gap:0)+(showShotStacked?shotH+gap:0)+bottomH;
+  const startY=stacked? Math.max(pad*0.7,(H-blockH)/2) : Math.max(pad*0.8,(H-blockH)/2);
+  let cur=startY;
+  const centerX=W/2;
+  const leftX=pad;
+  /* 品牌行：logo + badge */
+  if(headH){
+    ctx.font=`800 ${headS}px ${F_SANS}`;
+    let hw=(assets.logo?headS*2.1:0)+(d.badge?(assets.logo?headS*0.7:0)+ctx.measureText(d.badge).width+headS*1.9:0);
+    let hx=stacked? centerX-hw/2 : leftX;
+    if(assets.logo){const ls=headS*2.1;logoChip(ctx,assets.logo,hx,cur,ls);hx+=ls+headS*0.7;}
+    if(d.badge){
+      const bh=headS*1.9,tw=ctx.measureText(d.badge).width;
+      shadowOn(ctx,'rgba(23,18,43,.14)',headS*0.9,headS*0.25);
+      ctx.fillStyle='rgba(255,255,255,.9)';rr(ctx,hx,cur,bh+tw,bh,bh/2);ctx.fill();shadowOff(ctx);
+      ctx.fillStyle=acc;ctx.beginPath();ctx.arc(hx+headS*0.95,cur+bh/2,headS*0.26,0,7);ctx.fill();
+      ctx.fillStyle=ink;ctx.textAlign='left';ctx.fillText(d.badge,hx+headS*1.55,cur+bh*0.72);
+    }
+    cur+=headH+gap;
+  }
+  /* 截图（stacked 在标题上方？否——推广卡先价值主张后截图更常见；wide 右侧独立列） */
+  /* wide：截图放右侧垂直居中 */
+  if(hasShot&&!stacked){
+    const sx=W*0.53,sy=(H-shotH)/2;
+    shotFrame(ctx,{x:sx,y:sy,w:shotW,h:shotH},assets.shot,d.url,fr.mode,p,{border:'rgba(255,255,255,.95)',glow:'rgba(38,28,90,.25)'});
+  }
+  /* 标题 */
+  ctx.textAlign=stacked?'center':'left';
+  ctx.font=`900 ${tSize2}px ${F_SANS}`;
+  ctx.fillStyle=ink;
+  let ty=cur+tSize2*0.94;
+  for(const ln of tb.lines){ctx.fillText(ln,stacked?centerX:leftX,ty);ty+=tSize2*1.18;}
+  cur+=tH+gap;
+  /* 卖点 / 副句 */
+  if(featH){
+    ctx.font=`600 ${fS}px ${F_SANS}`;
+    if(asList){
+      if(stacked){
+        /* 横排一组 ✓ */
+        const items=feats;
+        ctx.font=`600 ${fS}px ${F_SANS}`;
+        const ws=items.map(t=>fS*1.5+ctx.measureText(t).width+fS*1.2);
+        const totW=ws.reduce((a,b)=>a+b,0);
+        let px=centerX-totW/2;
+        const fy=cur+fS*1.4;
+        items.forEach((t,i)=>{
+          ctx.fillStyle=acc;ctx.beginPath();ctx.arc(px+fS*0.65,fy-fS*0.32,fS*0.62,0,7);ctx.fill();
+          ctx.fillStyle='#fff';ctx.font=`800 ${fS*0.85}px ${F_SANS}`;ctx.textAlign='center';
+          ctx.fillText('✓',px+fS*0.65,fy-fS*0.02);
+          ctx.font=`600 ${fS}px ${F_SANS}`;ctx.fillStyle='rgba(23,18,43,.78)';ctx.textAlign='left';
+          ctx.fillText(t,px+fS*1.5,fy);
+          px+=ws[i];
+        });
+      } else {
+        for(const t of feats){
+          const fy=cur+fS*1.35;
+          ctx.fillStyle=acc;ctx.beginPath();ctx.arc(leftX+fS*0.65,fy-fS*0.34,fS*0.62,0,7);ctx.fill();
+          ctx.fillStyle='#fff';ctx.font=`800 ${fS*0.85}px ${F_SANS}`;ctx.textAlign='center';
+          ctx.fillText('✓',leftX+fS*0.65,fy-fS*0.04);
+          ctx.font=`600 ${fS}px ${F_SANS}`;ctx.fillStyle='rgba(23,18,43,.78)';ctx.textAlign='left';
+          ctx.fillText(t,leftX+fS*1.5,fy);
+          cur+=fS*2.1;
+        }
+      }
+    } else {
+      ctx.fillStyle='rgba(23,18,43,.72)';
+      ctx.fillText(feats[0],stacked?centerX:leftX,cur+fS*1.4);
+    }
+    cur+=featH+gap;
+  }
+  /* stacked：截图自适应放在卖点之后 */
+  if(showShotStacked){
+    const sx=centerX-shotW/2;
+    const sy=cur+gap*0.5;
+    shotFrame(ctx,{x:sx,y:sy,w:shotW,h:shotH},assets.shot,d.url,fr.mode,p,{border:'rgba(255,255,255,.95)',glow:'rgba(38,28,90,.25)'});
+    cur=sy+shotH+gap;
+  }
+  /* 地址栏：域名主角 */
+  if(d.url){
+    const barY=stacked? H-pad*0.7-(d.url?ctaH+gap*0.9:0)-barH : H-barH-ctaH-gap*1.6-pad*0.55;
+    const barX=stacked? centerX-barW/2 : leftX;
+    ctx.save();
+    shadowOn(ctx,'rgba(23,18,43,.18)',barH*0.35,barH*0.12);
+    ctx.fillStyle='#ffffff';rr(ctx,barX,barY,barW,barH,barH/2);ctx.fill();
+    shadowOff(ctx);ctx.restore();
+    ctx.strokeStyle='rgba(23,18,43,.10)';ctx.lineWidth=1.5;rr(ctx,barX,barY,barW,barH,barH/2);ctx.stroke();
+    /* 锁图标 */
+    const lx=barX+barH*0.62, ly=barY+barH*0.42, ls=barH*0.30;
+    ctx.strokeStyle=acc;ctx.lineWidth=Math.max(2,ls*0.28);
+    ctx.beginPath();ctx.arc(lx,ly-ls*0.18,ls*0.42,Math.PI,0);ctx.stroke();
+    ctx.fillStyle=acc;rr(ctx,lx-ls*0.55,ly-ls*0.18,ls*1.1,ls*0.95,ls*0.22);ctx.fill();
+    /* 域名大字 */
+    ctx.font=`800 ${barH*0.44}px ${F_SANS}`;
+    let uT=urlT;
+    while(uT.length>4&&ctx.measureText(uT).width>barW-barH*2.1)uT=uT.slice(0,-2);
+    ctx.fillStyle=ink;ctx.textAlign='center';
+    ctx.fillText(uT,barX+barW/2,barY+barH*0.68);
+    ctx.textAlign=stacked?'center':'left';
+    /* CTA 按钮 */
+    const cw=ctaW,ch=ctaH;
+    const cx2=stacked? centerX-cw/2 : barX+barW-cw;
+    const cy2=barY+barH+gap*0.9;
+    ctx.save();
+    shadowOn(ctx,hsl(p.h,p.s,50,.55),ch*0.5,ch*0.16);
+    ctx.fillStyle=acc;rr(ctx,cx2,cy2,cw,ch,ch/2);ctx.fill();
+    shadowOff(ctx);ctx.restore();
+    ctx.font=`800 ${ch*0.42}px ${F_SANS}`;
+    ctx.fillStyle='#fff';ctx.textAlign='left';
+    ctx.fillText(ctaTxt,cx2+ch*0.65,cy2+ch*0.68);
+    cur=cy2+ch;
+  }
+  /* handle 小字角落 */
+  if(d.handle){
+    const uS=clamp(pad*0.22,11,18);
+    ctx.font=`700 ${uS}px ${F_SANS}`;ctx.fillStyle='rgba(23,18,43,.42)';
+    ctx.textAlign='right';
+    ctx.fillText(d.handle,W-pad,H-pad*0.55);
+    ctx.textAlign='left';
   }
 },
 };

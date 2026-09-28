@@ -36,14 +36,14 @@
 </script>
 <style>
 :root{
-  --ui-accent:#6366f1;
-  --bg:#f6f7fb; --bg2:#ffffff; --ink:#0f172a; --mut:#64748b; --line:#e2e8f0;
-  --card:#ffffff; --soft:#f1f5f9; --shadow:0 1px 2px rgba(15,23,42,.06),0 8px 24px -12px rgba(15,23,42,.12);
+  --ui-accent:#7c3aed;
+  --bg:#f3f1fa; --bg2:#ffffff; --ink:#1c1531; --mut:#6b6486; --line:#e4def2;
+  --card:#ffffff; --soft:#f1eefa; --shadow:0 1px 2px rgba(46,32,92,.06),0 8px 24px -12px rgba(46,32,92,.16);
   --radius:14px;
 }
 html[data-theme="dark"]{
-  --bg:#0b0f19; --bg2:#111726; --ink:#e6eaf2; --mut:#8b95a9; --line:#232c3f;
-  --card:#151c2c; --soft:#1b2334; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -12px rgba(0,0,0,.5);
+  --bg:#0a0913; --bg2:#110e1e; --ink:#e9e5f5; --mut:#9a90b8; --line:#282142;
+  --card:#161225; --soft:#1d1730; --shadow:0 1px 2px rgba(0,0,0,.45),0 10px 28px -12px rgba(88,60,180,.35);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -51,8 +51,9 @@ body::before{
   content:'';position:fixed;right:-12vmin;bottom:-10vmin;width:78vmin;height:78vmin;
   background:url('bg-cat.webp') center/contain no-repeat;
   opacity:.07;pointer-events:none;z-index:-1;
+  filter:drop-shadow(0 0 34px rgba(124,58,237,.55));
 }
-html[data-theme="dark"] body::before{opacity:.16}
+html[data-theme="dark"] body::before{opacity:.18}
 body{
   font-family:-apple-system,'SF Pro Text','Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
   background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased;
@@ -64,7 +65,7 @@ header{
   backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
 }
 .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
-.logo-ring{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;padding:2px;background:linear-gradient(135deg,var(--ui-accent),color-mix(in srgb,var(--ui-accent) 55%,#a855f7));flex:none;box-shadow:0 2px 10px -3px color-mix(in srgb,var(--ui-accent) 55%,transparent)}
+.logo-ring{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;padding:2px;background:linear-gradient(135deg,var(--ui-accent),color-mix(in srgb,var(--ui-accent) 55%,#a78bfa));flex:none;box-shadow:0 2px 12px -2px color-mix(in srgb,var(--ui-accent) 70%,transparent),0 0 18px -4px rgba(124,58,237,.5)}
 .logo-ring img{display:block;width:100%;height:100%;border-radius:50%}
 .brand small{font-weight:600;color:var(--mut);font-size:12px;letter-spacing:0;margin-left:2px}
 header .sp{flex:1}
@@ -136,7 +137,7 @@ main{
   border:none;border-radius:10px;padding:11px 14px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:8px;
 }
-.btn.primary{background:linear-gradient(135deg,var(--ui-accent),color-mix(in srgb,var(--ui-accent) 55%,#a855f7));color:#fff;box-shadow:0 6px 18px -6px color-mix(in srgb,var(--ui-accent) 60%,transparent)}
+.btn.primary{background:linear-gradient(135deg,var(--ui-accent),color-mix(in srgb,var(--ui-accent) 55%,#a78bfa));color:#fff;box-shadow:0 6px 18px -6px color-mix(in srgb,var(--ui-accent) 60%,transparent)}
 .btn.primary:hover{filter:brightness(1.06)}
 .btn.ghost{background:var(--bg2);border:1px solid var(--line);color:var(--ink)}
 .btn.ghost:hover{border-color:var(--ui-accent);color:var(--ui-accent)}
@@ -378,7 +379,7 @@ const TPLS = [
   {k:'blueprint',en:'Blueprint', zh:'蓝图'},
   {k:'swiss',    en:'Swiss',     zh:'瑞士'},
 ];
-const ACCENTS = ['#6366f1','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
+const ACCENTS = ['#7c3aed','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
 
 const I18N = {
   en:{
@@ -411,7 +412,7 @@ const I18N = {
     a4:'Yes — type once, click “Export all 8 sizes”, and you get one ready-to-post PNG per platform. Single-size download and copy-to-clipboard are also available.',
     q5:'What format are the exports?', a5:'Lossless PNG files at each platform\'s exact pixel dimensions, ready to upload as-is.',
     footerPrivacy:'🔒 100% local — your content and screenshots never leave your browser.',
-    footerMade:'ShareForge · free social share image generator',
+    footerMade:'ShareForge · free social share image generator · by Nether Cat Works',
     docTitle:'ShareForge — Free Social Share Image Generator (X, WeChat, OG, Instagram)',
   },
   zh:{
@@ -444,14 +445,14 @@ const I18N = {
     a4:'可以——填一次文案，点击「一键导出全部 8 尺寸」，每个平台各得一张可直接发布的 PNG。也支持单张下载与复制到剪贴板。',
     q5:'导出是什么格式？','a5':'无损 PNG，尺寸与各平台要求像素级一致，可直接上传。',
     footerPrivacy:'🔒 纯本地运行——文案与截图不会离开你的浏览器。',
-    footerMade:'ShareForge · 免费社交分享图生成器',
+    footerMade:'ShareForge · 免费社交分享图生成器 · 幽冥猫工坊 出品',
     docTitle:'ShareForge — 免费社交分享图生成器（X / 公众号 / OG / 小红书）',
   }
 };
 
 /* ============ state ============ */
 const DEFAULTS = {
-  template:'aurora', size:'x', accent:'#6366f1',
+  template:'aurora', size:'x', accent:'#7c3aed',
   badge:'NEW LAUNCH',
   title:'Ship beautiful share images in seconds',
   sub:'One editor, every platform — X, WeChat, RED, Instagram & LinkedIn.',
@@ -1659,7 +1660,7 @@ function makeDemoShot(){
   x.fillText('yoursite.com', 470, 33); x.textBaseline='alphabetic';
   /* hero */
   const g = x.createLinearGradient(60,100,1140,380);
-  g.addColorStop(0,'#6366f1'); g.addColorStop(1,'#a855f7');
+  g.addColorStop(0,'#7c3aed'); g.addColorStop(1,'#a78bfa');
   x.fillStyle=g; rr(x,60,100,1080,270,22); x.fill();
   x.fillStyle='rgba(255,255,255,.95)'; rr(x,110,160,430,42,10); x.fill();
   x.fillStyle='rgba(255,255,255,.6)'; rr(x,110,222,300,26,8); x.fill();
@@ -1856,7 +1857,7 @@ $('#brandSel').onchange = ()=>{
   if (!pr) return;
   state.url = pr.url||''; state.handle = pr.handle||'';
   $('#inUrl').value = state.url; $('#inHandle').value = state.handle;
-  setAccent(pr.accent||'#6366f1');
+  setAccent(pr.accent||'#7c3aed');
   setAsset('logo', pr.logo||null);
   renderAll();
 };

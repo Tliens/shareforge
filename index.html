@@ -47,6 +47,12 @@ html[data-theme="dark"]{
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
+body::before{
+  content:'';position:fixed;right:-12vmin;bottom:-10vmin;width:78vmin;height:78vmin;
+  background:url('bg-cat.webp') center/contain no-repeat;
+  opacity:.07;pointer-events:none;z-index:-1;
+}
+html[data-theme="dark"] body::before{opacity:.16}
 body{
   font-family:-apple-system,'SF Pro Text','Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
   background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased;

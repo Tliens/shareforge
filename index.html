@@ -2232,6 +2232,7 @@ function download(blob,name){
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = name;
   document.body.appendChild(a); a.click();
+  try{ window.mxFunnel && window.mxFunnel(); }catch(e){}
   setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },800);
 }
 const slug = ()=> (state.title||'share').toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g,'-').replace(/^-+|-+$/g,'').slice(0,42)||'share';
@@ -2399,6 +2400,44 @@ window.__SF = {
   assets.logo = await loadImg(state.logo);
   updateZones();
   renderAll();
+})();
+</script>
+<style>
+.mxf{position:fixed;left:50%;bottom:20px;transform:translate(-50%,16px);opacity:0;visibility:hidden;transition:transform .3s,opacity .3s,visibility .3s;z-index:9990;max-width:min(440px,92vw);background:var(--card,#fff);border:1px solid var(--line,#e4def2);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:14px 40px 14px 16px;display:flex;gap:12px;align-items:flex-start;font-size:14px;text-align:left}
+.mxf.on{transform:translate(-50%,0);opacity:1;visibility:visible}
+.mxf-x{position:absolute;top:7px;right:9px;border:0;background:none;color:var(--mut,#6b6486);font-size:14px;cursor:pointer;padding:2px 4px;line-height:1}
+.mxf-ico{font-size:22px;line-height:1.3}
+.mxf-t{display:block;color:var(--ink,#1c1531);font-weight:700}
+.mxf-w{display:block;color:var(--mut,#6b6486);font-size:12.5px;margin-top:2px}
+.mxf-a{display:inline-block;margin-top:8px;color:#fff;background:var(--ui-accent,#7c3aed);border-radius:8px;padding:4px 12px;font-size:13px;font-weight:600;text-decoration:none}
+.mxf-a:hover{filter:brightness(1.08)}
+</style>
+<div class="mxf" id="mxFunnel" role="dialog">
+  <span class="mxf-ico">✍️</span>
+  <div>
+    <b class="mxf-t" id="mxFunnelT"></b>
+    <span class="mxf-w" id="mxFunnelW"></span>
+    <a class="mxf-a" id="mxFunnelA" href="https://rednote-formatter.kuige.me/?from=shareforge" target="_blank" rel="noopener"></a>
+  </div>
+  <button class="mxf-x" id="mxFunnelX" aria-label="Close">✕</button>
+</div>
+<script>
+(function(){
+  var F={key:'funnel_rednote_v1',
+    zh:{t:'发小红书？',w:'Rednote Formatter：智能分行、emoji 分隔、话题标签一键搞定',b:'去排版文案 →'},
+    en:{t:'Posting to REDnote?',w:'Rednote Formatter: smart line breaks, emoji separators & hashtags',b:'Format captions →'}};
+  var el=document.getElementById('mxFunnel');if(!el)return;
+  var shown=false;
+  window.mxFunnel=function(){
+    if(shown)return;
+    try{if(sessionStorage.getItem(F.key))return;sessionStorage.setItem(F.key,'1')}catch(e){return}
+    var c=((document.documentElement.lang||'en')+'').slice(0,2).toLowerCase()==='zh'?F.zh:F.en;
+    document.getElementById('mxFunnelT').textContent=c.t;
+    document.getElementById('mxFunnelW').textContent=c.w;
+    var a=document.getElementById('mxFunnelA');a.textContent=c.b;a.href=F.url;
+    el.classList.add('on');shown=true;
+  };
+  document.getElementById('mxFunnelX').addEventListener('click',function(){el.classList.remove('on')});
 })();
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "948f2535a9dd4775a436c677b3c950e4"}'></script>

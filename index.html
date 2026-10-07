@@ -179,6 +179,16 @@ td code{background:var(--soft);border-radius:5px;padding:1px 7px;font-size:12px;
 .faq p{margin:8px 0 2px;font-size:13.5px}
 .mini{border:1px solid var(--line);background:var(--bg2);color:var(--mut);border-radius:7px;font-size:11px;font-weight:700;padding:3px 8px;cursor:pointer}
 .mini:hover{border-color:var(--ui-accent);color:var(--ui-accent)}
+.mini.on{background:var(--ui-accent);border-color:var(--ui-accent);color:#fff}
+.pages-box{margin-bottom:12px}
+.pages-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px}
+.pchip{display:inline-flex;align-items:center;gap:6px;max-width:100%;border:1.5px solid var(--line);border-radius:8px;background:var(--bg2);color:var(--ink);padding:4px 8px;font-size:11.5px;cursor:pointer}
+.pchip b{font-variant-numeric:tabular-nums;color:var(--mut)}
+.pchip span{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.pchip.on{border-color:var(--ui-accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--ui-accent) 18%,transparent)}
+.pchip.on b{color:var(--ui-accent)}
+.pchip .del{color:var(--mut);font-size:10px;padding:0 1px}
+.pchip .del:hover{color:#e11d48}
 .card .hrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .card .hrow h2{margin:0;flex:1}
 .brandrow{display:flex;gap:8px}
@@ -238,6 +248,11 @@ footer a{color:var(--mut)}
           <button data-cl="zh" type="button">中</button>
           <button data-cl="en" type="button">EN</button>
         </div>
+        <button class="mini" id="btnSeries" data-i18n="series" type="button">Series</button>
+      </div>
+      <div class="pages-box" id="pagesBox" hidden>
+        <div id="pagesList"></div>
+        <button class="mini" id="btnAddPage" data-i18n="addPage" type="button">Add page</button>
       </div>
       <div class="frow" id="frowBadge">
         <label id="lblBadge" data-i18n="hBadge">Badge</label>
@@ -426,6 +441,8 @@ const I18N = {
     brandHint:'Saves copy (zh/en), template, size, screenshot, link, handle & accent — one click to switch sites.',
     brandPh:'Select brand…', brandPhEmpty:'No profiles yet — click Save to create one', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
     selAll:'All', selNone:'None', bAllN:'Export {n} sizes',
+    series:'Series', addPage:'Add page',
+    bAllSeries:'Export {s} sizes × {p} pages',
     secContent:'Content', secTemplate:'Template', secAccent:'Accent color', secSize:'Size', secAssets:'Assets',
     hBadge:'Badge', hTitle:'Title', hSub:'Subtitle', hUrl:'Link', hHandle:'Handle',
     bUpload:'Upload', bDownload:'Download PNG', bCopy:'Copy image', bAll:'Export all 8 sizes',
@@ -467,6 +484,8 @@ const I18N = {
     brandHint:'保存文案（中/EN）、模板、尺寸、截图、链接、账号与主题色——多站一键切换。',
     brandPh:'选择品牌…', brandPhEmpty:'尚无档案 · 填好后点「保存」创建', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
     selAll:'全选', selNone:'清空', bAllN:'导出 {n} 张',
+    series:'系列', addPage:'添加页',
+    bAllSeries:'导出 {s} 尺寸 × {p} 页',
     secContent:'文案内容', secTemplate:'模板', secAccent:'主题色', secSize:'尺寸', secAssets:'素材',
     hBadge:'角标', hTitle:'主标题', hSub:'副标题', hUrl:'链接', hHandle:'账号',
     bUpload:'上传', bDownload:'下载 PNG', bCopy:'复制图片', bAll:'一键导出全部 8 尺寸',
@@ -2340,10 +2359,49 @@ function updateZones(){
 
 /* ============ render ============ */
 const cv = $('#cv');
+/* ============ 系列多页模式 ============ */
+function seriesPages(){
+  if(!state.copies||!state.copies[state.copyLang]) return [];
+  const pgs=state.copies[state.copyLang].pages;
+  return Array.isArray(pgs)?pgs:[];
+}
+function seriesOn(){ return !!(state.series&&state.series.on&&seriesPages().length); }
+function curPage(){
+  if(!seriesOn()) return null;
+  const pgs=seriesPages();
+  return pgs[Math.min(state.series.cur||0,pgs.length-1)]||{t:'',s:''};
+}
+function renderState(){
+  const pg=curPage();
+  return pg? {...state, title:pg.t||'', sub:pg.s||''} : state;
+}
+const DARK_TPLS=new Set(['midnight','neon','terminal','spotlight','blueprint','viral']);
+function drawPageBadge(ctx,W,H,idx,total,p){
+  const dark=DARK_TPLS.has(state.template);
+  const m=Math.min(W,H);
+  const uS=clamp(m*0.022,10,20);
+  const txt=`${String(idx).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+  ctx.font=`800 ${uS}px ${F_MONO}`;
+  const tw=ctx.measureText(txt).width;
+  const bw=tw+uS*1.6, bh=uS*1.9;
+  const x=W-clamp(m*0.05,20,90)-bw, y=H-clamp(m*0.05,20,90)-bh;
+  ctx.save();
+  ctx.fillStyle=dark?'rgba(255,255,255,.14)':'rgba(23,18,43,.10)';
+  rr(ctx,x,y,bw,bh,bh/2); ctx.fill();
+  ctx.strokeStyle=dark?'rgba(255,255,255,.28)':'rgba(23,18,43,.16)'; ctx.lineWidth=1;
+  rr(ctx,x,y,bw,bh,bh/2); ctx.stroke();
+  ctx.fillStyle=dark?'#fff':'rgba(23,18,43,.85)';
+  ctx.textAlign='left'; ctx.textBaseline='middle';
+  ctx.fillText(txt,x+uS*0.8,y+bh/2+0.5);
+  ctx.textBaseline='alphabetic';
+  ctx.restore();
+}
 function renderTo(ctx2,W,H){
   ctx2.save();
   ctx2.clearRect(0,0,W,H);
-  TPL_FN[state.template](ctx2,W,H,state,pal(state.accent),frame(W,H,!!assets.shot));
+  const sd=renderState();
+  TPL_FN[state.template](ctx2,W,H,sd,pal(state.accent),frame(W,H,!!assets.shot));
+  if(seriesOn()&&(state.series.cur||0)>0) drawPageBadge(ctx2,W,H,(state.series.cur||0)+1,seriesPages().length,pal(state.accent));
   ctx2.restore();
 }
 function fitPreview(){
@@ -2364,17 +2422,18 @@ let thumbTimer = null;
 function renderThumbs(){
   clearTimeout(thumbTimer);
   thumbTimer = setTimeout(()=>{
+    const sd = renderState();
     for (const t of TPLS){
       const c = document.getElementById('tpl-'+t.k);
       if(!c) continue;
       const x = c.getContext('2d');
       const W=320, Hr=200;
-      const keep = state.template;
-      state.template = t.k;
+      const keep = sd.template;
+      sd.template = t.k;
       x.setTransform(1,0,0,1,0,0);
       x.clearRect(0,0,W,Hr);
-      TPL_FN[t.k](x,W,Hr,state,pal(state.accent),frame(W,Hr,!!assets.shot,{padMul:1.3}));
-      state.template = keep;
+      TPL_FN[t.k](x,W,Hr,sd,pal(sd.accent),frame(W,Hr,!!assets.shot,{padMul:1.3}));
+      sd.template = keep;
     }
   },120);
 }
@@ -2383,6 +2442,7 @@ function renderAll(){
   renderThumbs();
   updateMagicHint();
   updateFieldVis();
+  syncSeriesBtn();
   scheduleSave();
 }
 function renderStaticBits(){
@@ -2518,8 +2578,15 @@ $('#btnBrandDel').onclick = ()=>{
 function exportList(){ return Array.isArray(state.exportSel) ? state.exportSel : SIZES.map(s=>s.k); }
 function updateExportLabel(){
   const n = exportList().length;
-  const el = $('#bAllTxt'); if (el) el.textContent = I18N[lang].bAllN.replace('{n}',n);
-  const btn = $('#btnAll'); if (btn) btn.disabled = !n;
+  const el = $('#bAllTxt'); const btn = $('#btnAll');
+  if (seriesOn()){
+    const pgs = seriesPages().length;
+    if (el) el.textContent = I18N[lang].bAllSeries.replace('{s}',n).replace('{p}',pgs);
+    if (btn) btn.disabled = !(n&&pgs);
+  } else {
+    if (el) el.textContent = I18N[lang].bAllN.replace('{n}',n);
+    if (btn) btn.disabled = !n;
+  }
 }
 function renderSizes(){
   const sg = $('#sizeGrid'); sg.innerHTML='';
@@ -2548,11 +2615,14 @@ $('#selAll').onclick = ()=>{ state.exportSel = SIZES.map(s=>s.k); renderSizes();
 $('#selNone').onclick = ()=>{ state.exportSel = []; renderSizes(); scheduleSave(); };
 
 /* ============ export ============ */
-function renderNative(sizeKey){
+function renderNative(sizeKey,pageIdx){
   const s = SIZES.find(s=>s.k===sizeKey);
   const c = document.createElement('canvas');
   c.width=s.w; c.height=s.h;
+  let keep=null;
+  if(pageIdx!=null && state.series){ keep=state.series.cur||0; state.series.cur=pageIdx; }
   renderTo(c.getContext('2d'), s.w, s.h);
+  if(keep!=null && state.series) state.series.cur=keep;
   return c;
 }
 const toBlob = c => new Promise(res=>c.toBlob(res,'image/png'));
@@ -2570,7 +2640,8 @@ function setStatus(msg,ok){
 $('#btnDownload').onclick = async ()=>{
   const blob = await toBlob(renderNative(state.size));
   const s = SIZES.find(s=>s.k===state.size);
-  download(blob, `${slug()}-${state.template}-${s.w}x${s.h}.png`);
+  const pfx = seriesOn()? `-p${String((state.series.cur||0)+1).padStart(2,'0')}` : '';
+  download(blob, `${slug()}${pfx}-${state.template}-${s.w}x${s.h}.png`);
   setStatus(lang==='zh'?'已下载 ✓':'Downloaded ✓', true);
   setTimeout(()=>setStatus(''),1600);
 };
@@ -2586,15 +2657,19 @@ $('#btnCopy').onclick = async ()=>{
 $('#btnAll').onclick = async ()=>{
   const btn = $('#btnAll'); btn.disabled = true;
   const sel = exportList();
-  const total = sel.length; let i = 0;
+  const pages = seriesOn()? seriesPages().length : 1;
+  const total = sel.length * pages; let i = 0;
   try{
-    for (const s of SIZES){
-      if (!sel.includes(s.k)) continue;
-      i++;
-      setStatus(I18N[lang].stExporting.replace('{a}',i).replace('{b}',total));
-      const blob = await toBlob(renderNative(s.k));
-      download(blob, `${slug()}-${state.template}-${s.w}x${s.h}.png`);
-      await new Promise(r=>setTimeout(r,420));
+    for (let pi=0; pi<pages; pi++){
+      for (const s of SIZES){
+        if (!sel.includes(s.k)) continue;
+        i++;
+        setStatus(I18N[lang].stExporting.replace('{a}',i).replace('{b}',total));
+        const blob = await toBlob(renderNative(s.k, pages>1?pi:null));
+        const pfx = pages>1? `-p${String(pi+1).padStart(2,'0')}` : '';
+        download(blob, `${slug()}${pfx}-${state.template}-${s.w}x${s.h}.png`);
+        await new Promise(r=>setTimeout(r,420));
+      }
     }
     setStatus(I18N[lang].stDone.replace('{b}',total), true);
   }catch(e){ setStatus(I18N[lang].stFail+e.message); }
@@ -2607,10 +2682,67 @@ function bindText(id,key){
   const el = $(id);
   el.value = state[key];
   el.addEventListener('input',()=>{
-    state[key]=el.value;
-    if(state.copies && state.copies[state.copyLang]) state.copies[state.copyLang][key]=el.value;
+    const pageKey = key==='title'?'t':key==='sub'?'s':null;
+    if(seriesOn() && pageKey){
+      const pg = curPage();
+      if(pg) pg[pageKey] = el.value;
+    } else {
+      state[key]=el.value;
+      if(state.copies && state.copies[state.copyLang]) state.copies[state.copyLang][key]=el.value;
+    }
     renderAll();
   });
+}
+/* 系列页面列表管理 */
+function syncSeriesBtn(){
+  const b=$('#btnSeries'); if(b) b.classList.toggle('on', seriesOn());
+}
+function loadCurPageIntoInputs(){
+  const pg = curPage();
+  $('#inTitle').value = pg? (pg.t||'') : (state.title||'');
+  $('#inSub').value = pg? (pg.s||'') : (state.sub||'');
+}
+function renderPagesList(){
+  const box=$('#pagesList'); if(!box) return;
+  box.innerHTML='';
+  const pgs=seriesPages();
+  pgs.forEach((pg,i)=>{
+    const chip=document.createElement('button');
+    chip.type='button';
+    chip.className='pchip'+((state.series&&state.series.cur===i)?' on':'');
+    const num=document.createElement('b'); num.textContent=String(i+1).padStart(2,'0');
+    const ttl=document.createElement('span'); ttl.textContent=(pg.t||'（空）').slice(0,16);
+    chip.append(num,ttl);
+    if(pgs.length>1){
+      const del=document.createElement('i'); del.className='del'; del.textContent='✕'; del.title='删除本页';
+      del.onclick=e=>{ e.stopPropagation();
+        pgs.splice(i,1);
+        if((state.series.cur||0)>=pgs.length) state.series.cur=pgs.length-1;
+        loadCurPageIntoInputs(); renderPagesList(); renderAll();
+      };
+      chip.append(del);
+    }
+    chip.onclick=()=>{ state.series.cur=i; loadCurPageIntoInputs(); renderPagesList(); renderAll(); };
+    box.appendChild(chip);
+  });
+}
+function toggleSeries(){
+  if(!state.series) state.series={on:false,cur:0};
+  state.series.on=!state.series.on;
+  const slot=(state.copies&&state.copies[state.copyLang])||(state.copies[state.copyLang]={});
+  if(state.series.on){
+    if(!Array.isArray(slot.pages)||!slot.pages.length) slot.pages=[{t:state.title||'',s:state.sub||''}];
+    if((state.series.cur||0)>=slot.pages.length) state.series.cur=0;
+    loadCurPageIntoInputs();
+  } else {
+    const p0=seriesPages()[0];
+    if(p0){ state.title=p0.t||''; state.sub=p0.s||''; $('#inTitle').value=state.title; $('#inSub').value=state.sub; }
+  }
+  syncSeriesBtn();
+  $('#pagesBox').hidden=!state.series.on;
+  renderPagesList();
+  updateExportLabel();
+  renderAll();
 }
 /* 文案双语双套：切换时各自记住内容 */
 function setCopyLang(l){
@@ -2729,6 +2861,15 @@ function updateFieldVis(){
 }
 
 /* random */
+$('#btnSeries').onclick = toggleSeries;
+$('#btnAddPage').onclick = ()=>{
+  if(!seriesOn()) return;
+  const pgs = seriesPages();
+  if (pgs.length>=12){ toast(lang==='zh'?'最多 12 页':'Max 12 pages'); return; }
+  pgs.push({t:'',s:''});
+  state.series.cur = pgs.length-1;
+  loadCurPageIntoInputs(); renderPagesList(); updateExportLabel(); renderAll();
+};
 $('#btnRandom').onclick = ()=>{
   const t = TPLS[Math.random()*TPLS.length|0];
   const a = ACCENTS[Math.random()*ACCENTS.length|0];
@@ -2755,6 +2896,8 @@ function applyLang(){
   renderBrandSel();
   updateMagicHint();
   updateFieldVis();
+  syncSeriesBtn();
+  renderPagesList();
   renderStaticBits(); renderThumbs();
 }
 $('#btnLang').onclick = ()=>{ lang = lang==='zh'?'en':'zh'; applyLang(); renderAll(); };

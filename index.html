@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShareForge 分享图工坊 — Free Social Share Image Generator (X, WeChat, OG, Instagram)</title>
-<meta name="description" content="Create beautiful marketing share images in seconds. 14 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
+<meta name="description" content="Create beautiful marketing share images in seconds. 16 designer templates × 8 platform sizes for X/Twitter, WeChat, Xiaohongshu (RED), Instagram, LinkedIn and more. Upload or paste your product screenshot & logo, export PNG one-click or batch-export all sizes. 100% free, runs entirely in your browser.">
 <link rel="canonical" href="https://shareforge.kuige.me/">
 <link rel="alternate" hreflang="en" href="https://shareforge.kuige.me/">
 <link rel="alternate" hreflang="zh" href="https://shareforge.kuige.me/?lang=zh">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ShareForge 分享图工坊">
 <meta property="og:title" content="ShareForge — Social Share Image Generator">
-<meta property="og:description" content="14 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
+<meta property="og:description" content="16 designer templates × 8 platform sizes for X, WeChat, RED, Instagram & LinkedIn. Free, private, runs in your browser.">
 <meta property="og:url" content="https://shareforge.kuige.me/">
 <meta property="og:image" content="https://shareforge.kuige.me/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 14 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 16 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -204,7 +204,7 @@ footer a{color:var(--mut)}
 
 <section class="hero">
   <h1 data-i18n="heroTitle">Forge scroll-stopping share images</h1>
-  <p data-i18n="heroSub">14 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.</p>
+  <p data-i18n="heroSub">16 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.</p>
 </section>
 
 <main>
@@ -387,6 +387,8 @@ const TPLS = [
   {k:'swiss',    en:'Swiss',     zh:'瑞士'},
   {k:'viral',    en:'Viral',     zh:'爆文'},
   {k:'promo',    en:'Promo',     zh:'推广'},
+  {k:'bento',    en:'Bento',     zh:'便当'},
+  {k:'quote',    en:'Quote',     zh:'金句'},
 ];
 const ACCENTS = ['#7c3aed','#0ea5e9','#10b981','#f59e0b','#f43f5e','#8b5cf6','#14b8a6','#e11d48'];
 
@@ -394,7 +396,7 @@ const I18N = {
   en:{
     tagline:'Share image studio', surprise:'Surprise me',
     heroTitle:'Forge scroll-stopping share images',
-    heroSub:'14 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
+    heroSub:'16 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
     secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
     brandHint:'Saves link, handle, accent & logo — switch between your sites in one click.',
     brandPh:'Select brand…', brandPhEmpty:'No profiles yet — click Save to create one', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
@@ -429,7 +431,7 @@ const I18N = {
   zh:{
     tagline:'分享图工作室', surprise:'随机灵感',
     heroTitle:'锻造让全网驻足的分享图',
-    heroSub:'14 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
+    heroSub:'16 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
     secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
     brandHint:'保存链接、账号、主题色与 Logo——多个站点一键切换。',
     brandPh:'选择品牌…', brandPhEmpty:'尚无档案 · 填好后点「保存」创建', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
@@ -1962,6 +1964,242 @@ promo(ctx,W,H,d,p,fr){
     ctx.fillText(d.handle,W-pad,H-pad*0.55);
     ctx.textAlign='left';
   }
+},
+
+bento(ctx,W,H,d,p,fr){
+  /* 便当盒网格：圆角卡片 + 一两个 accent 强调格。badge/title/sub 格、域名格、截图格、卖点格。 */
+  const pad=fr.pad*0.82, gap=clamp(pad*0.26,10,26), R=clamp(pad*0.4,14,40);
+  ctx.fillStyle=hsl(p.h,p.s*0.45,96); ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.03);
+  const ink='#16112a';
+  const acc=p.base;
+  const deep=hsl(p.h,clamp(p.s,40,80),22);
+  const x0=pad,y0=pad,cw=W-pad*2,ch=H-pad*2;
+  const feats = d.sub ? d.sub.split(/\s*[·•|/、，,；;]\s*|\s{2,}/).map(s=>s.trim()).filter(Boolean).slice(0,3) : [];
+  const asList = feats.length>=2;
+  const urlT=(d.url||'yoursite.com').replace(/^https?:\/\//,'');
+  const cell=(x,y,w,h,fill,strokeW)=>{
+    if(strokeW){ctx.strokeStyle=fill;ctx.lineWidth=strokeW;rr(ctx,x,y,w,h,R);ctx.stroke();}
+    else{ctx.fillStyle=fill;rr(ctx,x,y,w,h,R);ctx.fill();}
+  };
+  /* 网格：wide 2 行 [大标题格|域名格] / [截图格|卖点格]；square 2×2 均分；portrait 3 行 */
+  const stacked=fr.mode!=='wide';
+  const hasShot=!!assets.shot;
+  const inner=clamp(pad*0.5,16,44); /* 格内边距 */
+  if(!stacked){
+    const r1=ch*0.55;
+    const c1w=cw*0.60;
+    /* 格1：标题格（深底强调） */
+    cell(x0,y0,c1w,r1,deep);
+    let ix=x0+inner,iy=y0+inner;
+    const hS=clamp(r1*0.055,11,20);
+    if(d.badge){
+      ctx.font=`800 ${hS}px ${F_SANS}`;
+      ctx.fillStyle=hsl(p.h,p.s,80,.95);
+      ctx.fillText(d.badge.toUpperCase(),ix,iy+hS);
+      iy+=hS*2.1;
+    }
+    const tb=fitBlock(ctx,d.title,c1w-inner*2,2,clamp(r1*0.15,26,84),16,sz=>ctx.font=`900 ${sz}px ${F_SANS}`);
+    ctx.font=`900 ${tb.size}px ${F_SANS}`;ctx.fillStyle='#fff';
+    let ty=iy+tb.size*0.95;
+    for(const ln of tb.lines){ctx.fillText(ln,ix,ty);ty+=tb.size*1.16;}
+    iy=ty-tb.size*1.16+tb.size*0.55;
+    if(d.sub&&!asList){
+      ctx.font=`500 ${clamp(r1*0.05,12,19)}px ${F_SANS}`;
+      ctx.fillStyle='rgba(255,255,255,.72)';
+      ctx.fillText(d.sub.length>40?d.sub.slice(0,39)+'…':d.sub,ix,iy+clamp(r1*0.05,12,19));
+    }
+    /* 格2：域名格（accent 实底，内容垂直居中） */
+    const c2x=x0+c1w+gap,c2w=cw-c1w-gap;
+    cell(c2x,y0,c2w,r1,p.base);
+    const lockS=clamp(r1*0.05,12,20);
+    let uS=clamp(r1*0.15,22,74);
+    let uT=urlT;
+    ctx.font=`800 ${uS}px ${F_SANS}`;
+    while(uS>14&&ctx.measureText(uT).width>c2w-inner*2-lockS*2.2){uS-=2;ctx.font=`800 ${uS}px ${F_SANS}`;}
+    const uY=y0+r1*0.46;
+    ctx.strokeStyle='#fff';ctx.lineWidth=Math.max(2,lockS*0.26);
+    ctx.beginPath();ctx.arc(c2x+inner+lockS*0.55,uY-lockS*0.15,lockS*0.42,Math.PI,0);ctx.stroke();
+    ctx.fillStyle='#fff';rr(ctx,c2x+inner+lockS*0.55-lockS*0.55,uY-lockS*0.15,lockS*1.1,lockS*0.95,lockS*0.22);ctx.fill();
+    ctx.fillStyle='#fff';ctx.textAlign='left';
+    ctx.fillText(uT,c2x+inner+lockS*2.1,uY+uS*0.36);
+    ctx.font=`700 ${clamp(r1*0.042,10,16)}px ${F_SANS}`;
+    ctx.fillStyle='rgba(255,255,255,.75)';
+    ctx.fillText(lang==='zh'?'立即访问 →':'visit now →',c2x+inner,y0+r1-inner);
+    ctx.fillStyle='rgba(255,255,255,.25)';
+    ctx.beginPath();ctx.arc(c2x+c2w-inner*1.2,y0+r1-inner*1.2,clamp(r1*0.035,8,16),0,7);ctx.fill();
+    /* 格3：截图格或署名格（白格描边） */
+    const r2y=y0+r1+gap,r2h=ch-r1-gap;
+    const c3w=cw*0.36;
+    cell(x0,r2y,c3w,r2h,'#ffffff',2);
+    if(hasShot){
+      shotFrame(ctx,{x:x0+inner*0.7,y:r2y+inner*0.7,w:c3w-inner*1.4,h:r2h-inner*1.4},assets.shot,'',fr.mode,p,{border:'rgba(23,17,42,.12)'});
+    } else if(d.handle){
+      ctx.font=`800 ${clamp(r2h*0.11,16,34)}px ${F_SANS}`;ctx.fillStyle=ink;
+      ctx.fillText(d.handle,x0+inner,r2y+inner+clamp(r2h*0.11,16,34));
+      ctx.font=`600 ${clamp(r2h*0.045,10,15)}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.5)';
+      ctx.fillText(lang==='zh'?'作者 · Author':'Author',x0+inner,r2y+inner+clamp(r2h*0.11,16,34)*1.9);
+    }
+    /* 格4：卖点格（白格） */
+    const c4x=x0+c3w+gap,c4w=cw-c3w-gap;
+    cell(c4x,r2y,c4w,r2h,'#ffffff',2);
+    if(asList){
+      const fS=clamp(r2h*0.062,12,22);
+      let fy=r2y+inner+fS*1.4;
+      for(const t of feats.slice(0, Math.floor((r2h-inner*2)/(fS*2.1)))){
+        ctx.fillStyle=acc;ctx.beginPath();ctx.arc(c4x+inner+fS*0.62,fy-fS*0.34,fS*0.6,0,7);ctx.fill();
+        ctx.fillStyle='#fff';ctx.font=`800 ${fS*0.8}px ${F_SANS}`;ctx.textAlign='center';
+        ctx.fillText('✓',c4x+inner+fS*0.62,fy-fS*0.05);
+        ctx.font=`600 ${fS}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.8)';ctx.textAlign='left';
+        ctx.fillText(t,c4x+inner+fS*1.5,fy);
+        fy+=fS*2.1;
+      }
+      if(d.handle){
+        ctx.font=`700 ${clamp(r2h*0.05,11,17)}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.45)';ctx.textAlign='right';
+        ctx.fillText(d.handle,c4x+c4w-inner,r2y+r2h-inner);
+        ctx.textAlign='left';
+      }
+    } else if(d.handle){
+      ctx.font=`800 ${clamp(r2h*0.1,16,32)}px ${F_SANS}`;ctx.fillStyle=ink;
+      ctx.fillText(d.handle,c4x+inner,r2y+inner+clamp(r2h*0.1,16,32));
+    }
+  } else {
+    /* portrait：3 行 [标题格] / [域名|卖点] / [截图格 或 署名+装饰] */
+    const r1=ch*(hasShot?0.30:0.36), r2=ch*0.24, r3=ch-r1-r2-gap*2;
+    cell(x0,y0,cw,r1,deep);
+    let ix=x0+inner,iy=y0+inner;
+    const hS=clamp(r1*0.07,11,22);
+    if(d.badge){
+      ctx.font=`800 ${hS}px ${F_SANS}`;
+      ctx.fillStyle=hsl(p.h,p.s,80,.95);
+      ctx.fillText(d.badge.toUpperCase(),ix,iy+hS);
+      iy+=hS*2.2;
+    }
+    const availT=r1-((iy-y0))-inner-(d.sub&&!asList? hS*2.6:0);
+    const tb=fitBlock(ctx,d.title,cw-inner*2,2,clamp(availT*0.42,24,88),16,sz=>ctx.font=`900 ${sz}px ${F_SANS}`);
+    ctx.font=`900 ${tb.size}px ${F_SANS}`;ctx.fillStyle='#fff';
+    let ty=iy+tb.size*0.95;
+    for(const ln of tb.lines){ctx.fillText(ln,ix,ty);ty+=tb.size*1.16;}
+    if(d.sub&&!asList){
+      ctx.font=`500 ${clamp(r1*0.055,12,20)}px ${F_SANS}`;
+      ctx.fillStyle='rgba(255,255,255,.72)';ctx.textAlign='left';
+      ctx.fillText(d.sub.length>34?d.sub.slice(0,33)+'…':d.sub,ix,y0+r1-inner*0.8);
+      ctx.textAlign='left';
+    }
+    const r2y=y0+r1+gap;
+    const halfW=(cw-gap)/2;
+    /* 域名格 */
+    cell(x0,r2y,halfW,r2,p.base);
+    const lockS=clamp(r2*0.06,11,18);
+    ctx.strokeStyle='#fff';ctx.lineWidth=Math.max(2,lockS*0.26);
+    ctx.beginPath();ctx.arc(x0+inner+lockS*0.55,r2y+inner+lockS*0.35,lockS*0.42,Math.PI,0);ctx.stroke();
+    ctx.fillStyle='#fff';rr(ctx,x0+inner+lockS*0.55-lockS*0.55,r2y+inner+lockS*0.35,lockS*1.1,lockS*0.95,lockS*0.22);ctx.fill();
+    let uS=clamp(r2*0.17,16,44);
+    let uT=urlT;
+    ctx.font=`800 ${uS}px ${F_SANS}`;
+    while(uS>12&&ctx.measureText(uT).width>halfW-inner*2-lockS*2.2){uS-=2;ctx.font=`800 ${uS}px ${F_SANS}`;}
+    ctx.fillStyle='#fff';
+    ctx.fillText(uT,x0+inner,r2y+r2-inner*0.75);
+    /* 卖点格 */
+    const c4x=x0+halfW+gap;
+    cell(c4x,r2y,halfW,r2,'#ffffff',2);
+    if(asList){
+      const fS=clamp(r2*0.062,11,19);
+      let fy=r2y+inner+fS*1.3;
+      for(const t of feats.slice(0, Math.max(1,Math.floor((r2-inner*1.6)/(fS*2.15))))){
+        ctx.fillStyle=acc;ctx.beginPath();ctx.arc(c4x+inner+fS*0.6,fy-fS*0.32,fS*0.58,0,7);ctx.fill();
+        ctx.fillStyle='#fff';ctx.font=`800 ${fS*0.8}px ${F_SANS}`;ctx.textAlign='center';
+        ctx.fillText('✓',c4x+inner+fS*0.6,fy-fS*0.03);
+        ctx.font=`600 ${fS}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.8)';ctx.textAlign='left';
+        ctx.fillText(t,c4x+inner+fS*1.45,fy);
+        fy+=fS*2.15;
+      }
+    } else if(d.sub){
+      ctx.font=`600 ${clamp(r2*0.055,11,17)}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.75)';
+      ctx.fillText(d.sub.slice(0,22),c4x+inner,r2y+inner+clamp(r2*0.055,11,17));
+    }
+    /* row3 */
+    const r3y=r2y+r2+gap;
+    if(hasShot){
+      cell(x0,r3y,cw,r3,'#ffffff',2);
+      shotFrame(ctx,{x:x0+inner*0.8,y:r3y+inner*0.8,w:cw-inner*1.6,h:r3-inner*1.6},assets.shot,'',fr.mode,p,{border:'rgba(23,17,42,.12)'});
+    } else {
+      const hw=hasShot?cw:(cw-gap)/2;
+      cell(x0,r3y,hw,r3,'#ffffff',2);
+      if(d.handle){
+        ctx.font=`800 ${clamp(r3*0.11,16,36)}px ${F_SANS}`;ctx.fillStyle=ink;
+        ctx.fillText(d.handle,x0+inner,r3y+r3/2+clamp(r3*0.11,16,36)*0.36);
+        ctx.font=`600 ${clamp(r3*0.045,10,15)}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.5)';
+        ctx.fillText(lang==='zh'?'作者 · Author':'Author',x0+inner,r3y+r3/2+clamp(r3*0.11,16,36)*1.35);
+      }
+      if(!hasShot){
+        const dx=x0+hw+gap,dw=hw;
+        cell(dx,r3y,dw,r3,p.base);
+        ctx.fillStyle='rgba(255,255,255,.22)';
+        ctx.beginPath();ctx.arc(dx+dw*0.5,r3y+r3*0.42,dw*0.17,0,7);ctx.fill();
+        ctx.beginPath();ctx.arc(dx+dw*0.32,r3y+r3*0.68,dw*0.10,0,7);ctx.fill();
+        ctx.beginPath();ctx.arc(dx+dw*0.68,r3y+r3*0.70,dw*0.07,0,7);ctx.fill();
+      }
+    }
+  }
+},
+
+quote(ctx,W,H,d,p,fr){
+  /* 金句卡：大引号 + 居中金句 + 署名。纯文字，跟主题色淡底。 */
+  const bg=hsl(p.h,p.s*0.4,95);
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+  const gl=ctx.createRadialGradient(W*0.5,H*0.24,0,W*0.5,H*0.24,W*0.55);
+  gl.addColorStop(0,hsl(p.h,p.s,80,.5)); gl.addColorStop(1,hsl(p.h,p.s,80,0));
+  ctx.fillStyle=gl; ctx.fillRect(0,0,W,H);
+  noise(ctx,W,H,.028);
+  const ink='#1a1430';
+  const m=Math.min(W,H);
+  /* 大引号装饰 */
+  const qS=m*0.30;
+  ctx.font=`900 ${qS}px ${F_SERIF}`;
+  ctx.fillStyle=hsl(p.h,p.s,62,.34);
+  ctx.textAlign='left';
+  ctx.fillText('\u201C',W*0.5-qS*0.18,qS*0.86);
+  /* 金句 */
+  const T={x:fr.pad*1.4,w:W-fr.pad*2.8};
+  const qMax = fr.mode==='portrait'?4:3;
+  const base=clamp(T.w*(fr.mode==='wide'?0.085:0.10),20,m*0.115);
+  const tb=fitBlock(ctx,d.title||'',T.w,qMax,base,base*0.4,sz=>ctx.font=`700 ${sz}px ${F_SERIF}`);
+  const lh=tb.size*1.34;
+  const subS=clamp(tb.size*0.34,12,20);
+  const hasSub=!!d.sub;
+  const sigH=(d.handle?m*0.075:0)+(d.badge&&d.handle?m*0.035:0);
+  const footH=d.url? m*0.05 : 0;
+  const blockH=qS*0.42+tb.lines.length*lh+(hasSub?subS*2.2:0)+m*0.055+sigH;
+  let y=Math.max(fr.pad*1.2,(H-footH-blockH)/2)+qS*0.42;
+  ctx.textAlign='center';ctx.font=`700 ${tb.size}px ${F_SERIF}`;ctx.fillStyle=ink;
+  for(const ln of tb.lines){ctx.fillText(ln,W/2,y+tb.size*0.9);y+=lh;}
+  if(hasSub){
+    ctx.font=`500 ${subS}px ${F_SANS}`;ctx.fillStyle='rgba(26,20,48,.55)';
+    ctx.fillText(d.sub.length>60?d.sub.slice(0,59)+'…':d.sub,W/2,y+subS*1.3);
+    y+=subS*2.2;
+  }
+  y+=m*0.055;
+  ctx.fillStyle=p.base;
+  rr(ctx,W/2-m*0.035,y,m*0.07,Math.max(3,m*0.008),m*0.004); ctx.fill();
+  y+=m*0.055;
+  if(d.handle){
+    ctx.font=`800 ${clamp(m*0.032,15,30)}px ${F_SANS}`;
+    ctx.fillStyle=ink;
+    ctx.fillText(d.handle.replace(/^@/,''),W/2,y+clamp(m*0.032,15,30));
+    y+=clamp(m*0.032,15,30)*1.5;
+    if(d.badge){
+      ctx.font=`600 ${clamp(m*0.021,11,16)}px ${F_SANS}`;
+      ctx.fillStyle='rgba(26,20,48,.5)';
+      ctx.fillText(d.badge,W/2,y+clamp(m*0.021,11,16));
+    }
+  }
+  if(d.url){
+    ctx.font=`700 ${clamp(m*0.02,11,15)}px ${F_SANS}`;
+    ctx.fillStyle=hsl(p.h,p.s,45,.75);
+    ctx.fillText(urlStrip(d.url),W/2,H-fr.pad*0.72);
+  }
+  function urlStrip(u){return u.replace(/^https?:\/\//,'');}
 },
 };
 

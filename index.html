@@ -182,6 +182,9 @@ td code{background:var(--soft);border-radius:5px;padding:1px 7px;font-size:12px;
 .brandrow{display:flex;gap:8px}
 .brandrow select{flex:1;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--bg2);color:var(--ink);padding:8px 10px;font:inherit;font-size:13.5px}
 .hint{font-size:11.5px;color:var(--mut);margin-top:9px;line-height:1.45}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.seg button{border:none;background:var(--bg2);color:var(--mut);font-size:11px;font-weight:800;padding:4px 10px;cursor:pointer}
+.seg button.on{background:var(--ui-accent);color:#fff}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 footer{border-top:1px solid var(--line);padding:18px 20px 30px;text-align:center;color:var(--mut);font-size:12.5px}
 footer a{color:var(--mut)}
@@ -227,7 +230,13 @@ footer a{color:var(--mut)}
     </section>
 
     <section class="card">
-      <h2 data-i18n="secContent">Content</h2>
+      <div class="hrow">
+        <h2 data-i18n="secContent">Content</h2>
+        <div class="seg" id="copySeg" title="Copy language / 文案语言">
+          <button data-cl="zh" type="button">中</button>
+          <button data-cl="en" type="button">EN</button>
+        </div>
+      </div>
       <div class="frow">
         <label data-i18n="hBadge">Badge</label>
         <input type="text" id="inBadge" maxlength="40">
@@ -410,7 +419,7 @@ const I18N = {
     stShotSet:'Screenshot updated ✓', stLogoSet:'Logo updated ✓',
     heroSub:'16 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
     secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
-    brandHint:'Saves link, handle, accent & logo — switch between your sites in one click.',
+    brandHint:'Saves copy (zh/en), template, size, screenshot, link, handle & accent — one click to switch sites.',
     brandPh:'Select brand…', brandPhEmpty:'No profiles yet — click Save to create one', stBrandSaved:'Brand saved ✓', stBrandDel:'Brand deleted', stStoreFull:'Save failed: storage full',
     selAll:'All', selNone:'None', bAllN:'Export {n} sizes',
     secContent:'Content', secTemplate:'Template', secAccent:'Accent color', secSize:'Size', secAssets:'Assets',
@@ -449,7 +458,7 @@ const I18N = {
     stShotSet:'已设为产品截图 ✓', stLogoSet:'Logo 已更新 ✓',
     heroSub:'16 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
     secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
-    brandHint:'保存链接、账号、主题色与 Logo——多个站点一键切换。',
+    brandHint:'保存文案（中/EN）、模板、尺寸、截图、链接、账号与主题色——多站一键切换。',
     brandPh:'选择品牌…', brandPhEmpty:'尚无档案 · 填好后点「保存」创建', stBrandSaved:'品牌已保存 ✓', stBrandDel:'已删除', stStoreFull:'保存失败：存储空间不足',
     selAll:'全选', selNone:'清空', bAllN:'导出 {n} 张',
     secContent:'文案内容', secTemplate:'模板', secAccent:'主题色', secSize:'尺寸', secAssets:'素材',
@@ -490,6 +499,7 @@ const DEFAULTS = {
   url:'yoursite.com', handle:'@yourhandle',
   shot:null, logo:null, demo:true,
   exportSel: SIZES.map(s=>s.k),
+  copyLang:'en', copies:{}, copiesMigrated:false,
 };
 let state = {...DEFAULTS};
 const assets = {shot:null, logo:null};
@@ -2427,7 +2437,31 @@ function loadProfiles(){
   try{ const l = JSON.parse(localStorage.getItem(PROFILES_KEY)); return Array.isArray(l)?l:[]; }catch(e){ return []; }
 }
 function saveProfiles(list){
-  try{ localStorage.setItem(PROFILES_KEY, JSON.stringify(list)); return true; }catch(e){ return false; }
+  try{ localStorage.setItem(PROFILES_KEY, JSON.stringify(list)); return true; }
+  catch(e){
+    /* 配额不足：先去掉快照里的截图，再不行去掉整个快照 */
+    try{
+      localStorage.setItem(PROFILES_KEY, JSON.stringify(list.map(p=>p.snap?{...p,snap:{...p.snap,shot:null}}:p)));
+      return true;
+    }catch(e2){
+      try{ localStorage.setItem(PROFILES_KEY, JSON.stringify(list.map(p=>({...p,snap:undefined})))); return true; }
+      catch(e3){ return false; }
+    }
+  }
+}
+function brandSnap(){
+  return {template:state.template, size:state.size, exportSel:state.exportSel, copyLang:state.copyLang, copies:state.copies, shot:state.shot};
+}
+function applySnap(snap){
+  if(!snap) return;
+  ['template','size','exportSel','copyLang','copies'].forEach(k=>{ if(snap[k]!=null) state[k]=snap[k]; });
+  if(!state.copies||!state.copies[state.copyLang]){
+    state.copies = state.copies||{}; state.copies[state.copyLang]={badge:state.badge||'',title:state.title||'',sub:state.sub||''};
+  }
+  const c=state.copies[state.copyLang];
+  state.badge=c.badge||''; state.title=c.title||''; state.sub=c.sub||'';
+  $('#inBadge').value=state.badge; $('#inTitle').value=state.title; $('#inSub').value=state.sub;
+  syncSeg(); renderStaticBits(); updateStageHead();
 }
 function renderBrandSel(){
   const sel = $('#brandSel'); if(!sel) return;
@@ -2447,7 +2481,7 @@ $('#btnBrandSave').onclick = ()=>{
   const host = (state.url||'').replace(/^https?:\/\//,'').replace(/[\/\?#].*$/,'').trim() || 'brand';
   const list = loadProfiles();
   const ex = list.find(pr=>pr.name===host);
-  const prof = {id: ex?ex.id:'b'+Date.now().toString(36), name:host, url:state.url, handle:state.handle, accent:state.accent, logo:state.logo};
+  const prof = {id: ex?ex.id:'b'+Date.now().toString(36), name:host, url:state.url, handle:state.handle, accent:state.accent, logo:state.logo, snap:brandSnap()};
   if (ex) Object.assign(ex, prof); else list.push(prof);
   if (!saveProfiles(list)){ toast(I18N[lang].stStoreFull); return; }
   renderBrandSel(); $('#brandSel').value = prof.id;
@@ -2461,6 +2495,8 @@ $('#brandSel').onchange = ()=>{
   state.url = pr.url||''; state.handle = pr.handle||'';
   $('#inUrl').value = state.url; $('#inHandle').value = state.handle;
   setAccent(pr.accent||'#6366f1');
+  applySnap(pr.snap);
+  setAsset('shot', (pr.snap&&pr.snap.shot!=null)?pr.snap.shot:(state.shot||null));
   setAsset('logo', pr.logo||null);
   renderAll();
 };
@@ -2563,7 +2599,32 @@ $('#btnAll').onclick = async ()=>{
 function bindText(id,key){
   const el = $(id);
   el.value = state[key];
-  el.addEventListener('input',()=>{ state[key]=el.value; renderAll(); });
+  el.addEventListener('input',()=>{
+    state[key]=el.value;
+    if(state.copies && state.copies[state.copyLang]) state.copies[state.copyLang][key]=el.value;
+    renderAll();
+  });
+}
+/* 文案双语双套：切换时各自记住内容 */
+function setCopyLang(l){
+  if(!state.copies) state.copies={};
+  if(!state.copies.zh) state.copies.zh={badge:'',title:'',sub:''};
+  if(!state.copies.en) state.copies.en={badge:'',title:'',sub:''};
+  if(l===state.copyLang) return;
+  const cur=state.copies[state.copyLang]||(state.copies[state.copyLang]={badge:'',title:'',sub:''});
+  cur.badge=state.badge||''; cur.title=state.title||''; cur.sub=state.sub||'';
+  state.copyLang=l;
+  const nxt=state.copies[l];
+  state.badge=nxt.badge||''; state.title=nxt.title||''; state.sub=nxt.sub||'';
+  $('#inBadge').value=state.badge; $('#inTitle').value=state.title; $('#inSub').value=state.sub;
+  document.querySelectorAll('#copySeg button').forEach(b=>b.classList.toggle('on',b.dataset.cl===l));
+  renderAll();
+}
+document.querySelectorAll('#copySeg button').forEach(b=>{
+  b.addEventListener('click',()=>setCopyLang(b.dataset.cl));
+});
+function syncSeg(){
+  document.querySelectorAll('#copySeg button').forEach(b=>b.classList.toggle('on',b.dataset.cl===(state.copyLang||'en')));
 }
 bindText('#inBadge','badge'); bindText('#inTitle','title'); bindText('#inSub','sub');
 bindText('#inUrl','url'); bindText('#inHandle','handle');
@@ -2717,9 +2778,20 @@ window.__SF = {
     state = draft;
     if (params.get('lang')) lang = params.get('lang');
   }
+  /* 文案双套迁移：把现有内容种入当前语言槽（老草稿/新用户各一次） */
+  if (!state.copiesMigrated){
+    if(!state.copies||typeof state.copies!=='object') state.copies={};
+    const l0=state.copyLang||'en';
+    state.copies[l0]={badge:state.badge||'',title:state.title||'',sub:state.sub||''};
+    const other=l0==='zh'?'en':'zh';
+    if(!state.copies[other]) state.copies[other]={badge:'',title:'',sub:''};
+    state.copyLang=l0;
+    state.copiesMigrated=true;
+  }
   if (state.demo !== false && !state.shot) state.shot = makeDemoShot();
   /* bind input values from restored state */
   for (const [id,k] of [['#inBadge','badge'],['#inTitle','title'],['#inSub','sub'],['#inUrl','url'],['#inHandle','handle']]) $(id).value = state[k]||'';
+  syncSeg();
   document.documentElement.style.setProperty('--ui-accent', state.accent);
   applyLang();
   assets.shot = await loadImg(state.shot);

@@ -1989,22 +1989,29 @@ bento(ctx,W,H,d,p,fr){
   if(!stacked){
     const r1=ch*0.55;
     const c1w=cw*0.60;
-    /* 格1：标题格（深底强调） */
+    /* 格1：标题格（深底强调，内容垂直居中） */
     cell(x0,y0,c1w,r1,deep);
-    let ix=x0+inner,iy=y0+inner;
     const hS=clamp(r1*0.055,11,20);
+    const badgeH=d.badge?hS*2.1:0;
+    const subShow=d.sub&&!asList;
+    /* 先试排版再垂直居中 */
+    const tb=fitBlock(ctx,d.title,c1w-inner*2,2,clamp(r1*0.15,26,84),16,sz=>ctx.font=`900 ${sz}px ${F_SANS}`);
+    const tBlockH=tb.lines.length*tb.size*1.16;
+    const subH=subShow? clamp(r1*0.05,12,19)*1.9 : 0;
+    const contentH=badgeH+tBlockH+subH;
+    let iy=y0+Math.max(inner,(r1-contentH)/2);
+    let ix=x0+inner;
     if(d.badge){
       ctx.font=`800 ${hS}px ${F_SANS}`;
       ctx.fillStyle=hsl(p.h,p.s,80,.95);
       ctx.fillText(d.badge.toUpperCase(),ix,iy+hS);
-      iy+=hS*2.1;
+      iy+=badgeH;
     }
-    const tb=fitBlock(ctx,d.title,c1w-inner*2,2,clamp(r1*0.15,26,84),16,sz=>ctx.font=`900 ${sz}px ${F_SANS}`);
     ctx.font=`900 ${tb.size}px ${F_SANS}`;ctx.fillStyle='#fff';
     let ty=iy+tb.size*0.95;
     for(const ln of tb.lines){ctx.fillText(ln,ix,ty);ty+=tb.size*1.16;}
-    iy=ty-tb.size*1.16+tb.size*0.55;
-    if(d.sub&&!asList){
+    iy=ty-tb.size*1.16+tb.size*0.35;
+    if(subShow){
       ctx.font=`500 ${clamp(r1*0.05,12,19)}px ${F_SANS}`;
       ctx.fillStyle='rgba(255,255,255,.72)';
       ctx.fillText(d.sub.length>40?d.sub.slice(0,39)+'…':d.sub,ix,iy+clamp(r1*0.05,12,19));
@@ -2035,10 +2042,17 @@ bento(ctx,W,H,d,p,fr){
     if(hasShot){
       shotFrame(ctx,{x:x0+inner*0.7,y:r2y+inner*0.7,w:c3w-inner*1.4,h:r2h-inner*1.4},assets.shot,'',fr.mode,p,{border:'rgba(23,17,42,.12)'});
     } else if(d.handle){
-      ctx.font=`800 ${clamp(r2h*0.11,16,34)}px ${F_SANS}`;ctx.fillStyle=ink;
-      ctx.fillText(d.handle,x0+inner,r2y+inner+clamp(r2h*0.11,16,34));
-      ctx.font=`600 ${clamp(r2h*0.045,10,15)}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.5)';
-      ctx.fillText(lang==='zh'?'作者 · Author':'Author',x0+inner,r2y+inner+clamp(r2h*0.11,16,34)*1.9);
+      /* 署名卡：垂直居中，logo + handle + 单语言角色标签 */
+      const nS=clamp(r2h*0.085,16,30);
+      let cy=r2y+r2h/2-(assets.logo?nS*1.75:nS*0.9);
+      if(assets.logo){const ls=nS*1.55;logoChip(ctx,assets.logo,x0+inner,cy,ls);cy+=ls*1.42;}
+      ctx.font=`800 ${nS}px ${F_SANS}`;ctx.fillStyle=ink;ctx.textAlign='left';
+      ctx.fillText(d.handle,x0+inner,cy+nS);
+      ctx.fillStyle=acc;
+      rr(ctx,x0+inner,cy+nS*1.18,nS*1.7,Math.max(3,nS*0.09),nS*0.05);ctx.fill();
+      ctx.font=`600 ${clamp(nS*0.44,10,14)}px ${F_SANS}`;
+      ctx.fillStyle='rgba(22,17,42,.5)';
+      ctx.fillText(lang==='zh'?'作者':'Author',x0+inner,cy+nS*1.95);
     }
     /* 格4：卖点格（白格） */
     const c4x=x0+c3w+gap,c4w=cw-c3w-gap;
@@ -2064,49 +2078,58 @@ bento(ctx,W,H,d,p,fr){
       ctx.fillText(d.handle,c4x+inner,r2y+inner+clamp(r2h*0.1,16,32));
     }
   } else {
-    /* portrait：3 行 [标题格] / [域名|卖点] / [截图格 或 署名+装饰] */
-    const r1=ch*(hasShot?0.30:0.36), r2=ch*0.24, r3=ch-r1-r2-gap*2;
+    /* portrait：3 行 [标题格] / [域名|卖点] / [截图格 或 紧凑署名条] */
+    const r2=ch*0.24;
+    const r3=hasShot? ch*0.40 : clamp(ch*0.12,96,168);
+    const r1=ch-r2-r3-gap*2;
     cell(x0,y0,cw,r1,deep);
-    let ix=x0+inner,iy=y0+inner;
-    const hS=clamp(r1*0.07,11,22);
+    const hS=clamp(r1*0.045,11,22);
+    const badgeH=d.badge?hS*2.2:0;
+    const subShow=d.sub&&!asList;
+    const subS2=clamp(r1*0.045,12,20);
+    const availT=r1-inner*2-badgeH-(subShow?subS2*1.9:0);
+    const tb=fitBlock(ctx,d.title,cw-inner*2,3,clamp(availT*0.34,24,137),16,sz=>ctx.font=`900 ${sz}px ${F_SANS}`);
+    const tBlockH=tb.lines.length*tb.size*1.16;
+    const contentH=badgeH+tBlockH+(subShow?subS2*1.9:0);
+    const iy=y0+Math.max(inner,(r1-contentH)/2);
+    let ix=x0+inner;
     if(d.badge){
       ctx.font=`800 ${hS}px ${F_SANS}`;
       ctx.fillStyle=hsl(p.h,p.s,80,.95);
       ctx.fillText(d.badge.toUpperCase(),ix,iy+hS);
-      iy+=hS*2.2;
     }
-    const availT=r1-((iy-y0))-inner-(d.sub&&!asList? hS*2.6:0);
-    const tb=fitBlock(ctx,d.title,cw-inner*2,2,clamp(availT*0.42,24,88),16,sz=>ctx.font=`900 ${sz}px ${F_SANS}`);
     ctx.font=`900 ${tb.size}px ${F_SANS}`;ctx.fillStyle='#fff';
-    let ty=iy+tb.size*0.95;
+    let ty=iy+badgeH+tb.size*0.95;
     for(const ln of tb.lines){ctx.fillText(ln,ix,ty);ty+=tb.size*1.16;}
-    if(d.sub&&!asList){
-      ctx.font=`500 ${clamp(r1*0.055,12,20)}px ${F_SANS}`;
+    if(subShow){
+      ctx.font=`500 ${subS2}px ${F_SANS}`;
       ctx.fillStyle='rgba(255,255,255,.72)';ctx.textAlign='left';
-      ctx.fillText(d.sub.length>34?d.sub.slice(0,33)+'…':d.sub,ix,y0+r1-inner*0.8);
+      ctx.fillText(d.sub.length>34?d.sub.slice(0,33)+'…':d.sub,ix,ty-tb.size*1.16+tb.size*0.35+subS2);
       ctx.textAlign='left';
     }
     const r2y=y0+r1+gap;
     const halfW=(cw-gap)/2;
-    /* 域名格 */
+    /* 域名格：锁+域名成组垂直居中 */
     cell(x0,r2y,halfW,r2,p.base);
     const lockS=clamp(r2*0.06,11,18);
-    ctx.strokeStyle='#fff';ctx.lineWidth=Math.max(2,lockS*0.26);
-    ctx.beginPath();ctx.arc(x0+inner+lockS*0.55,r2y+inner+lockS*0.35,lockS*0.42,Math.PI,0);ctx.stroke();
-    ctx.fillStyle='#fff';rr(ctx,x0+inner+lockS*0.55-lockS*0.55,r2y+inner+lockS*0.35,lockS*1.1,lockS*0.95,lockS*0.22);ctx.fill();
     let uS=clamp(r2*0.17,16,44);
     let uT=urlT;
     ctx.font=`800 ${uS}px ${F_SANS}`;
     while(uS>12&&ctx.measureText(uT).width>halfW-inner*2-lockS*2.2){uS-=2;ctx.font=`800 ${uS}px ${F_SANS}`;}
+    const grpY=r2y+r2*0.52;
+    ctx.strokeStyle='#fff';ctx.lineWidth=Math.max(2,lockS*0.26);
+    ctx.beginPath();ctx.arc(x0+inner+lockS*0.55,grpY-lockS*0.12,lockS*0.42,Math.PI,0);ctx.stroke();
+    ctx.fillStyle='#fff';rr(ctx,x0+inner+lockS*0.55-lockS*0.55,grpY-lockS*0.12,lockS*1.1,lockS*0.95,lockS*0.22);ctx.fill();
     ctx.fillStyle='#fff';
-    ctx.fillText(uT,x0+inner,r2y+r2-inner*0.75);
-    /* 卖点格 */
+    ctx.fillText(uT,x0+inner+lockS*2.2,grpY+uS*0.36);
+    /* 卖点格：垂直居中列表 */
     const c4x=x0+halfW+gap;
     cell(c4x,r2y,halfW,r2,'#ffffff',2);
     if(asList){
+      const n=Math.min(feats.length, Math.max(1,Math.floor((r2-inner*1.2)/(clamp(r2*0.062,11,19)*2.15))));
       const fS=clamp(r2*0.062,11,19);
-      let fy=r2y+inner+fS*1.3;
-      for(const t of feats.slice(0, Math.max(1,Math.floor((r2-inner*1.6)/(fS*2.15))))){
+      let fy=r2y+(r2-n*fS*2.15)/2+fS*1.3;
+      for(const t of feats.slice(0,n)){
         ctx.fillStyle=acc;ctx.beginPath();ctx.arc(c4x+inner+fS*0.6,fy-fS*0.32,fS*0.58,0,7);ctx.fill();
         ctx.fillStyle='#fff';ctx.font=`800 ${fS*0.8}px ${F_SANS}`;ctx.textAlign='center';
         ctx.fillText('✓',c4x+inner+fS*0.6,fy-fS*0.03);
@@ -2115,8 +2138,9 @@ bento(ctx,W,H,d,p,fr){
         fy+=fS*2.15;
       }
     } else if(d.sub){
-      ctx.font=`600 ${clamp(r2*0.055,11,17)}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.75)';
-      ctx.fillText(d.sub.slice(0,22),c4x+inner,r2y+inner+clamp(r2*0.055,11,17));
+      const fS=clamp(r2*0.055,11,17);
+      ctx.font=`600 ${fS}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.75)';
+      ctx.fillText(d.sub.slice(0,22),c4x+inner,r2y+r2/2+fS*0.4);
     }
     /* row3 */
     const r3y=r2y+r2+gap;
@@ -2124,21 +2148,25 @@ bento(ctx,W,H,d,p,fr){
       cell(x0,r3y,cw,r3,'#ffffff',2);
       shotFrame(ctx,{x:x0+inner*0.8,y:r3y+inner*0.8,w:cw-inner*1.6,h:r3-inner*1.6},assets.shot,'',fr.mode,p,{border:'rgba(23,17,42,.12)'});
     } else {
-      const hw=hasShot?cw:(cw-gap)/2;
-      cell(x0,r3y,hw,r3,'#ffffff',2);
+      /* 整行署名条：logo+handle+角色 | 右侧访问提示 */
+      cell(x0,r3y,cw,r3,'#ffffff',2);
+      const nS=clamp(r3*0.10,15,30);
+      const iyC=r3y+r3/2;
+      let ix=x0+inner;
+      if(assets.logo){const ls=nS*1.55;logoChip(ctx,assets.logo,ix,iyC-ls/2,ls);ix+=ls*1.35;}
       if(d.handle){
-        ctx.font=`800 ${clamp(r3*0.11,16,36)}px ${F_SANS}`;ctx.fillStyle=ink;
-        ctx.fillText(d.handle,x0+inner,r3y+r3/2+clamp(r3*0.11,16,36)*0.36);
-        ctx.font=`600 ${clamp(r3*0.045,10,15)}px ${F_SANS}`;ctx.fillStyle='rgba(22,17,42,.5)';
-        ctx.fillText(lang==='zh'?'作者 · Author':'Author',x0+inner,r3y+r3/2+clamp(r3*0.11,16,36)*1.35);
+        ctx.font=`800 ${nS}px ${F_SANS}`;ctx.fillStyle=ink;ctx.textAlign='left';
+        ctx.fillText(d.handle,ix,iyC+nS*0.36);
+        ix+=ctx.measureText(d.handle).width+nS*0.9;
       }
-      if(!hasShot){
-        const dx=x0+hw+gap,dw=hw;
-        cell(dx,r3y,dw,r3,p.base);
-        ctx.fillStyle='rgba(255,255,255,.22)';
-        ctx.beginPath();ctx.arc(dx+dw*0.5,r3y+r3*0.42,dw*0.17,0,7);ctx.fill();
-        ctx.beginPath();ctx.arc(dx+dw*0.32,r3y+r3*0.68,dw*0.10,0,7);ctx.fill();
-        ctx.beginPath();ctx.arc(dx+dw*0.68,r3y+r3*0.70,dw*0.07,0,7);ctx.fill();
+      ctx.font=`600 ${clamp(nS*0.44,10,14)}px ${F_SANS}`;
+      ctx.fillStyle='rgba(22,17,42,.5)';
+      ctx.fillText(lang==='zh'?'作者':'Author',ix,iyC+nS*0.3);
+      if(d.url){
+        ctx.font=`800 ${clamp(nS*0.62,12,19)}px ${F_SANS}`;
+        ctx.fillStyle=acc;ctx.textAlign='right';
+        ctx.fillText((lang==='zh'?'访问 ':'visit ')+d.url.replace(/^https?:\/\//,'')+' →',x0+cw-inner,iyC+nS*0.32);
+        ctx.textAlign='left';
       }
     }
   }

@@ -137,6 +137,13 @@ main{
 .btnrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .status{font-size:12.5px;color:var(--mut);min-height:18px;text-align:center}
 .status.ok{color:#059669}
+.mhint{font-size:11.5px;color:var(--ui-accent);opacity:.9;line-height:1.45;margin-top:2px}
+.toast-wrap{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{background:var(--ink);color:var(--bg);border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;box-shadow:0 10px 34px -10px rgba(0,0,0,.4);opacity:0;transform:translateY(-10px);transition:opacity .25s,transform .25s;max-width:80vw}
+.toast.show{opacity:1;transform:translateY(0)}
+#canvasWrap{position:relative}
+#dropOverlay{position:absolute;inset:8px;display:none;align-items:center;justify-content:center;background:color-mix(in srgb,var(--ui-accent) 14%,transparent);backdrop-filter:blur(2px);border:2px dashed var(--ui-accent);border-radius:var(--radius);z-index:6;font-weight:800;font-size:15px;color:var(--ui-accent);pointer-events:none}
+#dropOverlay.on{display:flex}
 .stage{position:sticky;top:64px;display:flex;flex-direction:column;gap:10px}
 @media (max-width:980px){ .stage{position:static} }
 .stage-head{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);font-weight:600}
@@ -232,6 +239,7 @@ footer a{color:var(--mut)}
       <div class="frow">
         <label data-i18n="hSub">Subtitle</label>
         <textarea id="inSub" rows="2" maxlength="160"></textarea>
+        <div class="mhint" id="subHint" hidden></div>
       </div>
       <div class="f2">
         <div class="frow">
@@ -396,6 +404,10 @@ const I18N = {
   en:{
     tagline:'Share image studio', surprise:'Surprise me',
     heroTitle:'Forge scroll-stopping share images',
+    magicList:'Tip: separate points with · or / — this template auto-splits them into ✓ bullets.',
+    magicViral:'Tip: numbers & short acronyms (0, AI, GPT…) in the title turn red automatically.',
+    dropHint:'Drop to set as product screenshot',
+    stShotSet:'Screenshot updated ✓', stLogoSet:'Logo updated ✓',
     heroSub:'16 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
     secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
     brandHint:'Saves link, handle, accent & logo — switch between your sites in one click.',
@@ -431,6 +443,10 @@ const I18N = {
   zh:{
     tagline:'分享图工作室', surprise:'随机灵感',
     heroTitle:'锻造让全网驻足的分享图',
+    magicList:'提示：用 · 或 / 分隔卖点，此模板会自动拆成 ✓ 列表',
+    magicViral:'提示：标题中的数字与缩写（0、AI、GPT…）会自动标红',
+    dropHint:'松开手 · 设为产品截图',
+    stShotSet:'已设为产品截图 ✓', stLogoSet:'Logo 已更新 ✓',
     heroSub:'16 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
     secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
     brandHint:'保存链接、账号、主题色与 Logo——多个站点一键切换。',
@@ -2289,6 +2305,7 @@ async function importImageFile(kind, blob){
   state[kind] = out; state.demo = state.demo && kind!=='shot' ? state.demo : false;
   assets[kind] = await loadImg(out);
   updateZones(); renderAll();
+  toast(kind==='shot'?I18N[lang].stShotSet:I18N[lang].stLogoSet, true);
 }
 function setAsset(kind, dataURL){
   state[kind] = dataURL;
@@ -2348,6 +2365,7 @@ function renderThumbs(){
 function renderAll(){
   fitPreview();
   renderThumbs();
+  updateMagicHint();
   scheduleSave();
 }
 function renderStaticBits(){
@@ -2431,17 +2449,18 @@ $('#btnBrandSave').onclick = ()=>{
   const ex = list.find(pr=>pr.name===host);
   const prof = {id: ex?ex.id:'b'+Date.now().toString(36), name:host, url:state.url, handle:state.handle, accent:state.accent, logo:state.logo};
   if (ex) Object.assign(ex, prof); else list.push(prof);
-  if (!saveProfiles(list)){ setStatus(I18N[lang].stStoreFull); return; }
+  if (!saveProfiles(list)){ toast(I18N[lang].stStoreFull); return; }
   renderBrandSel(); $('#brandSel').value = prof.id;
-  setStatus(I18N[lang].stBrandSaved, true);
-  setTimeout(()=>setStatus(''),1600);
+  const b = $('#btnBrandSave'); b.textContent = I18N[lang].stBrandSaved;
+  setTimeout(()=>{ b.textContent = I18N[lang].bBrandSave; },1500);
+  toast(I18N[lang].stBrandSaved, true);
 };
 $('#brandSel').onchange = ()=>{
   const pr = loadProfiles().find(p=>p.id===$('#brandSel').value);
   if (!pr) return;
   state.url = pr.url||''; state.handle = pr.handle||'';
   $('#inUrl').value = state.url; $('#inHandle').value = state.handle;
-  setAccent(pr.accent||'#7c3aed');
+  setAccent(pr.accent||'#6366f1');
   setAsset('logo', pr.logo||null);
   renderAll();
 };
@@ -2449,8 +2468,7 @@ $('#btnBrandDel').onclick = ()=>{
   const id = $('#brandSel').value; if (!id) return;
   saveProfiles(loadProfiles().filter(p=>p.id!==id));
   renderBrandSel();
-  setStatus(I18N[lang].stBrandDel, true);
-  setTimeout(()=>setStatus(''),1400);
+  toast(I18N[lang].stBrandDel, true);
 };
 
 /* ============ size selection for batch export ============ */
@@ -2574,6 +2592,46 @@ document.querySelectorAll('.zclear').forEach(b=>{
   b.addEventListener('click',e=>{ e.stopPropagation(); setAsset(b.dataset.clr, null); });
 });
 
+/* 全局拖拽：拦截浏览器默认打开文件；任意位置落图 = 设为产品截图 */
+const dropOverlay=document.createElement('div');
+dropOverlay.id='dropOverlay';
+$('#canvasWrap').appendChild(dropOverlay);
+let dropHideTimer=null;
+window.addEventListener('dragover',e=>{
+  if(![...(e.dataTransfer?.types||[])].includes('Files')) return;
+  e.preventDefault();
+  dropOverlay.textContent=I18N[lang].dropHint;
+  dropOverlay.classList.add('on');
+  clearTimeout(dropHideTimer);
+  dropHideTimer=setTimeout(()=>dropOverlay.classList.remove('on'),160);
+});
+window.addEventListener('drop',e=>{
+  dropOverlay.classList.remove('on');
+  if (e.defaultPrevented) return; /* 投放区已处理 */
+  e.preventDefault();
+  const f=[...(e.dataTransfer?.files||[])].find(f=>f.type.startsWith('image/'));
+  if (f){ pasteTarget='shot'; importImageFile('shot',f); }
+});
+
+/* toast：反馈就近显示 */
+const toastWrap=document.createElement('div');toastWrap.className='toast-wrap';document.body.appendChild(toastWrap);
+function toast(msg,ok){
+  const t=document.createElement('div');t.className='toast'+(ok?' ok':'');t.textContent=(ok?'✓ ':'')+msg;
+  toastWrap.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300);},2200);
+}
+
+/* 情境提示：按所选模板揭示"魔法规则" */
+function updateMagicHint(){
+  const el=$('#subHint'); if(!el) return;
+  let key=null;
+  if(state.template==='promo'||state.template==='bento') key='magicList';
+  else if(state.template==='viral') key='magicViral';
+  if(key){ el.hidden=false; el.textContent='💡 '+I18N[lang][key]; }
+  else el.hidden=true;
+}
+
 /* random */
 $('#btnRandom').onclick = ()=>{
   const t = TPLS[Math.random()*TPLS.length|0];
@@ -2599,6 +2657,7 @@ function applyLang(){
   localStorage.setItem('shareforge_lang', lang);
   try{ history.replaceState(null,'', lang==='zh' ? '?lang=zh'+location.hash : location.pathname+location.hash); }catch(e){}
   renderBrandSel();
+  updateMagicHint();
   renderStaticBits(); renderThumbs();
 }
 $('#btnLang').onclick = ()=>{ lang = lang==='zh'?'en':'zh'; applyLang(); renderAll(); };

@@ -141,6 +141,8 @@ main{
 .toast-wrap{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
 .toast{background:var(--ink);color:var(--bg);border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;box-shadow:0 10px 34px -10px rgba(0,0,0,.4);opacity:0;transform:translateY(-10px);transition:opacity .25s,transform .25s;max-width:80vw}
 .toast.show{opacity:1;transform:translateY(0)}
+.frow.off,.zone.off{display:none}
+.zones.one{grid-template-columns:1fr}
 #canvasWrap{position:relative}
 #dropOverlay{position:absolute;inset:8px;display:none;align-items:center;justify-content:center;background:color-mix(in srgb,var(--ui-accent) 14%,transparent);backdrop-filter:blur(2px);border:2px dashed var(--ui-accent);border-radius:var(--radius);z-index:6;font-weight:800;font-size:15px;color:var(--ui-accent);pointer-events:none}
 #dropOverlay.on{display:flex}
@@ -237,26 +239,26 @@ footer a{color:var(--mut)}
           <button data-cl="en" type="button">EN</button>
         </div>
       </div>
-      <div class="frow">
-        <label data-i18n="hBadge">Badge</label>
+      <div class="frow" id="frowBadge">
+        <label id="lblBadge" data-i18n="hBadge">Badge</label>
         <input type="text" id="inBadge" maxlength="40">
       </div>
-      <div class="frow">
-        <label data-i18n="hTitle">Title</label>
+      <div class="frow" id="frowTitle">
+        <label id="lblTitle" data-i18n="hTitle">Title</label>
         <textarea id="inTitle" rows="2" maxlength="120"></textarea>
       </div>
-      <div class="frow">
-        <label data-i18n="hSub">Subtitle</label>
+      <div class="frow" id="frowSub">
+        <label id="lblSub" data-i18n="hSub">Subtitle</label>
         <textarea id="inSub" rows="2" maxlength="160"></textarea>
         <div class="mhint" id="subHint" hidden></div>
       </div>
       <div class="f2">
-        <div class="frow">
-          <label data-i18n="hUrl">Link</label>
+        <div class="frow" id="frowUrl">
+          <label id="lblUrl" data-i18n="hUrl">Link</label>
           <input type="text" id="inUrl" maxlength="60" inputmode="url">
         </div>
-        <div class="frow">
-          <label data-i18n="hHandle">Handle</label>
+        <div class="frow" id="frowHandle">
+          <label id="lblHandle" data-i18n="hHandle">Handle</label>
           <input type="text" id="inHandle" maxlength="30">
         </div>
       </div>
@@ -281,9 +283,9 @@ footer a{color:var(--mut)}
       <div class="size-grid" id="sizeGrid"></div>
     </section>
 
-    <section class="card">
+    <section class="card" id="assetsCard">
       <h2 data-i18n="secAssets">Assets</h2>
-      <div class="zones">
+      <div class="zones" id="zonesGrid">
         <div class="zone" id="zoneShot" tabindex="0">
           <img alt="screenshot preview" id="pvShot">
           <div class="zt" data-i18n="zoneShot">Product screenshot</div>
@@ -417,6 +419,8 @@ const I18N = {
     magicViral:'Tip: numbers & short acronyms (0, AI, GPT…) in the title turn red automatically.',
     dropHint:'Drop to set as product screenshot',
     stShotSet:'Screenshot updated ✓', stLogoSet:'Logo updated ✓',
+    qTitle:'Quote', qSub:'Context (optional)', qBadge:'Role / source', qHandle:'Attribution',
+    fSub:'Selling points (· separated)', vSub:'Red subtitle',
     heroSub:'16 designer templates × 8 platform sizes — X, WeChat, RED, Instagram & LinkedIn. Free, private, right in your browser.',
     secBrand:'Brand profiles', bBrandSave:'Save', bBrandDel:'Delete',
     brandHint:'Saves copy (zh/en), template, size, screenshot, link, handle & accent — one click to switch sites.',
@@ -456,6 +460,8 @@ const I18N = {
     magicViral:'提示：标题中的数字与缩写（0、AI、GPT…）会自动标红',
     dropHint:'松开手 · 设为产品截图',
     stShotSet:'已设为产品截图 ✓', stLogoSet:'Logo 已更新 ✓',
+    qTitle:'金句', qSub:'小注（可选）', qBadge:'身份 / 出处', qHandle:'署名',
+    fSub:'卖点（用 · 分隔）', vSub:'朱红副标题',
     heroSub:'16 款设计模板 × 8 平台尺寸——X、公众号、小红书、Instagram、LinkedIn 一站搞定。免费、纯本地、无需注册。',
     secBrand:'品牌档案', bBrandSave:'保存', bBrandDel:'删除',
     brandHint:'保存文案（中/EN）、模板、尺寸、截图、链接、账号与主题色——多站一键切换。',
@@ -2376,6 +2382,7 @@ function renderAll(){
   fitPreview();
   renderThumbs();
   updateMagicHint();
+  updateFieldVis();
   scheduleSave();
 }
 function renderStaticBits(){
@@ -2692,6 +2699,34 @@ function updateMagicHint(){
   if(key){ el.hidden=false; el.textContent='💡 '+I18N[lang][key]; }
   else el.hidden=true;
 }
+/* 字段随模板自适应：隐藏该模板用不到的字段，按角色改标签 */
+const FIELD_UNUSED = {
+  midnight:['logo'], editorial:['logo'], neon:['logo'], pop:['logo'], spotlight:['logo'],
+  terminal:['logo'], blueprint:['logo'], swiss:['logo'],
+  viral:['shot','logo'], quote:['shot','logo'],
+  frosted:['handle'], ticket:['handle'],
+};
+const FIELD_LABELS = {
+  quote:{title:'qTitle',sub:'qSub',badge:'qBadge',handle:'qHandle'},
+  promo:{sub:'fSub'}, bento:{sub:'fSub'},
+  viral:{sub:'vSub'},
+};
+function updateFieldVis(){
+  const t=state.template;
+  const unused=FIELD_UNUSED[t]||[];
+  const rows={badge:'#frowBadge',title:'#frowTitle',sub:'#frowSub',url:'#frowUrl',handle:'#frowHandle'};
+  for(const k in rows){ const el=$(rows[k]); if(el) el.classList.toggle('off',unused.includes(k)); }
+  const shotUsed=!unused.includes('shot'), logoUsed=!unused.includes('logo');
+  const zs=$('#zoneShot'), zl=$('#zoneLogo'), zg=$('#zonesGrid');
+  if(zs) zs.classList.toggle('off',!shotUsed);
+  if(zl) zl.classList.toggle('off',!logoUsed);
+  if(zg) zg.classList.toggle('one', !(shotUsed&&logoUsed));
+  const ov=FIELD_LABELS[t]||{};
+  const L=I18N[lang];
+  const setLbl=(k,id,def)=>{ const el=$(id); if(el) el.textContent = ov[k]? (L[ov[k]]||L[def]) : L[def]; };
+  setLbl('badge','#lblBadge','hBadge'); setLbl('title','#lblTitle','hTitle');
+  setLbl('sub','#lblSub','hSub'); setLbl('url','#lblUrl','hUrl'); setLbl('handle','#lblHandle','hHandle');
+}
 
 /* random */
 $('#btnRandom').onclick = ()=>{
@@ -2719,6 +2754,7 @@ function applyLang(){
   try{ history.replaceState(null,'', lang==='zh' ? '?lang=zh'+location.hash : location.pathname+location.hash); }catch(e){}
   renderBrandSel();
   updateMagicHint();
+  updateFieldVis();
   renderStaticBits(); renderThumbs();
 }
 $('#btnLang').onclick = ()=>{ lang = lang==='zh'?'en':'zh'; applyLang(); renderAll(); };

@@ -21,7 +21,8 @@
 <meta name="twitter:title" content="ShareForge — Social Share Image Generator">
 <meta name="twitter:description" content="Beautiful marketing images for every platform. 6 templates, 8 sizes, one click.">
 <meta name="twitter:image" content="https://shareforge.kuige.me/og-image.png">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"ShareForge","url":"https://shareforge.kuige.me/","applicationCategory":"DesignApplication","operatingSystem":"Any","description":"Free browser-based social share image generator: 16 designer templates, 8 platform sizes (X/Twitter, WeChat, Xiaohongshu, Instagram, LinkedIn, OG), screenshot & logo upload, one-click PNG and batch export. No signup, no upload — everything stays on your device.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
@@ -52,16 +53,6 @@ body{
   background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased;
 }
 a{color:var(--ui-accent)}
-header{
-  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
-  padding:10px 20px;background:color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
-}
-.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
-.logo-ring{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;padding:2px;background:linear-gradient(135deg,var(--ui-accent),color-mix(in srgb,var(--ui-accent) 55%,#a78bfa));flex:none;box-shadow:0 2px 12px -2px color-mix(in srgb,var(--ui-accent) 70%,transparent),0 0 18px -4px rgba(124,58,237,.5)}
-.logo-ring img{display:block;width:100%;height:100%;border-radius:50%}
-.brand small{font-weight:600;color:var(--mut);font-size:12px;letter-spacing:0;margin-left:2px}
-header .sp{flex:1}
 .hbtn{
   border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;
   padding:6px 11px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;
@@ -200,8 +191,6 @@ td code{background:var(--soft);border-radius:5px;padding:1px 7px;font-size:12px;
 .seg button{border:none;background:var(--bg2);color:var(--mut);font-size:11px;font-weight:800;padding:4px 10px;cursor:pointer}
 .seg button.on{background:var(--ui-accent);color:#fff}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-footer{border-top:1px solid var(--line);padding:18px 20px 30px;text-align:center;color:var(--mut);font-size:12.5px}
-footer a{color:var(--mut)}
 .hero{max-width:1460px;margin:0 auto;padding:26px 20px 0;text-align:center}
 .hero h1{
   margin:0;font-size:clamp(24px,3.4vw,40px);font-weight:900;letter-spacing:-.02em;line-height:1.15;
@@ -210,20 +199,44 @@ footer a{color:var(--mut)}
 }
 .hero p{margin:8px auto 0;max-width:760px;color:var(--mut);font-size:clamp(13.5px,1.4vw,16.5px)}
 @media (max-width:980px){ .hero{padding-top:18px} }
+/* ── KuiGe 站群统一基座 ───────────────────── */
+:root{--kg-ink:#1f2430;--kg-sub:#6b7280;--kg-accent:#f2603c;--kg-line:#e8e6e1;--kg-bg:#faf9f7}
+.kg-top{position:sticky;top:0;z-index:60;background:rgba(250,249,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--kg-line)}
+.kg-top-in{max-width:1120px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.kg-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--kg-ink);font-weight:700;font-size:17px}
+.kg-brand img{width:32px;height:32px;border-radius:9px;display:block}
+.kg-brand small{font-weight:500;color:var(--kg-sub);font-size:12px}
+.kg-nav{display:flex;align-items:center;gap:14px;font-size:14px}
+.kg-nav a{color:var(--kg-sub);text-decoration:none}
+.kg-nav a:hover{color:var(--kg-ink)}
+.kg-entry{background:var(--kg-ink);color:#fff!important;padding:6px 14px;border-radius:999px;text-decoration:none;font-size:13px}
+.kg-entry:hover{background:var(--kg-accent)}
+.kg-foot{background:var(--kg-bg);border-top:1px solid var(--kg-line);color:var(--kg-sub);font-size:13px;margin-top:0}
+.kg-foot-in{max-width:1120px;margin:0 auto;padding:36px 20px 28px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.kg-foot img{width:44px;height:44px;border-radius:12px;margin-bottom:2px}
+.kg-foot-brand{color:var(--kg-ink);font-weight:700;font-size:15px;margin:0}
+.kg-foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px}
+.kg-foot-links a{color:var(--kg-sub);text-decoration:none}
+.kg-foot-links a:hover{color:var(--kg-accent)}
+.kg-foot-copy{margin:4px 0 0;color:#9ca3af;font-size:12px}
+@media(max-width:640px){.kg-nav a:not(.kg-entry){display:none}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">
-    <span class="logo-ring" title="幽冥猫"><img src="logo.png" alt="幽冥猫 logo"></span>
-    ShareForge <small data-i18n="tagline">Share image studio</small>
+<header class="kg-top">
+  <div class="kg-top-in">
+    <a class="kg-brand" href="./">
+      <img src="favicon.png?v=2" alt="ShareForge 吉祥物">
+      <span>ShareForge<small data-i18n="tagline">Share image studio</small></span>
+    </a>
+    <nav class="kg-nav">
+      <button class="hbtn" id="btnRandom" title="Surprise me">🎲 <span data-i18n="surprise">Surprise me</span></button>
+      <button class="hbtn" id="btnLang">中文</button>
+      <button class="hbtn" id="btnTheme" title="Theme">◐</button>
+      <a class="hbtn" style="text-decoration:none" href="https://x.com/kuige_me" target="_blank" rel="noopener" title="Follow on X (Twitter)">X</a>
+      <a class="kg-entry" href="https://kuige.me/" target="_blank" rel="noopener">魁歌 · 全部作品</a>
+    </nav>
   </div>
-  <div class="sp"></div>
-  <a class="hbtn kuige-entry" href="https://kuige.me/" target="_blank" rel="noopener" title="kuige.me" style="text-decoration:none"><img src="https://kuige.me/logo.png" alt="" width="16" height="16" style="width:16px;height:16px;border-radius:50%;vertical-align:-3px;margin-right:6px">魁歌</a>
-    <button class="hbtn" id="btnRandom" title="Surprise me">🎲 <span data-i18n="surprise">Surprise me</span></button>
-  <button class="hbtn" id="btnLang">中文</button>
-  <button class="hbtn" id="btnTheme" title="Theme">◐</button>
-  <a class="hbtn" style="text-decoration:none" href="https://x.com/kuige_me" target="_blank" rel="noopener" title="Follow on X (Twitter)">X</a>
 </header>
 
 <section class="hero">
@@ -389,9 +402,20 @@ footer a{color:var(--mut)}
   </section>
 </div>
 
-<footer>
-  <span data-i18n="footerPrivacy">🔒 100% local — your content and screenshots never leave your browser.</span><br>
-  <span data-i18n="footerMade">ShareForge · free social share image generator</span> · <a href="https://x.com/kuige_me" target="_blank" rel="noopener">X (Twitter)</a>
+<footer class="kg-foot">
+  <div class="kg-foot-in">
+    <img src="favicon.png?v=2" alt="ShareForge 吉祥物">
+    <p class="kg-foot-brand">ShareForge</p>
+    <nav class="kg-foot-links">
+      <a href="https://kuige.me/" target="_blank" rel="noopener">魁歌主页</a>
+      <a href="https://rednote-formatter.kuige.me/" target="_blank" rel="noopener">Rednote Formatter 文案排版</a>
+      <a href="https://collagemill.kuige.me/" target="_blank" rel="noopener">CollageMill 图片排版</a>
+      <a href="https://picsqueeze.kuige.me/" target="_blank" rel="noopener">PicSqueeze 图片压缩</a>
+      <a href="https://x.com/kuige_me" target="_blank" rel="noopener">X (Twitter)</a>
+    </nav>
+    <p data-i18n="footerPrivacy" style="margin:0;max-width:560px">🔒 100% local — your content and screenshots never leave your browser.</p>
+    <p class="kg-foot-copy" data-i18n="footerMade">ShareForge · free social share image generator · © 2026 魁歌 KuiGe · <a href="https://kuige.me/" style="color:inherit">kuige.me</a></p>
+  </div>
 </footer>
 
 <script>
